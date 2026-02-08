@@ -85,11 +85,15 @@
             </div>
           </div>
 
-          <div class="card">
-            <div class="photo-placeholder">
-              QUI METTEREMO UNA TUA FOTO<br/>
-              (tu con pesce / in pesca)
-            </div>
+          <div class="card hero-slider">
+  <img src="/images/hero-1.jpg" class="slide active" alt="Pesca in Liguria con Frank">
+  <img src="/images/hero-2.jpg" class="slide" alt="Uscita di pesca in mare">
+  <img src="/images/hero-3.jpg" class="slide" alt="Pesca all'alba">
+  <img src="/images/hero-4.jpg" class="slide" alt="Pesca dalla spiaggia">
+  <!-- quinta opzionale -->
+  <!-- <img src="/images/hero-5.jpg" class="slide" alt="Pesca in Liguria"> -->
+</div>
+
           </div>
         </div>
       </div>
@@ -207,7 +211,19 @@
   </main>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  // aggiorna anno footer
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // HERO SLIDER automatico
+  const slides = document.querySelectorAll(".hero-slider .slide");
+  let currentSlide = 0;
+
+  setInterval(() => {
+    slides[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add("active");
+  }, 3000);
+</script>
+
 </body>
 </html>
