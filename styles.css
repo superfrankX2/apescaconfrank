@@ -1,0 +1,364 @@
+/* ==========================
+   Base + Design tokens
+========================== */
+:root{
+  --bg:#f4f7f8;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --shadow:0 10px 30px rgba(0,0,0,.08);
+  --radius:14px;
+
+  /* Spaziature "responsive" */
+  --pad: clamp(16px, 3.6vw, 34px);
+  --section: clamp(34px, 6vw, 60px);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+}
+
+img, svg, video{ max-width:100%; height:auto; display:block; }
+a{ color:inherit; text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+/* ==========================
+   Layout
+========================== */
+.container{
+  width:min(1100px, 92vw);
+  margin:0 auto;
+}
+
+/* Sezioni */
+section{ padding: var(--section) 0; }
+
+/* Tipografia (fluid) */
+h1{ font-size: clamp(28px, 5.5vw, 44px); line-height:1.1; margin:0 0 10px; }
+h2{ font-size: clamp(20px, 4.2vw, 26px); line-height:1.2; margin:0 0 10px; }
+h3{ font-size: clamp(18px, 3.8vw, 22px); line-height:1.25; margin:0 0 6px; }
+p{ margin:0; line-height:1.7; }
+.lead, .section-sub{ color:var(--muted); }
+.lead{ margin:0 0 18px; font-size:16px; }
+.section-title{ font-size:22px; margin:0 0 10px; }
+.section-sub{ margin:0 0 16px; }
+
+/* ==========================
+   Card / componenti
+========================== */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--pad);
+}
+
+.mini{ padding: 16px; }
+
+.photo-placeholder{
+  border-radius:var(--radius);
+  border:1px dashed #cbd5e1;
+  background:linear-gradient(180deg, #ffffff, #f8fafc);
+  padding:18px;
+  color:var(--muted);
+  text-align:center;
+  font-weight:600;
+  min-height:170px;
+  display:grid;
+  place-items:center;
+}
+
+/* CTA / bottoni: sempre comodi su mobile */
+.cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:var(--text);
+  color:white;
+  font-weight:600;
+  border:1px solid rgba(0,0,0,.05);
+}
+.cta:hover{ text-decoration:none; opacity:.92; }
+
+.ghost{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:white;
+  font-weight:600;
+}
+.ghost:hover{ text-decoration:none; background:rgba(255,255,255,.7); }
+
+/* ==========================
+   Header + Nav (mobile first)
+   - senza JS
+   - menu principale collapsabile su mobile
+========================== */
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(244,247,248,.92);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 0;
+  gap:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:700;
+  letter-spacing:.2px;
+  min-width: 200px;
+}
+
+.logo{
+  width:38px; height:38px;
+  border-radius:999px;
+  background:var(--card);
+  box-shadow: var(--shadow);
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  font-size:18px;
+}
+
+/* --- MENU WRAPPER (dettagli) --- */
+.menu{
+  position:relative;
+}
+
+/* Bottone "Menu" solo su mobile */
+.menu > summary{
+  cursor:pointer;
+  list-style:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.65);
+  font-weight:650;
+  min-height:44px;
+}
+.menu > summary::-webkit-details-marker{ display:none; }
+.menu > summary:hover{ background:rgba(255,255,255,.85); }
+
+/* Pannello menu */
+.menu-panel{
+  position:absolute;
+  right:0;
+  top:52px;
+  width:min(92vw, 320px);
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow: var(--shadow);
+  padding:10px;
+}
+
+/* Lista menu */
+.menu-panel ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.menu-panel a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 12px;
+  border-radius:12px;
+  text-decoration:none;
+}
+
+.menu-panel a:hover{
+  background:rgba(244,247,248,1);
+  text-decoration:none;
+}
+
+/* Dropdown tecniche dentro menu (riuso details) */
+.submenu{
+  margin-top:6px;
+  border-top:1px solid var(--line);
+  padding-top:8px;
+}
+.submenu summary{
+  cursor:pointer;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 12px;
+  border-radius:12px;
+  font-weight:650;
+}
+.submenu summary::-webkit-details-marker{ display:none; }
+.submenu summary:hover{ background:rgba(244,247,248,1); }
+
+.submenu .submenu-links{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:6px 0 0;
+}
+.submenu .submenu-links a{
+  padding:10px 12px;
+  border-radius:12px;
+}
+
+/* Desktop: nav sempre visibile, niente menu-button */
+@media (min-width: 861px){
+  .menu > summary{ display:none; }
+  .menu-panel{
+    position:static;
+    width:auto;
+    border:none;
+    box-shadow:none;
+    background:transparent;
+    padding:0;
+  }
+  .menu-panel ul{
+    flex-direction:row;
+    align-items:center;
+    gap:18px;
+  }
+  .menu-panel a{
+    padding:8px 10px;
+    border-radius:10px;
+  }
+  .submenu{
+    border-top:none;
+    padding-top:0;
+    margin-top:0;
+    position:relative;
+  }
+  .submenu summary{
+    padding:8px 10px;
+  }
+  .submenu .submenu-links{
+    position:absolute;
+    top:44px;
+    left:0;
+    width:220px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow: var(--shadow);
+    padding:8px;
+  }
+}
+
+/* ==========================
+   HERO (home)
+========================== */
+.hero{ padding: 26px 0 10px; }
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:14px;
+  align-items:stretch;
+}
+.hero p{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.7;
+}
+.hero-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+/* Mobile hero: 1 colonna + meno “aria” */
+@media (max-width: 860px){
+  .hero-grid{ grid-template-columns:1fr; }
+}
+
+/* ==========================
+   Griglie contenuti
+========================== */
+.grid-3{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:14px;
+}
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+  margin-top:16px;
+}
+@media (max-width: 860px){
+  .grid-3{ grid-template-columns: 1fr; }
+  .grid{ grid-template-columns: 1fr; }
+}
+
+/* ==========================
+   Card tecniche cliccabili
+========================== */
+.technique-link{ display:block; text-decoration:none; }
+.technique-link:hover{ text-decoration:none; }
+.more{
+  display:inline-block;
+  margin-top:10px;
+  font-weight:700;
+  color: var(--text);
+}
+
+/* ==========================
+   Pills + actions
+========================== */
+.pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.pill{
+  display:inline-block;
+  font-size:13px;
+  color:var(--text);
+  border:1px solid var(--line);
+  background:white;
+  border-radius:999px;
+  padding:8px 10px;
+}
+
+.actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:18px;
+  align-items:center;
+}
+
+/* ==========================
+   Form contatti
+========================== */
+form{
