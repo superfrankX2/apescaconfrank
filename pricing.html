@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing | A pesca con Frank</title>
+  <meta name="description" content="Pricing e informazioni sulle uscite di pesca con Andrea (Frank) in Liguria. Approccio chiaro, senza marketing aggressivo." />
+  <link rel="stylesheet" href="/styles.css?v=2" />
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="/index.html">
+          <div class="logo">🎣</div>
+          <div>apescaconfrank</div>
+        </a>
+
+        <!-- DESKTOP NAV -->
+        <nav class="desktop-nav" aria-label="Menu principale desktop">
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/chi-sono.html">Chi sono</a></li>
+
+            <li>
+              <details class="submenu">
+                <summary>Tecniche di pesca ▾</summary>
+                <div class="submenu-links" role="menu" aria-label="Tecniche di pesca">
+                  <a href="/surfcasting.html">Surfcasting</a>
+                  <a href="/beach-ledgering.html">Beach ledgering</a>
+                  <a href="/spinning.html">Spinning</a>
+                </div>
+              </details>
+            </li>
+
+            <li><a href="/pricing.html">Pricing</a></li>
+            <li><a class="cta" href="/index.html#contatti">Contattami</a></li>
+          </ul>
+        </nav>
+
+        <!-- MOBILE NAV -->
+        <details class="menu mobile-nav">
+          <summary>Menu ▾</summary>
+
+          <div class="menu-panel">
+            <ul>
+              <li><a href="/index.html">Home</a></li>
+              <li><a href="/chi-sono.html">Chi sono</a></li>
+
+              <li class="submenu">
+                <details>
+                  <summary>Tecniche di pesca ▾</summary>
+                  <div class="submenu-links" role="menu" aria-label="Tecniche di pesca">
+                    <a href="/surfcasting.html">Surfcasting</a>
+                    <a href="/beach-ledgering.html">Beach ledgering</a>
+                    <a href="/spinning.html">Spinning</a>
+                  </div>
+                </details>
+              </li>
+
+              <li><a href="/pricing.html">Pricing</a></li>
+              <li><a class="cta" href="/index.html#contatti">Contattami</a></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section>
+      <div class="container">
+        <div class="card">
+          <h1>Pricing</h1>
+          <p class="section-sub">
+            Qui metteremo le informazioni nel modo giusto, coerente con il tono del sito.
+            Niente marketing aggressivo, solo chiarezza.
+          </p>
+
+          <div class="photo-placeholder" style="min-height:160px;">
+            QUI POTREMMO METTERE UNA FOTO / UNA GRAFICA SEMPLICE
+          </div>
+
+          <div class="actions" style="margin-top:18px;">
+            <a class="cta" href="/index.html#contatti">Contattami</a>
+            <a class="ghost" href="/index.html">Torna alla Home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        © <span id="year"></span> A pesca con Frank — apescaconfrank.it
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
