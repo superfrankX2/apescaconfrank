@@ -60,8 +60,7 @@ p{ margin:0; line-height:1.7; }
   box-shadow: var(--shadow);
   padding: var(--pad);
 }
-
-.mini{ padding: 16px; }
+.mini{ padding:16px; }
 
 .photo-placeholder{
   border-radius:var(--radius);
@@ -76,7 +75,7 @@ p{ margin:0; line-height:1.7; }
   place-items:center;
 }
 
-/* CTA / bottoni: sempre comodi su mobile */
+/* CTA / bottoni */
 .cta{
   display:inline-flex;
   align-items:center;
@@ -86,7 +85,7 @@ p{ margin:0; line-height:1.7; }
   border-radius:999px;
   background:var(--text);
   color:white;
-  font-weight:600;
+  font-weight:650;
   border:1px solid rgba(0,0,0,.05);
 }
 .cta:hover{ text-decoration:none; opacity:.92; }
@@ -100,14 +99,14 @@ p{ margin:0; line-height:1.7; }
   border-radius:999px;
   border:1px solid var(--line);
   background:white;
-  font-weight:600;
+  font-weight:650;
 }
 .ghost:hover{ text-decoration:none; background:rgba(255,255,255,.7); }
 
 /* ==========================
-   Header + Nav (mobile first)
-   - senza JS
-   - menu principale collapsabile su mobile
+   Header + Nav (Piano B)
+   - Desktop: menu lineare
+   - Mobile: bottone Menu + pannello
 ========================== */
 header{
   position:sticky;
@@ -130,9 +129,9 @@ header{
   display:flex;
   align-items:center;
   gap:12px;
-  font-weight:700;
+  font-weight:800;
   letter-spacing:.2px;
-  min-width: 200px;
+  white-space:nowrap;
 }
 
 .logo{
@@ -146,12 +145,12 @@ header{
   font-size:18px;
 }
 
-/* --- MENU WRAPPER (dettagli) --- */
-.menu{
-  position:relative;
-}
+/* Default: mobile */
+.desktop-nav{ display:none; }
+.mobile-nav{ display:block; }
 
-/* Bottone "Menu" solo su mobile */
+/* Mobile menu (details) */
+.menu{ position:relative; }
 .menu > summary{
   cursor:pointer;
   list-style:none;
@@ -168,7 +167,6 @@ header{
 .menu > summary::-webkit-details-marker{ display:none; }
 .menu > summary:hover{ background:rgba(255,255,255,.85); }
 
-/* Pannello menu */
 .menu-panel{
   position:absolute;
   right:0;
@@ -181,7 +179,6 @@ header{
   padding:10px;
 }
 
-/* Lista menu */
 .menu-panel ul{
   list-style:none;
   margin:0;
@@ -199,19 +196,14 @@ header{
   border-radius:12px;
   text-decoration:none;
 }
-
 .menu-panel a:hover{
   background:rgba(244,247,248,1);
   text-decoration:none;
 }
 
-/* Dropdown tecniche dentro menu (riuso details) */
-.submenu{
-  margin-top:6px;
-  border-top:1px solid var(--line);
-  padding-top:8px;
-}
-.submenu summary{
+/* Submenu (Tecniche) - mobile dentro pannello */
+.menu-panel .submenu{ margin-top:6px; border-top:1px solid var(--line); padding-top:8px; }
+.menu-panel .submenu summary{
   cursor:pointer;
   list-style:none;
   display:flex;
@@ -221,58 +213,61 @@ header{
   border-radius:12px;
   font-weight:650;
 }
-.submenu summary::-webkit-details-marker{ display:none; }
-.submenu summary:hover{ background:rgba(244,247,248,1); }
-
-.submenu .submenu-links{
+.menu-panel .submenu summary::-webkit-details-marker{ display:none; }
+.menu-panel .submenu summary:hover{ background:rgba(244,247,248,1); }
+.menu-panel .submenu .submenu-links{
   display:flex;
   flex-direction:column;
   gap:6px;
   padding:6px 0 0;
 }
-.submenu .submenu-links a{
+.menu-panel .submenu .submenu-links a{
   padding:10px 12px;
   border-radius:12px;
 }
 
-/* Desktop: nav sempre visibile, niente menu-button */
+/* Desktop: menu lineare */
 @media (min-width: 861px){
-  .menu > summary{ display:none; }  
-   /* Desktop: il pannello menu deve essere sempre visibile */
-  details.menu > .menu-panel{ display:block !important; }
+  .desktop-nav{ display:block; }
+  .mobile-nav{ display:none; }
 
-  /* Desktop: il contenuto del details non deve "collassare" */
-  details.menu{ position:static; }
-
-  details.menu .menu-panel{ display:block; }
-  details.menu[open] .menu-panel{ display:block; }
-  .menu-panel{
-    position:static;
-    width:auto;
-    border:none;
-    box-shadow:none;
-    background:transparent;
-    padding:0;
-  }
-  .menu-panel ul{
-    flex-direction:row;
+  .desktop-nav ul{
+    list-style:none;
+    display:flex;
     align-items:center;
     gap:18px;
+    margin:0;
+    padding:0;
   }
-  .menu-panel a{
+
+  .desktop-nav a{
+    display:inline-flex;
+    align-items:center;
     padding:8px 10px;
     border-radius:10px;
   }
-  .submenu{
-    border-top:none;
-    padding-top:0;
-    margin-top:0;
-    position:relative;
+
+  .desktop-nav a:hover{
+    background:rgba(255,255,255,.6);
+    text-decoration:none;
   }
-  .submenu summary{
+
+  /* Dropdown tecniche (desktop) */
+  .desktop-nav details.submenu{ position:relative; }
+  .desktop-nav details.submenu > summary{
+    cursor:pointer;
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
     padding:8px 10px;
+    border-radius:10px;
+    font-weight:650;
   }
-  .submenu .submenu-links{
+  .desktop-nav details.submenu > summary::-webkit-details-marker{ display:none; }
+  .desktop-nav details.submenu > summary:hover{ background:rgba(255,255,255,.6); }
+
+  .desktop-nav details.submenu .submenu-links{
     position:absolute;
     top:44px;
     left:0;
@@ -282,6 +277,19 @@ header{
     border-radius:12px;
     box-shadow: var(--shadow);
     padding:8px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+  .desktop-nav details.submenu .submenu-links a{
+    padding:10px 10px;
+    border-radius:10px;
+  }
+
+  .desktop-nav details.submenu .submenu-links a:hover{
+    background:rgba(244,247,248,1);
+    text-decoration:none;
   }
 }
 
@@ -307,8 +315,6 @@ header{
   flex-wrap:wrap;
   align-items:center;
 }
-
-/* Mobile hero: 1 colonna + meno “aria” */
 @media (max-width: 860px){
   .hero-grid{ grid-template-columns:1fr; }
 }
@@ -333,16 +339,19 @@ header{
 }
 
 /* ==========================
-   Card tecniche cliccabili
+   Card cliccabili + "Scopri di più"
 ========================== */
 .technique-link{ display:block; text-decoration:none; }
 .technique-link:hover{ text-decoration:none; }
 .more{
   display:inline-block;
-  margin-top:10px;
-  font-weight:700;
+  margin-top:12px;
+  font-weight:750;
   color: var(--text);
 }
+
+/* Extra: Chi sono in home, separazione garantita */
+#chi-sono .more{ margin-top:14px; }
 
 /* ==========================
    Pills + actions
@@ -357,50 +366,40 @@ header{
   border-radius:999px;
   padding:8px 10px;
 }
-
 .actions{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
   margin-top:18px;
   align-items:center;
-}/* ==========================
-   Header: Desktop nav vs Mobile nav (Piano B)
-========================== */
-
-/* Di default (mobile): mostra il menu a tendina, nascondi desktop-nav */
-.desktop-nav { display:none; }
-.mobile-nav { display:block; }
-
-/* Desktop: mostra desktop-nav, nascondi mobile-nav */
-@media (min-width: 861px){
-  .desktop-nav { display:block; }
-  .mobile-nav { display:none; }
-
-  .desktop-nav ul{
-    list-style:none;
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin:0;
-    padding:0;
-  }
-
-  .desktop-nav a{
-    display:inline-flex;
-    align-items:center;
-    padding:8px 10px;
-    border-radius:10px;
-  }
-
-  .desktop-nav a:hover{
-    background:rgba(255,255,255,.6);
-    text-decoration:none;
-  }
 }
-
 
 /* ==========================
    Form contatti
 ========================== */
-form{
+form{ display:grid; gap:10px; }
+input, textarea{
+  width:100%;
+  padding:12px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  font: inherit;
+  background:white;
+}
+textarea{ min-height:120px; resize:vertical; }
+
+.fineprint{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* ==========================
+   Footer
+========================== */
+footer{
+  padding:26px 0 40px;
+  color:var(--muted);
+  font-size:13px;
+}
+
