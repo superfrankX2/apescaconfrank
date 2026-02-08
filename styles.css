@@ -364,7 +364,41 @@ header{
   flex-wrap:wrap;
   margin-top:18px;
   align-items:center;
+}/* ==========================
+   Header: Desktop nav vs Mobile nav (Piano B)
+========================== */
+
+/* Di default (mobile): mostra il menu a tendina, nascondi desktop-nav */
+.desktop-nav { display:none; }
+.mobile-nav { display:block; }
+
+/* Desktop: mostra desktop-nav, nascondi mobile-nav */
+@media (min-width: 861px){
+  .desktop-nav { display:block; }
+  .mobile-nav { display:none; }
+
+  .desktop-nav ul{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin:0;
+    padding:0;
+  }
+
+  .desktop-nav a{
+    display:inline-flex;
+    align-items:center;
+    padding:8px 10px;
+    border-radius:10px;
+  }
+
+  .desktop-nav a:hover{
+    background:rgba(255,255,255,.6);
+    text-decoration:none;
+  }
 }
+
 
 /* ==========================
    Form contatti
