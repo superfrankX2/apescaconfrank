@@ -237,7 +237,13 @@ header{
 
 /* Desktop: nav sempre visibile, niente menu-button */
 @media (min-width: 861px){
-  .menu > summary{ display:none; }
+  .menu > summary{ display:none; }  
+   /* Desktop: il pannello menu deve essere sempre visibile */
+  details.menu > .menu-panel{ display:block !important; }
+
+  /* Desktop: il contenuto del details non deve "collassare" */
+  details.menu{ position:static; }
+
   details.menu .menu-panel{ display:block; }
   details.menu[open] .menu-panel{ display:block; }
   .menu-panel{
