@@ -35,7 +35,6 @@ a:hover{ text-decoration:underline; }
   width:min(1100px, 92vw);
   margin:0 auto;
 }
-
 section{ padding: var(--section) 0; }
 
 /* Tipografia (fluid) */
@@ -145,7 +144,7 @@ header{
 .desktop-nav{ display:none; }
 .mobile-nav{ display:block; }
 
-/* Mobile menu (details) */
+/* Mobile menu */
 .menu{ position:relative; }
 .menu > summary{
   cursor:pointer;
@@ -222,86 +221,71 @@ header{
   border-radius:12px;
 }
 
-/* ==========================
-   Desktop nav (FORZATO)
-========================== */
+/* Desktop nav (forzato) */
 @media (min-width: 861px){
   .desktop-nav{ display:block !important; }
   .mobile-nav{ display:none !important; }
 
-  /* FORZA orizzontale + niente pallini */
   .desktop-nav ul{
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 18px !important;
+    list-style:none !important;
+    margin:0 !important;
+    padding:0 !important;
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    gap:18px !important;
   }
-
-  .desktop-nav li{
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+  .desktop-nav li{ list-style:none !important; }
 
   .desktop-nav a{
-    display: inline-flex !important;
-    align-items: center !important;
-    padding: 8px 10px !important;
-    border-radius: 10px !important;
-    text-decoration: none !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    padding:8px 10px !important;
+    border-radius:10px !important;
+    text-decoration:none !important;
   }
-
   .desktop-nav a:hover{
-    background: rgba(255,255,255,.6) !important;
-    text-decoration: none !important;
+    background:rgba(255,255,255,.6) !important;
+    text-decoration:none !important;
   }
 
-  /* Dropdown tecniche desktop */
-  .desktop-nav details.submenu{ position: relative !important; }
-
+  .desktop-nav details.submenu{ position:relative !important; }
   .desktop-nav details.submenu > summary{
-    cursor: pointer !important;
-    list-style: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 8px 10px !important;
-    border-radius: 10px !important;
-    font-weight: 650 !important;
+    cursor:pointer !important;
+    list-style:none !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    gap:6px !important;
+    padding:8px 10px !important;
+    border-radius:10px !important;
+    font-weight:650 !important;
   }
   .desktop-nav details.submenu > summary::-webkit-details-marker{ display:none; }
-  .desktop-nav details.submenu > summary:hover{
-    background: rgba(255,255,255,.6) !important;
-  }
+  .desktop-nav details.submenu > summary:hover{ background:rgba(255,255,255,.6) !important; }
 
   .desktop-nav details.submenu .submenu-links{
-    position: absolute !important;
-    top: 44px !important;
-    left: 0 !important;
-    width: 220px !important;
-    background: var(--card) !important;
-    border: 1px solid var(--line) !important;
-    border-radius: 12px !important;
+    position:absolute !important;
+    top:44px !important;
+    left:0 !important;
+    width:220px !important;
+    background:var(--card) !important;
+    border:1px solid var(--line) !important;
+    border-radius:12px !important;
     box-shadow: var(--shadow) !important;
-    padding: 8px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 6px !important;
-    z-index: 100 !important;
+    padding:8px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:6px !important;
+    z-index:100 !important;
   }
-
   .desktop-nav details.submenu .submenu-links a{
-    padding: 10px 10px !important;
-    border-radius: 10px !important;
-    justify-content: flex-start !important;
+    padding:10px 10px !important;
+    border-radius:10px !important;
+    justify-content:flex-start !important;
   }
-
   .desktop-nav details.submenu .submenu-links a:hover{
-    background: rgba(244,247,248,1) !important;
-    text-decoration: none !important;
+    background:rgba(244,247,248,1) !important;
+    text-decoration:none !important;
   }
 }
 
@@ -332,6 +316,44 @@ header{
 }
 
 /* ==========================
+   HERO SLIDER
+========================== */
+.hero-slider{
+  position:relative;
+  overflow:hidden;
+  padding:0;                 /* niente padding nella card */
+  min-height:260px;
+}
+.hero-slider .slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition: opacity 1s ease-in-out;
+  border-radius: var(--radius);
+}
+.hero-slider .slide.active{ opacity:1; }
+
+.hero-slider .slider-fallback{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:18px;
+  color:var(--muted);
+  font-weight:650;
+  background:linear-gradient(180deg, #ffffff, #f8fafc);
+  border-radius: var(--radius);
+}
+
+@media (max-width: 860px){
+  .hero-slider{ min-height:220px; }
+}
+
+/* ==========================
    Griglie contenuti
 ========================== */
 .grid-3{
@@ -350,12 +372,9 @@ header{
   .grid{ grid-template-columns: 1fr; }
 }
 
-/* ==========================
-   Card cliccabili + "Scopri di più"
-========================== */
+/* Card cliccabili + "Scopri di più" */
 .technique-link{ display:block; text-decoration:none; }
 .technique-link:hover{ text-decoration:none; }
-
 .more{
   display:inline-block;
   margin-top:12px;
@@ -364,9 +383,7 @@ header{
 }
 #chi-sono .more{ margin-top:14px; }
 
-/* ==========================
-   Pills + actions
-========================== */
+/* Pills + actions */
 .pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
 .pill{
   display:inline-block;
@@ -385,9 +402,7 @@ header{
   align-items:center;
 }
 
-/* ==========================
-   Form contatti
-========================== */
+/* Form contatti */
 form{ display:grid; gap:10px; }
 input, textarea{
   width:100%;
@@ -398,49 +413,16 @@ input, textarea{
   background:white;
 }
 textarea{ min-height:120px; resize:vertical; }
-
 .fineprint{
   color:var(--muted);
   font-size:13px;
   line-height:1.5;
 }
 
-/* ==========================
-   Footer
-========================== */
+/* Footer */
 footer{
   padding:26px 0 40px;
   color:var(--muted);
   font-size:13px;
-}
-/* ==========================
-   HERO SLIDER (Home)
-========================== */
-.hero-slider{
-  position: relative;
-  overflow: hidden;
-  min-height: 260px;
-  padding: 0;
-}
-
-.hero-slider img{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  border-radius: var(--radius);
-}
-
-.hero-slider img.active{
-  opacity: 1;
-}
-
-@media (max-width: 860px){
-  .hero-slider{
-    min-height: 220px;
-  }
 }
 
