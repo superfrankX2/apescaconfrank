@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <header>
+ <header>
   <div class="container">
     <div class="nav">
       <a class="brand" href="#top">
@@ -18,7 +18,31 @@
         <div>apescaconfrank</div>
       </a>
 
-      <details class="menu">
+      <!-- DESKTOP NAV (sempre visibile) -->
+      <nav class="desktop-nav" aria-label="Menu principale desktop">
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="/chi-sono.html">Chi sono</a></li>
+
+          <li>
+            <details class="submenu">
+              <summary>Tecniche di pesca ▾</summary>
+              <div class="submenu-links" role="menu" aria-label="Tecniche di pesca">
+                <a href="/surfcasting.html">Surfcasting</a>
+                <a href="/beach-ledgering.html">Beach ledgering</a>
+                <a href="/spinning.html">Spinning</a>
+              </div>
+            </details>
+          </li>
+
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contatti">Contatti</a></li>
+          <li><a class="cta" href="#contatti">Contattami</a></li>
+        </ul>
+      </nav>
+
+      <!-- MOBILE NAV (bottone Menu) -->
+      <details class="menu mobile-nav">
         <summary>Menu ▾</summary>
 
         <div class="menu-panel">
@@ -37,6 +61,8 @@
               </details>
             </li>
 
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contatti">Contatti</a></li>
             <li><a class="cta" href="#contatti">Contattami</a></li>
           </ul>
         </div>
@@ -44,6 +70,7 @@
     </div>
   </div>
 </header>
+
 
 
   <main id="top">
