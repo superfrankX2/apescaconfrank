@@ -10,7 +10,6 @@
   --shadow:0 10px 30px rgba(0,0,0,.08);
   --radius:14px;
 
-  /* Spaziature "responsive" */
   --pad: clamp(16px, 3.6vw, 34px);
   --section: clamp(34px, 6vw, 60px);
 }
@@ -37,7 +36,6 @@ a:hover{ text-decoration:underline; }
   margin:0 auto;
 }
 
-/* Sezioni */
 section{ padding: var(--section) 0; }
 
 /* Tipografia (fluid) */
@@ -104,9 +102,7 @@ p{ margin:0; line-height:1.7; }
 .ghost:hover{ text-decoration:none; background:rgba(255,255,255,.7); }
 
 /* ==========================
-   Header + Nav (Piano B)
-   - Desktop: menu lineare
-   - Mobile: bottone Menu + pannello
+   Header + Nav
 ========================== */
 header{
   position:sticky;
@@ -201,7 +197,7 @@ header{
   text-decoration:none;
 }
 
-/* Submenu (Tecniche) - mobile dentro pannello */
+/* Submenu mobile */
 .menu-panel .submenu{ margin-top:6px; border-top:1px solid var(--line); padding-top:8px; }
 .menu-panel .submenu summary{
   cursor:pointer;
@@ -226,70 +222,86 @@ header{
   border-radius:12px;
 }
 
-/* Desktop: menu lineare */
+/* ==========================
+   Desktop nav (FORZATO)
+========================== */
 @media (min-width: 861px){
-  .desktop-nav{ display:block; }
-  .mobile-nav{ display:none; }
+  .desktop-nav{ display:block !important; }
+  .mobile-nav{ display:none !important; }
 
+  /* FORZA orizzontale + niente pallini */
   .desktop-nav ul{
-    list-style:none;
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin:0;
-    padding:0;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 18px !important;
+  }
+
+  .desktop-nav li{
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .desktop-nav a{
-    display:inline-flex;
-    align-items:center;
-    padding:8px 10px;
-    border-radius:10px;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    text-decoration: none !important;
   }
 
   .desktop-nav a:hover{
-    background:rgba(255,255,255,.6);
-    text-decoration:none;
+    background: rgba(255,255,255,.6) !important;
+    text-decoration: none !important;
   }
 
-  /* Dropdown tecniche (desktop) */
-  .desktop-nav details.submenu{ position:relative; }
+  /* Dropdown tecniche desktop */
+  .desktop-nav details.submenu{ position: relative !important; }
+
   .desktop-nav details.submenu > summary{
-    cursor:pointer;
-    list-style:none;
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:8px 10px;
-    border-radius:10px;
-    font-weight:650;
+    cursor: pointer !important;
+    list-style: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    font-weight: 650 !important;
   }
   .desktop-nav details.submenu > summary::-webkit-details-marker{ display:none; }
-  .desktop-nav details.submenu > summary:hover{ background:rgba(255,255,255,.6); }
+  .desktop-nav details.submenu > summary:hover{
+    background: rgba(255,255,255,.6) !important;
+  }
 
   .desktop-nav details.submenu .submenu-links{
-    position:absolute;
-    top:44px;
-    left:0;
-    width:220px;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:12px;
-    box-shadow: var(--shadow);
-    padding:8px;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+    position: absolute !important;
+    top: 44px !important;
+    left: 0 !important;
+    width: 220px !important;
+    background: var(--card) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow) !important;
+    padding: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    z-index: 100 !important;
   }
 
   .desktop-nav details.submenu .submenu-links a{
-    padding:10px 10px;
-    border-radius:10px;
+    padding: 10px 10px !important;
+    border-radius: 10px !important;
+    justify-content: flex-start !important;
   }
 
   .desktop-nav details.submenu .submenu-links a:hover{
-    background:rgba(244,247,248,1);
-    text-decoration:none;
+    background: rgba(244,247,248,1) !important;
+    text-decoration: none !important;
   }
 }
 
@@ -343,14 +355,13 @@ header{
 ========================== */
 .technique-link{ display:block; text-decoration:none; }
 .technique-link:hover{ text-decoration:none; }
+
 .more{
   display:inline-block;
   margin-top:12px;
   font-weight:750;
   color: var(--text);
 }
-
-/* Extra: Chi sono in home, separazione garantita */
 #chi-sono .more{ margin-top:14px; }
 
 /* ==========================
