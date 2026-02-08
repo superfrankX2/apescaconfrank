@@ -413,4 +413,34 @@ footer{
   color:var(--muted);
   font-size:13px;
 }
+/* ==========================
+   HERO SLIDER (Home)
+========================== */
+.hero-slider{
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  padding: 0;
+}
+
+.hero-slider img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  border-radius: var(--radius);
+}
+
+.hero-slider img.active{
+  opacity: 1;
+}
+
+@media (max-width: 860px){
+  .hero-slider{
+    min-height: 220px;
+  }
+}
 
