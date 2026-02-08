@@ -238,6 +238,8 @@ header{
 /* Desktop: nav sempre visibile, niente menu-button */
 @media (min-width: 861px){
   .menu > summary{ display:none; }
+  details.menu .menu-panel{ display:block; }
+  details.menu[open] .menu-panel{ display:block; }
   .menu-panel{
     position:static;
     width:auto;
