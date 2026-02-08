@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A pesca con Frank</title>
   <meta name="description" content="Supporto pesca e guida in Liguria: surfcasting, beach ledgering, rockfishing e spinning. Attrezzatura inclusa e aperitivo. Contattami." />
-  <link rel="stylesheet" href="/styles.css?v=2" />
+  <link rel="stylesheet" href="/styles.css?v=3" />
 </head>
 
 <body>
@@ -17,7 +17,7 @@
           <div>apescaconfrank</div>
         </a>
 
-        <!-- DESKTOP NAV (lineare orizzontale) -->
+        <!-- DESKTOP NAV -->
         <nav class="desktop-nav" aria-label="Menu principale desktop">
           <ul>
             <li><a href="#top">Home</a></li>
@@ -39,7 +39,7 @@
           </ul>
         </nav>
 
-        <!-- MOBILE NAV (bottone Menu) -->
+        <!-- MOBILE NAV -->
         <details class="menu mobile-nav">
           <summary>Menu ▾</summary>
 
@@ -85,15 +85,17 @@
             </div>
           </div>
 
-          <div class="card hero-slider">
-  <img src="/images/hero1.jpg" class="slide active" alt="Pesca in Liguria con Frank">
-  <img src="/images/hero2.jpg" class="slide" alt="Uscita di pesca in mare">
-  <img src="/images/hero3.jpg" class="slide" alt="Pesca all'alba">
-  <img src="/images/hero4.jpg" class="slide" alt="Pesca dalla spiaggia">
-  <!-- quinta opzionale -->
-  <!-- <img src="/images/hero-5.jpg" class="slide" alt="Pesca in Liguria"> -->
-</div>
+          <!-- SLIDER FOTO -->
+          <div class="card hero-slider" aria-label="Foto di pesca">
+            <img src="/images/hero1.jpg" class="slide active" alt="Foto di pesca 1">
+            <img src="/images/hero2.jpg" class="slide" alt="Foto di pesca 2">
+            <img src="/images/hero3.jpg" class="slide" alt="Foto di pesca 3">
+            <img src="/images/hero4.jpg" class="slide" alt="Foto di pesca 4">
 
+            <!-- fallback visivo se le immagini non caricano -->
+            <div class="slider-fallback">
+              Le foto non risultano caricate. Controlla nomi file in /images.
+            </div>
           </div>
         </div>
       </div>
@@ -211,19 +213,24 @@
   </main>
 
   <script>
-  // aggiorna anno footer
-  document.getElementById("year").textContent = new Date().getFullYear();
+    // anno
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  // HERO SLIDER automatico
-  const slides = document.querySelectorAll(".hero-slider .slide");
-  let currentSlide = 0;
+    // slider (solo se trova le immagini)
+    const slides = document.querySelectorAll(".hero-slider .slide");
+    const fallback = document.querySelector(".hero-slider .slider-fallback");
 
-  setInterval(() => {
-    slides[currentSlide].classList.remove("active");
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add("active");
-  }, 3000);
-</script>
+    if (slides.length > 0) {
+      let currentSlide = 0;
+      // nascondo fallback se ho slide
+      if (fallback) fallback.style.display = "none";
 
+      setInterval(() => {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }, 3000);
+    }
+  </script>
 </body>
 </html>
