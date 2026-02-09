@@ -6,29 +6,27 @@ fetch("header.html")
 
     mount.innerHTML = html;
 
-    // ===== Evidenzia pagina attiva =====
+    /* ==========================
+       PAGINA ATTIVA
+    ========================== */
+
     const normalize = (p) => {
       if (!p) return "/";
-      // toglie query/hash, lascia solo path
       p = p.split("?")[0].split("#")[0];
-      // se finisce con /index.html -> /
-      if (p.endsWith("/index.html")) p = p.replace("/index.html", "/");
-      // assicura leading slash
+      if (p.endsWith("/index.html")) p = "/";
       if (!p.startsWith("/")) p = "/" + p;
       return p;
     };
 
     const currentPath = normalize(window.location.pathname);
+    const links = mount.querySelectorAll("a[href]");
 
-    // tutti i link dentro header (desktop + mobile)
-    const links = mount.querySelectorAll('a[href]');
+    let isTechniquePage = false;
+
     links.forEach((a) => {
-      const href = a.getAttribute("href") || "";
+      const href = a.getAttribute("href");
+      if (!href || href.startsWith("#") || href.startsWith("mailto:")) return;
 
-      // ignora mailto / tel / ancore pure
-      if (href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("#")) return;
-
-      // costruisce path assoluto da href (gestisce /, /pagina.html, pagina.html)
       let linkPath;
       try {
         linkPath = normalize(new URL(href, window.location.origin).pathname);
@@ -36,18 +34,32 @@ fetch("header.html")
         return;
       }
 
-      // regola: Home è "/" (o "/index.html" normalizzato)
-      const isHomeLink = linkPath === "/";
+      if (linkPath === currentPath) {
+        a.classList.add("is-active");
 
-      // match: stessa pagina
-      const isMatch =
-        linkPath === currentPath ||
-        (isHomeLink && currentPath === "/");
-
-      if (isMatch) a.classList.add("is-active");
+        // se è una tecnica, segniamo il flag
+        if (
+          linkPath === "/surfcasting.html" ||
+          linkPath === "/beach-ledgering.html" ||
+          linkPath === "/spinning.html"
+        ) {
+          isTechniquePage = true;
+        }
+      }
     });
 
-    // ===== Header che si compatta on scroll (pro) =====
+    /* ==========================
+       ATTIVA "TECNICHE DI PESCA"
+    ========================== */
+    if (isTechniquePage) {
+      mount
+        .querySelectorAll(".submenu > summary")
+        .forEach((summary) => summary.classList.add("is-active"));
+    }
+
+    /* ==========================
+       HEADER SHRINK ON SCROLL
+    ========================== */
     const header = mount.querySelector("header");
     if (header) {
       const onScroll = () => {
@@ -61,4 +73,5 @@ fetch("header.html")
   .catch(() => {
     console.warn("Header non caricato. Controlla header.html e il percorso.");
   });
+
 
