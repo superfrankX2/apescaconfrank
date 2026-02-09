@@ -243,6 +243,18 @@ footer{
   padding:26px 0 40px;
   color:var(--muted);
   font-size:13px;
+}/* Link attivo nel menu */
+header a.is-active{
+  text-decoration: none !important;
+  background: rgba(255,255,255,.85);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 18px rgba(0,0,0,.06);
+}
+
+/* Mobile menu: evidenzia voce attiva anche nel pannello */
+.menu-panel a.is-active{
+  background: rgba(244,247,248,1);
+  border: 1px solid var(--line);
 }
 
 
