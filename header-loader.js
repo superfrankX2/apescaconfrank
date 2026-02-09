@@ -6,10 +6,6 @@ fetch("header.html")
 
     mount.innerHTML = html;
 
-    /* ==========================
-       PAGINA ATTIVA
-    ========================== */
-
     const normalize = (p) => {
       if (!p) return "/";
       p = p.split("?")[0].split("#")[0];
@@ -20,24 +16,19 @@ fetch("header.html")
 
     const currentPath = normalize(window.location.pathname);
     const links = mount.querySelectorAll("a[href]");
-
     let isTechniquePage = false;
 
     links.forEach((a) => {
       const href = a.getAttribute("href");
-      if (!href || href.startsWith("#") || href.startsWith("mailto:")) return;
+      if (!href || href.startsWith("#") || href.startsWith("mailto")) return;
 
-      let linkPath;
-      try {
-        linkPath = normalize(new URL(href, window.location.origin).pathname);
-      } catch {
-        return;
-      }
+      const linkPath = normalize(
+        new URL(href, window.location.origin).pathname
+      );
 
       if (linkPath === currentPath) {
         a.classList.add("is-active");
 
-        // se è una tecnica, segniamo il flag
         if (
           linkPath === "/surfcasting.html" ||
           linkPath === "/beach-ledgering.html" ||
@@ -48,30 +39,26 @@ fetch("header.html")
       }
     });
 
-    /* ==========================
-       ATTIVA "TECNICHE DI PESCA"
-    ========================== */
+    /* ===== evidenzia TUTTO il blocco Tecniche ===== */
     if (isTechniquePage) {
       mount
-        .querySelectorAll(".submenu > summary")
-        .forEach((summary) => summary.classList.add("is-active"));
+        .querySelectorAll("details.submenu, .submenu details")
+        .forEach((d) => d.classList.add("is-active"));
     }
 
-    /* ==========================
-       HEADER SHRINK ON SCROLL
-    ========================== */
+    /* ===== shrink header ===== */
     const header = mount.querySelector("header");
     if (header) {
       const onScroll = () => {
-        if (window.scrollY > 10) header.classList.add("header--compact");
-        else header.classList.remove("header--compact");
+        header.classList.toggle("header--compact", window.scrollY > 10);
       };
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
     }
   })
   .catch(() => {
-    console.warn("Header non caricato. Controlla header.html e il percorso.");
+    console.warn("Header non caricato.");
   });
+
 
 
