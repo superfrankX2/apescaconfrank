@@ -10,41 +10,7 @@
 </head>
 
 <body>
-  <header>
-  <div class="container">
-    <div class="nav">
-      <a class="brand" href="/index.html">
-        <div class="logo">🎣</div>
-        <div>A pesca con Frank</div>
-      </a>
-
-      <details class="menu">
-        <summary>Menu ▾</summary>
-
-        <div class="menu-panel">
-          <ul>
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/chi-sono.html">Chi sono</a></li>
-
-            <li class="submenu">
-              <details>
-                <summary>Tecniche di pesca ▾</summary>
-                <div class="submenu-links" role="menu" aria-label="Tecniche di pesca">
-                  <a href="/surfcasting.html">Surfcasting</a>
-                  <a href="/beach-ledgering.html">Beach ledgering</a>
-                  <a href="/spinning.html">Spinning</a>
-                </div>
-              </details>
-            </li>
-
-            <li><a class="cta" href="/index.html#contatti">Contattami</a></li>
-          </ul>
-        </div>
-      </details>
-    </div>
-  </div>
-</header>
-
+  <div id="site-header"></div>
 
   <main class="page">
     <div class="container">
@@ -111,7 +77,7 @@
       </footer>
     </div>
   </main>
-
+<script src="header-loader.js"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
