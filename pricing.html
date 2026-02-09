@@ -5,17 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pricing | A pesca con Frank</title>
   <meta name="description" content="Pricing e informazioni sulle uscite di pesca con Andrea (Frank) in Liguria. Approccio chiaro, senza marketing aggressivo." />
-  <link rel="stylesheet" href="/styles.css?v=2" />
+  <link rel="stylesheet" href="/styles.css?v=9999" />
 </head>
 
-<body>
-  <div id="site-header"></div>
+<body style="padding-top:70px;">
+  <!-- HEADER CONDIVISO (FORZATO FIXED) -->
+  <div id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:99999;"></div>
 
   <main class="page">
     <section>
       <div class="container">
         <div class="card">
           <h1>Pricing</h1>
+
           <p class="section-sub">
             Qui metteremo le informazioni nel modo giusto, coerente con il tono del sito.
             Niente marketing aggressivo, solo chiarezza.
@@ -26,22 +28,24 @@
           </div>
 
           <div class="actions" style="margin-top:18px;">
-            <a class="cta" href="/index.html#contatti">Contattami</a>
-            <a class="ghost" href="/index.html">Torna alla Home</a>
+            <a class="cta" href="/#contatti">Contattami</a>
+            <a class="ghost" href="/">Torna alla Home</a>
           </div>
         </div>
       </div>
     </section>
-
-    <footer>
-      <div class="container">
-        © <span id="year"></span> A pesca con Frank — apescaconfrank.it
-      </div>
-    </footer>
   </main>
-<script src="header-loader.js"></script>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> A pesca con Frank — apescaconfrank.it
+    </div>
+  </footer>
+
+  <script src="/header-loader.js?v=9999"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
+
