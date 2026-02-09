@@ -6,9 +6,11 @@
   <title>A pesca con Frank</title>
   <meta name="description" content="Supporto pesca e guida in Liguria: surfcasting, beach ledgering, rockfishing e spinning. Attrezzatura inclusa e aperitivo. Contattami." />
   <link rel="stylesheet" href="styles.css?v=9999" />
+  <script src="header-loader.js" defer></script>
 </head>
 
 <body>
+  <!-- Header condiviso (caricato via JS da header.html) -->
   <div id="site-header"></div>
 
   <main id="top">
@@ -154,7 +156,7 @@
       </div>
     </footer>
   </main>
-<script src="header-loader.js"></script>
+
   <script>
     // anno
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -165,7 +167,6 @@
 
     if (slides.length > 0) {
       let currentSlide = 0;
-      // nascondo fallback se ho slide
       if (fallback) fallback.style.display = "none";
 
       setInterval(() => {
@@ -177,3 +178,4 @@
   </script>
 </body>
 </html>
+
