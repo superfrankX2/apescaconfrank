@@ -92,7 +92,7 @@
     if (!host) return;
 
     try {
-      const res = await fetch(HEADER_URL, { cache: "no-cache" });
+      const res = await fetch(`${HEADER_URL}?v=20260209`, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status} loading ${HEADER_URL}`);
 
       const html = await res.text();
