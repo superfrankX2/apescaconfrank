@@ -107,6 +107,7 @@ header{
   position:sticky;
   top:0;
   z-index:50;
+  -webkit-position: sticky;
   background:rgba(244,247,248,.92);
   backdrop-filter: blur(10px);
   border-bottom:1px solid var(--line);
@@ -116,7 +117,7 @@ header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:12px 0;
+  padding:8px 0;
   gap:12px;
 }
 
@@ -152,12 +153,12 @@ header{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  padding:10px 12px;
+  padding:8px 10px;
   border-radius:12px;
   border:1px solid var(--line);
   background:rgba(255,255,255,.65);
   font-weight:650;
-  min-height:44px;
+  min-height:38px;
 }
 .menu > summary::-webkit-details-marker{ display:none; }
 .menu > summary:hover{ background:rgba(255,255,255,.85); }
@@ -240,7 +241,7 @@ header{
   .desktop-nav a{
     display:inline-flex !important;
     align-items:center !important;
-    padding:8px 10px !important;
+    padding:6px 8px !important;
     border-radius:10px !important;
     text-decoration:none !important;
   }
@@ -279,7 +280,7 @@ header{
     z-index:100 !important;
   }
   .desktop-nav details.submenu .submenu-links a{
-    padding:10px 10px !important;
+    padding:6px 8px !important;
     border-radius:10px !important;
     justify-content:flex-start !important;
   }
