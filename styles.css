@@ -55,6 +55,7 @@ p{ margin:0; line-height:1.7; }
   padding: var(--pad);
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
 .card.mini{ 
@@ -404,7 +405,7 @@ the class designed for desktop navigation
   justify-content: center;
 }
 
-actions {
+.actions {
  display: flex;
  gap: 10px;
  margin-top: 20px;
@@ -492,6 +493,8 @@ textarea {
   transition: box-shadow 0.2s ease, transform 0.2s ease;
   cursor: pointer;
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .technique-link:hover {
@@ -500,15 +503,27 @@ textarea {
   text-decoration: none;
 }
 
+.technique-link:hover * {
+  text-decoration: none;
+}
+
+.technique-link p {
+  flex: 1;
+}
+
 .technique-link .more {
   color: var(--text);
   font-weight: 600;
-  margin-top: 10px;
-  transition: margin-top 0.2s ease;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 10px;
+  transition: color 0.2s ease;
 }
 
 .technique-link:hover .more {
-  margin-top: 15px;
+  color: #111827;
 }
 
 .muted {
