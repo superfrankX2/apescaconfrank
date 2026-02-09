@@ -1,39 +1,116 @@
-// Improved Header Loader with Error Handling and Optimized Scroll Behavior
+// header-loader.js
+// Carica header.html dentro #site-header + evidenzia link attivo + hide/show su scroll
 
-class HeaderLoader {
-    constructor(headerElement) {
-        this.headerElement = headerElement;
-        this.lastScrollY = window.scrollY;
-        this.init();
-    }
+(function () {
+  const HOST_ID = "site-header";
+  const HEADER_URL = "/header.html";
 
-    init() {
-        window.addEventListener('scroll', this.onScroll.bind(this));
-    }
+  function normalizePath(pathname) {
+    // Normalizza: "/" oppure "/surfcasting.html"
+    if (!pathname || pathname === "") return "/";
+    if (pathname.endsWith("/")) return pathname;
+    return pathname;
+  }
 
-    onScroll() {
-        try {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > this.lastScrollY) {
-                this.hideHeader();
-            } else {
-                this.showHeader();
-            }
-            this.lastScrollY = currentScrollY;
-        } catch (error) {
-            console.error('Error in onScroll:', error);
+  function setActiveNav(container) {
+    const current = normalizePath(window.location.pathname);
+
+    // Marca active tutti i link che matchano pathname
+    const links = container.querySelectorAll('a[href]');
+    links.forEach(a => {
+      const href = a.getAttribute("href");
+      if (!href) return;
+
+      // Considera solo link interni (iniziano con "/")
+      if (!href.startsWith("/")) return;
+
+      // Normalizza href (home può essere "/" o "/index.html" non lo usi, ma ok)
+      const hrefNorm = normalizePath(href);
+
+      if (hrefNorm === current) {
+        a.classList.add("is-active");
+
+        // Se è dentro un <details class="submenu"> aprilo e marca active
+        const submenu = a.closest("details.submenu");
+        if (submenu) {
+          submenu.classList.add("is-active");
+          submenu.open = true;
         }
+
+        // Se è dentro submenu mobile (details dentro li.submenu)
+        const mobileSub = a.closest("li.submenu")?.querySelector("details");
+        if (mobileSub) {
+          mobileSub.open = true;
+        }
+      }
+    });
+  }
+
+  function initHideShow(siteHeader) {
+    let lastY = window.scrollY || 0;
+    let ticking = false;
+
+    function onScroll() {
+      const y = window.scrollY || 0;
+
+      // evita micro-jitter
+      const delta = y - lastY;
+      if (Math.abs(delta) < 6) {
+        lastY = y;
+        ticking = false;
+        return;
+      }
+
+      // se scendi: nascondi, se sali: mostra
+      if (y > lastY) {
+        siteHeader.style.transform = "translateY(-100%)";
+      } else {
+        siteHeader.style.transform = "translateY(0)";
+      }
+
+      lastY = y;
+      ticking = false;
     }
 
-    hideHeader() {
-        this.headerElement.style.transform = 'translateY(-100%)';
-    }
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(onScroll);
+      }
+    }, { passive: true });
+  }
 
-    showHeader() {
-        this.headerElement.style.transform = 'translateY(0)';
-    }
-}
+  async function loadHeader() {
+    const host = document.getElementById(HOST_ID);
+    if (!host) return;
 
-// Usage:
-const header = document.querySelector('header');
-const headerLoader = new HeaderLoader(header);
+    try {
+      const res = await fetch(HEADER_URL, { cache: "no-cache" });
+      if (!res.ok) throw new Error(`HTTP ${res.status} loading ${HEADER_URL}`);
+
+      const html = await res.text();
+      host.innerHTML = html;
+
+      // Ora che esiste nel DOM:
+      setActiveNav(host);
+      initHideShow(host);
+    } catch (err) {
+      console.error("Header load failed:", err);
+      // fallback minimale (così non resti senza nav)
+      host.innerHTML = `
+        <header>
+          <div class="container">
+            <div class="nav">
+              <a class="brand" href="/"><div class="logo">🎣</div><div>apescaconfrank</div></a>
+              <a class="cta" href="/#contatti">Contattami</a>
+            </div>
+          </div>
+        </header>
+      `;
+      initHideShow(host);
+    }
+  }
+
+  // Avvia
+  document.addEventListener("DOMContentLoaded", loadHeader);
+})();
