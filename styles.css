@@ -27,6 +27,8 @@ body{
   color:var(--text);
   line-height:1.55;
   padding-top: var(--header-h);
+  overflow-x: hidden;
+
 }
 
 img, svg, video{ max-width:100%; height:auto; display:block; }
@@ -34,8 +36,8 @@ a{ color:inherit; text-decoration:none; }
 a:hover{ text-decoration:underline; }
 
 .container{
-  width:min(1100px, 92vw);
-  margin:0 auto;
+  width: min(1100px, 100%);
+  margin: 0 auto;
   padding: 0 15px;
 }
 section{ padding: var(--section) 0; }
@@ -201,13 +203,27 @@ header{
 .menu-panel ul { list-style: none; padding: 0; margin: 0; }
 .menu-panel li { margin: 0; }
 
-.menu-panel a{
-  display:block;
+.menu-panel a:not(.cta){
+  display: block;
   padding: 8px 12px;
   color: var(--text);
   text-decoration: none;
   border-radius: 8px;
   transition: background-color 0.2s ease;
+}
+
+/* CTA nel menu mobile: deve restare bottone scuro con testo bianco */
+.menu-panel a.cta{
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu-panel a.cta:hover{
+  opacity: .92;
+  background: var(--text);
 }
 .menu-panel a:hover{
   background-color: rgba(255, 255, 255, 0.6);
