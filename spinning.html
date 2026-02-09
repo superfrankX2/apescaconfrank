@@ -5,81 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spinning | A pesca con Frank</title>
   <meta name="description" content="Spinning in Liguria con Andrea (Frank): pesca ai predatori, dinamica e tecnica. Spot, fondale, lanci e movimento. Uscite guidate per imparare e migliorare." />
-  <link rel="stylesheet" href="/styles.css" />
-  
+  <link rel="stylesheet" href="/styles.css?v=9999" />
 </head>
 
-<body>
-  <div id="site-header"></div>
+<body style="padding-top:70px;">
+  <!-- HEADER CONDIVISO (FORZATO FIXED) -->
+  <div id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:99999;"></div>
 
   <main class="page">
-    <div class="container">
-      <div class="card">
-        <h1>Spinning</h1>
-        <p class="lead">
-          Lo spinning è una pesca dinamica, dedicata alla ricerca dei predatori e basata sul movimento continuo dell’esca lungo la costa.
-          Qui trovi una spiegazione chiara e come la viviamo insieme sul campo.
-        </p>
+    <section>
+      <div class="container">
+        <div class="card">
+          <h1>Spinning</h1>
 
-        <div class="photo-placeholder">
-          QUI METTEREMO UNA FOTO DI SPINNING (scogliera / costa / esche / alba o tramonto)
-        </div>
+          <p class="lead">
+            Lo spinning è una pesca dinamica, dedicata alla ricerca dei predatori e basata sul movimento continuo dell’esca lungo la costa.
+            Qui trovi una spiegazione chiara e come la viviamo insieme sul campo.
+          </p>
 
-        <div class="pillrow" aria-label="Punti chiave">
-          <span class="pill">Pesca ai predatori</span>
-          <span class="pill">Dinamica &amp; movimento</span>
-          <span class="pill">Spot &amp; fondale</span>
-          <span class="pill">Uscita guidata</span>
-        </div>
-
-        <div class="grid">
-          <div class="card mini">
-            <h2>Cos’è (in poche parole)</h2>
-            <p>
-              Lo spinning è una pesca dinamica e coinvolgente, dedicata alla ricerca dei predatori e basata sul movimento continuo dell’esca lungo la costa e tra le strutture naturali.
-              È adatta sia a chi si avvicina per la prima volta a una pesca più attiva, sia a chi ha già esperienza e vuole affinare tecnica e capacità di osservazione.
-            </p>
+          <div class="photo-placeholder">
+            QUI METTEREMO UNA FOTO DI SPINNING (scogliera / costa / esche / alba o tramonto)
           </div>
 
-          <div class="card mini">
-            <h2>Per chi è adatto</h2>
-            <p>
-              Se ti piace una pesca attiva, dove contano osservazione e reattività, lo spinning è perfetto.
-              È ottimo per imparare a muoversi sullo spot e capire quando insistere, cambiare approccio o cambiare zona.
-            </p>
+          <div class="pillrow" aria-label="Punti chiave">
+            <span class="pill">Pesca ai predatori</span>
+            <span class="pill">Dinamica &amp; movimento</span>
+            <span class="pill">Spot &amp; fondale</span>
+            <span class="pill">Uscita guidata</span>
           </div>
 
-          <div class="card mini">
-            <h2>Cosa facciamo durante l’uscita</h2>
-            <p>
-              Ci concentriamo sull’osservare l’ambiente, leggere il fondale e capire come muoversi e lanciare in base alle condizioni del mare.
-              L’obiettivo è farti vivere una giornata concreta, con spiegazioni chiare e senza stress.
-            </p>
+          <div class="grid">
+            <div class="card mini">
+              <h2>Cos’è (in poche parole)</h2>
+              <p>
+                Lo spinning è una pesca dinamica e coinvolgente, dedicata alla ricerca dei predatori e basata sul movimento continuo dell’esca lungo la costa e tra le strutture naturali.
+                È adatta sia a chi si avvicina per la prima volta a una pesca più attiva, sia a chi ha già esperienza e vuole affinare tecnica e capacità di osservazione.
+              </p>
+            </div>
+
+            <div class="card mini">
+              <h2>Per chi è adatto</h2>
+              <p>
+                Se ti piace una pesca attiva, dove contano osservazione e reattività, lo spinning è perfetto.
+                È ottimo per imparare a muoversi sullo spot e capire quando insistere, cambiare approccio o cambiare zona.
+              </p>
+            </div>
+
+            <div class="card mini">
+              <h2>Cosa facciamo durante l’uscita</h2>
+              <p>
+                Ci concentriamo sull’osservare l’ambiente, leggere il fondale e capire come muoversi e lanciare in base alle condizioni del mare.
+                L’obiettivo è farti vivere una giornata concreta, con spiegazioni chiare e senza stress.
+              </p>
+            </div>
+
+            <div class="card mini">
+              <h2>Periodo, condizioni e prede</h2>
+              <p class="muted">
+                Qui inseriremo (con calma) periodi, condizioni tipiche e prede più frequenti dello spinning in Liguria,
+                con indicazioni realistiche e utili, senza promesse.
+              </p>
+            </div>
           </div>
 
-          <div class="card mini">
-            <h2>Periodo, condizioni e prede</h2>
-            <p class="muted">
-              Qui inseriremo (con calma) periodi, condizioni tipiche e prede più frequenti dello spinning in Liguria,
-              con indicazioni realistiche e utili, senza promesse.
-            </p>
+          <div class="actions">
+            <a class="cta" href="/#contatti">Contattami per organizzare la nostra uscita</a>
+            <a class="ghost" href="/#tecniche">Torna alle tecniche</a>
           </div>
-        </div>
-
-        <div class="actions">
-          <a class="cta" href="/index.html#contatti">Contattami per organizzare la nostra uscita</a>
-          <a class="ghost" href="/index.html#tecniche">Torna alle tecniche</a>
         </div>
       </div>
-
-      <footer>
-        © <span id="year"></span> A pesca con Frank — apescaconfrank.it
-      </footer>
-    </div>
+    </section>
   </main>
-<script src="header-loader.js"></script>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> A pesca con Frank — apescaconfrank.it
+    </div>
+  </footer>
+
+  <script src="/header-loader.js?v=9999"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
+
