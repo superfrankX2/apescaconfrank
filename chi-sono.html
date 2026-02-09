@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chi sono | A pesca con Frank</title>
   <meta name="description" content="Mi chiamo Andrea (Frank). Pesco da sempre: dal torrente col nonno alla Liguria di oggi. Ti accompagno a pescare con un approccio tecnico ma rilassato." />
-  <link rel="stylesheet" href="/styles.css" />
-  
+  <link rel="stylesheet" href="/styles.css?v=9999" />
 </head>
 
-<body>
-  <div id="site-header"></div>
+<body style="padding-top:70px;">
+  <!-- HEADER CONDIVISO (FORZATO FIXED QUI) -->
+  <div id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:99999;"></div>
 
   <main class="page">
     <div class="container">
@@ -69,19 +69,23 @@
         </div>
 
         <div class="actions">
-          <a class="cta" href="/index.html#contatti">Contattami per organizzare la nostra uscita</a>
-          <a class="ghost" href="/index.html#tecniche">Guarda le tecniche</a>
+          <a class="cta" href="/#contatti">Contattami per organizzare la nostra uscita</a>
+          <a class="ghost" href="/#tecniche">Guarda le tecniche</a>
         </div>
       </div>
-
-      <footer>
-        © <span id="year"></span> A pesca con Frank — apescaconfrank.it
-      </footer>
     </div>
   </main>
-<script src="header-loader.js"></script>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> A pesca con Frank — apescaconfrank.it
+    </div>
+  </footer>
+
+  <script src="/header-loader.js?v=9999"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
+
