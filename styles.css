@@ -1,4 +1,3 @@
-body { background: #ff00ff !important; }
 /* ==========================
    Base + Design tokens
 ========================== */
@@ -18,7 +17,6 @@ body { background: #ff00ff !important; }
   --header-h: 64px;         /* altezza base header (stima) */
   --header-h-compact: 54px; /* altezza in modalità "shrink" */
 }
-body { background: #ff00ff !important; }
 
 *{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
