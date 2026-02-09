@@ -17,9 +17,7 @@
 
     // Marca active tutti i link che matchano pathname
     const links = container.querySelectorAll('a[href]');
-    links.forEach(a => {
-          const links = container.querySelectorAll('a[href]');
-    links.forEach(a => {
+    links.forEach((a) => {
       const href = a.getAttribute("href");
       if (!href) return;
 
@@ -29,8 +27,7 @@
       // Considera solo link interni (iniziano con "/")
       if (!href.startsWith("/")) return;
 
-
-      // Normalizza href (home può essere "/" o "/index.html" non lo usi, ma ok)
+      // Normalizza href
       const hrefNorm = normalizePath(href);
 
       if (hrefNorm === current) {
@@ -78,12 +75,16 @@
       ticking = false;
     }
 
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(onScroll);
-      }
-    }, { passive: true });
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(onScroll);
+        }
+      },
+      { passive: true }
+    );
   }
 
   async function loadHeader() {
@@ -102,6 +103,7 @@
       initHideShow(host);
     } catch (err) {
       console.error("Header load failed:", err);
+
       // fallback minimale (così non resti senza nav)
       host.innerHTML = `
         <header>
@@ -113,6 +115,7 @@
           </div>
         </header>
       `;
+
       initHideShow(host);
     }
   }
