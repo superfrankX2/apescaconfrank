@@ -18,11 +18,17 @@
     // Marca active tutti i link che matchano pathname
     const links = container.querySelectorAll('a[href]');
     links.forEach(a => {
+          const links = container.querySelectorAll('a[href]');
+    links.forEach(a => {
       const href = a.getAttribute("href");
       if (!href) return;
 
+      // NON evidenziare il brand (apescaconfrank) come voce attiva
+      if (a.classList.contains("brand") || a.closest(".brand")) return;
+
       // Considera solo link interni (iniziano con "/")
       if (!href.startsWith("/")) return;
+
 
       // Normalizza href (home può essere "/" o "/index.html" non lo usi, ma ok)
       const hrefNorm = normalizePath(href);
