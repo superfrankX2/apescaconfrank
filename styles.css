@@ -37,6 +37,8 @@ body{
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  overflow-x: clip;
+
 }
 
 img, svg, video{ max-width:100%; height:auto; display:block; }
@@ -212,8 +214,10 @@ header{ position:relative; }
 .menu-panel{
   position:absolute;
   right:0;
-  top:52px;
-  width:min(92vw, 320px);
+  top: calc(var(--header-h) - 8px);
+  width: calc(100vw - 24px);
+  max-width: 320px;
+
   background:var(--card);
   border:1px solid var(--line);
   border-radius:16px;
@@ -221,14 +225,15 @@ header{ position:relative; }
   padding:10px;
   z-index: 1000;
 
-  /* FIX iOS: non uscire mai dal viewport */
-  max-width: calc(100vw - 24px);
-  overflow-x: hidden;
-
-  /* se lista lunga, deve scorrere */
+  /* menu lungo: deve scorrere */
   max-height: calc(100vh - var(--header-h) - 24px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+/* 🔥 FIX iOS: se il menu è chiuso, il pannello non deve "sforare" */
+details.menu:not([open]) .menu-panel{
+  display:none;
 }
 
 .menu-panel ul { list-style: none; padding: 0; margin: 0; }
@@ -243,7 +248,7 @@ header{ position:relative; }
   transition: background-color 0.2s ease;
 }
 
-.menu-panel a:hover{
+.menu-panel a:not(.cta):hover{
   background-color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
 }
@@ -253,14 +258,23 @@ header{ position:relative; }
   display: inline-flex;
   width: 100%;
   justify-content: center;
+  align-items: center;
+
+  padding: 10px 12px;
+  min-height: 44px;
+
   color: #fff !important;
-  background: var(--text);
+  background: var(--text) !important;
   text-decoration: none;
+
+  font-weight: 650;
+  line-height: 1.2;
 }
+
 .menu-panel a.cta:hover{
   opacity: .92;
-  background: var(--text);
 }
+
 
 @media (min-width: 861px){
   .desktop-nav{ display:block; }
@@ -583,5 +597,9 @@ textarea{
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+}main, #site-header {
+  overflow-x: clip;
+  max-width: 100%;
 }
+
 
