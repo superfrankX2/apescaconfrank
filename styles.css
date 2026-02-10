@@ -18,7 +18,14 @@
 }
 
 *{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
 
 body{
   margin:0;
@@ -28,18 +35,23 @@ body{
   line-height:1.55;
   padding-top: var(--header-h);
   overflow-x: hidden;
-
+  width: 100%;
+  max-width: 100%;
 }
 
 img, svg, video{ max-width:100%; height:auto; display:block; }
 a{ color:inherit; text-decoration:none; }
 a:hover{ text-decoration:underline; }
 
+/* Evita che link/bottoni possano mai uscire dal contenitore */
+a, button { max-width: 100%; }
+
 .container{
   width: min(1100px, 100%);
   margin: 0 auto;
   padding: 0 15px;
 }
+
 section{ padding: var(--section) 0; }
 
 h1{ font-size: clamp(28px, 5.5vw, 44px); line-height:1.1; margin:0 0 10px; }
@@ -58,6 +70,7 @@ p{ margin:0; line-height:1.7; }
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0; /* IMPORTANT iOS/flex: evita overflow */
 }
 
 .card.mini{
@@ -73,6 +86,7 @@ a.technique-link{
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-width: 0; /* evita overflow */
 }
 a.technique-link:hover { text-decoration: none; }
 
@@ -90,8 +104,14 @@ a.technique-link:hover { text-decoration: none; }
   border: none;
   transition: opacity 0.2s ease;
   text-decoration: none;
+
+  /* FIX testi lunghi */
+  max-width: 100%;
   white-space: normal;
   text-align: center;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .cta:hover{
   opacity:.92;
@@ -131,9 +151,7 @@ a.technique-link:hover { text-decoration: none; }
   transition: transform .25s ease;
 }
 
-header{
-  position:relative;
-}
+header{ position:relative; }
 
 .nav{
   min-height: var(--header-h);
@@ -146,12 +164,15 @@ header{
   padding-right: 15px;
 }
 
+.nav > *{ min-width: 0; } /* IMPORTANT: evita overflow su iOS */
+
 .brand{
   display:flex;
   align-items:center;
   gap:10px;
   font-weight:800;
   white-space: nowrap;
+  min-width: 0;
 }
 
 .logo{
@@ -199,6 +220,15 @@ header{
   box-shadow: var(--shadow);
   padding:10px;
   z-index: 1000;
+
+  /* FIX iOS: non uscire mai dal viewport */
+  max-width: calc(100vw - 24px);
+  overflow-x: hidden;
+
+  /* se lista lunga, deve scorrere */
+  max-height: calc(100vh - var(--header-h) - 24px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .menu-panel ul { list-style: none; padding: 0; margin: 0; }
@@ -213,22 +243,23 @@ header{
   transition: background-color 0.2s ease;
 }
 
+.menu-panel a:hover{
+  background-color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}
+
 /* CTA nel menu mobile: deve restare bottone scuro con testo bianco */
 .menu-panel a.cta{
   display: inline-flex;
   width: 100%;
   justify-content: center;
-  color: #fff;
+  color: #fff !important;
+  background: var(--text);
   text-decoration: none;
 }
-
 .menu-panel a.cta:hover{
   opacity: .92;
   background: var(--text);
-}
-.menu-panel a:hover{
-  background-color: rgba(255, 255, 255, 0.6);
-  text-decoration: none;
 }
 
 @media (min-width: 861px){
@@ -303,25 +334,38 @@ header{
 }
 
 .hero{ padding: 26px 0 10px; }
+
 .hero-grid{
   display:grid;
   grid-template-columns: 1.2fr .8fr;
   gap:14px;
 }
+.hero-grid > *{ min-width: 0; } /* IMPORTANT: evita overflow */
 
 .hero-actions{
   display:flex;
   gap: 10px;
   margin-top: 15px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 @media (max-width: 860px){
   .hero-grid{ grid-template-columns:1fr; }
   .hero-actions{ flex-direction: column; }
-   .hero-actions .cta,
+
+  .hero-actions .cta,
   .hero-actions .ghost{
     width: 100%;
+  }
+}
+
+/* Fix extra iOS: su mobile togli nowrap al ghost per evitare overflow */
+@media (max-width: 480px){
+  .ghost{
+    white-space: normal;
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -533,3 +577,11 @@ textarea{
 
   .actions{ gap: 8px; }
 }
+
+/* Evita che il brand venga mai trattato come link attivo */
+.brand.is-active{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
