@@ -781,4 +781,10 @@ textarea{
 main, #site-header{
   overflow-x: clip;
   max-width: 100%;
+}/* Nascondo le parole chiave sotto l'immagine SOLO su mobile */
+@media (max-width: 768px){
+  .technique-wrapper .pillrow{
+    display: none;
+  }
 }
+
