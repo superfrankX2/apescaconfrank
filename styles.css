@@ -38,7 +38,6 @@ body{
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
-
 }
 
 img, svg, video{ max-width:100%; height:auto; display:block; }
@@ -60,6 +59,7 @@ h1{ font-size: clamp(28px, 5.5vw, 44px); line-height:1.1; margin:0 0 10px; }
 h2{ font-size: clamp(20px, 4.2vw, 26px); line-height:1.2; margin:0 0 10px; }
 h3{ font-size: clamp(18px, 3.8vw, 22px); line-height:1.25; margin:0 0 6px; }
 p{ margin:0; line-height:1.7; }
+
 .section-sub{ color:var(--muted); }
 .lead{ font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 20px; }
 
@@ -275,7 +275,6 @@ details.menu:not([open]) .menu-panel{
   opacity: .92;
 }
 
-
 @media (min-width: 861px){
   .desktop-nav{ display:block; }
   .mobile-nav{ display:none; }
@@ -430,32 +429,29 @@ details.menu:not([open]) .menu-panel{
 }
 
 /* ==========================
-   Longform (pagine tecniche)
-   Surfcasting / Beach-ledgering / Spinning
+   Longform (base)
+   (compatibilità: se una longform resta dentro .card)
 ========================== */
-
-/* NB: longform dentro .card => selettore più specifico */
 .card > .longform{
-  max-width: 940px;       /* colonna più larga */
-  margin: 10px auto 0;    /* meno aria su desktop */
+  max-width: 940px;
+  margin: 10px auto 0;
   line-height: 1.7;
 }
 
 .longform h2{
-  margin-top: 24px;       /* meno aria tra sezioni */
-  font-size: 1.38rem;     /* titoli leggermente più piccoli */
+  margin-top: 24px;
+  font-size: 1.38rem;
   line-height: 1.25;
 }
 
 .longform p{
-  margin: 10px 0;         /* più compatto */
+  margin: 10px 0;
 }
 
 .longform strong{
   font-weight: 600;
 }
 
-/* mobile: riduco un pelo i titoli e l’aria */
 @media (max-width: 480px){
   .longform h2{
     font-size: 1.26rem;
@@ -463,6 +459,9 @@ details.menu:not([open]) .menu-panel{
   }
 }
 
+/* ==========================
+   Pills (stile editoriale)
+========================== */
 .pill{
   display:inline-block;
   background: transparent;
@@ -492,10 +491,13 @@ details.menu:not([open]) .menu-panel{
   margin: 15px 0;
 }
 
+/* ==========================
+   Foto placeholder (e futura immagine)
+========================== */
 .photo-placeholder{
   background-color:#e5e7eb;
   border: 2px dashed var(--line);
-  border-radius: 10px;
+  border-radius: 16px; /* più premium */
   padding: 40px 20px;
   text-align:center;
   color: var(--muted);
@@ -505,6 +507,15 @@ details.menu:not([open]) .menu-panel{
   display:flex;
   align-items:center;
   justify-content:center;
+}
+
+/* Quando userai una foto vera */
+img.technique-image{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.10);
 }
 
 .actions{
@@ -641,20 +652,22 @@ textarea{
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-}/* =========================================
-   Pagine tecniche – layout editoriale
-========================================= */
+}
 
+/* =========================================
+   Pagine tecniche – layout editoriale (10/10)
+   (usa .technique-wrapper nel markup)
+========================================= */
 .technique-wrapper{
-  padding: 0;                /* niente padding boxato */
-  background: transparent;   /* niente fondo bianco */
-  box-shadow: none;          /* niente ombra */
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
   border: none;
 }
 
-/* Spazio controllato per contenuto editoriale */
+/* Contenuto centrato e coerente */
 .technique-wrapper > *{
-  max-width: 960px;
+  max-width: 980px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -664,23 +677,46 @@ textarea{
   margin-bottom: 14px;
 }
 
-/* Lead più elegante */
+/* Lead più elegante e “da guida” */
 .technique-wrapper .lead{
-  font-size: 1.05rem;
+  font-size: 1.08rem;
+  line-height: 1.6;
   max-width: 760px;
+  color: #24303f;
 }
 
-/* Longform più ariosa ma non dispersiva */
-.technique-wrapper .longform{
+/* Pill row: più respiro e larghezza editoriale */
+.technique-wrapper .pillrow{
   max-width: 820px;
-  margin: 40px auto 0;
+  margin: 28px auto 36px;
 }
 
+/* Longform: colonna di lettura perfetta */
+.technique-wrapper .longform{
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* H2 con “accent bar” */
 .technique-wrapper .longform h2{
   font-size: 1.32rem;
   margin-top: 34px;
+  position: relative;
+  padding-left: 14px;
 }
 
+.technique-wrapper .longform h2::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 4px;
+  height: 18px;
+  background: var(--text);
+  border-radius: 2px;
+}
+
+/* Corpo testo leggermente più “editoriale” */
 .technique-wrapper .longform p{
   font-size: 0.98rem;
 }
@@ -690,6 +726,22 @@ textarea{
   margin-top: 50px;
 }
 
+@media (max-width: 480px){
+  .technique-wrapper .lead{
+    font-size: 1.02rem;
+  }
+  .technique-wrapper .pillrow{
+    margin: 22px auto 26px;
+  }
+  .technique-wrapper .longform h2{
+    font-size: 1.22rem;
+    margin-top: 26px;
+  }
+  .technique-wrapper .longform h2::before{
+    top: 5px;
+    height: 16px;
+  }
+}
 
 main, #site-header{
   overflow-x: clip;
