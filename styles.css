@@ -434,22 +434,31 @@ details.menu:not([open]) .menu-panel{
    Surfcasting / Beach-ledgering / Spinning
 ========================== */
 .longform{
-  max-width: 800px;
-  margin: 40px auto 20px auto;
+  max-width: 900px;          /* testo più largo */
+  margin: 28px auto 16px;    /* meno aria su desktop */
   line-height: 1.7;
 }
 
 .longform h2{
-  margin-top: 40px;
-  font-size: 1.6rem;
+  margin-top: 28px;          /* meno aria tra sezioni */
+  font-size: 1.45rem;        /* titoli leggermente più piccoli */
+  line-height: 1.25;
 }
 
 .longform p{
-  margin: 14px 0;
+  margin: 12px 0;            /* un filo più compatto */
 }
 
 .longform strong{
   font-weight: 600;
+}
+
+/* micro-tuning mobile: riduco SOLO un pelo i titoli */
+@media (max-width: 480px){
+  .longform h2{
+    font-size: 1.30rem;
+    margin-top: 22px;
+  }
 }
 
 .pill{
