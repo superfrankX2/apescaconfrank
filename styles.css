@@ -763,4 +763,22 @@ textarea{
 main, #site-header{
   overflow-x: clip;
   max-width: 100%;
+}/* ==============================
+   Hero image – pagine tecniche
+============================== */
+
+.technique-hero-image{
+  margin: 40px auto 30px;
+  max-width: 1100px;
+  border-radius: 18px;
+  overflow: hidden;
 }
+
+.technique-hero-image img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
