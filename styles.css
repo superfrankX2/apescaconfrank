@@ -429,6 +429,29 @@ details.menu:not([open]) .menu-panel{
   .grid-3{ grid-template-columns: 1fr; }
 }
 
+/* ==========================
+   Longform (pagine tecniche)
+   Surfcasting / Beach-ledgering / Spinning
+========================== */
+.longform{
+  max-width: 800px;
+  margin: 40px auto 20px auto;
+  line-height: 1.7;
+}
+
+.longform h2{
+  margin-top: 40px;
+  font-size: 1.6rem;
+}
+
+.longform p{
+  margin: 14px 0;
+}
+
+.longform strong{
+  font-weight: 600;
+}
+
 .pill{
   display:inline-block;
   background-color: rgba(31, 41, 55, 0.1);
@@ -597,7 +620,9 @@ textarea{
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-}main, #site-header {
+}
+
+main, #site-header{
   overflow-x: clip;
   max-width: 100%;
 }
