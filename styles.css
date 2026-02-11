@@ -71,7 +71,7 @@ p{ margin:0; line-height:1.7; }
   padding: var(--pad);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px; /* prima era 16px: meno aria */
   min-width: 0; /* IMPORTANT iOS/flex: evita overflow */
 }
 
@@ -433,31 +433,33 @@ details.menu:not([open]) .menu-panel{
    Longform (pagine tecniche)
    Surfcasting / Beach-ledgering / Spinning
 ========================== */
-.longform{
-  max-width: 900px;          /* testo più largo */
-  margin: 28px auto 16px;    /* meno aria su desktop */
+
+/* NB: longform dentro .card => selettore più specifico */
+.card > .longform{
+  max-width: 940px;       /* colonna più larga */
+  margin: 10px auto 0;    /* meno aria su desktop */
   line-height: 1.7;
 }
 
 .longform h2{
-  margin-top: 28px;          /* meno aria tra sezioni */
-  font-size: 1.45rem;        /* titoli leggermente più piccoli */
+  margin-top: 24px;       /* meno aria tra sezioni */
+  font-size: 1.38rem;     /* titoli leggermente più piccoli */
   line-height: 1.25;
 }
 
 .longform p{
-  margin: 12px 0;            /* un filo più compatto */
+  margin: 10px 0;         /* più compatto */
 }
 
 .longform strong{
   font-weight: 600;
 }
 
-/* micro-tuning mobile: riduco SOLO un pelo i titoli */
+/* mobile: riduco un pelo i titoli e l’aria */
 @media (max-width: 480px){
   .longform h2{
-    font-size: 1.30rem;
-    margin-top: 22px;
+    font-size: 1.26rem;
+    margin-top: 20px;
   }
 }
 
@@ -635,5 +637,3 @@ main, #site-header{
   overflow-x: clip;
   max-width: 100%;
 }
-
-
