@@ -658,7 +658,6 @@ textarea{
    Pagine tecniche – layout editoriale (NO "cono")
    (usa .technique-wrapper nel markup)
 ========================================= */
-
 .technique-wrapper{
   padding: 0;
   background: transparent;
@@ -688,13 +687,6 @@ textarea{
   line-height: 1.6;
   color: #24303f;
   max-width: 860px; /* leggero, non “cono” */
-}
-
-/* Foto / placeholder a piena colonna */
-.technique-wrapper .photo-placeholder,
-.technique-wrapper img.technique-image{
-  width: 100%;
-  border-radius: 16px;
 }
 
 /* Pill: stessa colonna, con un po’ di respiro */
@@ -759,26 +751,34 @@ textarea{
   }
 }
 
-
-main, #site-header{
-  overflow-x: clip;
-  max-width: 100%;
-}/* ==============================
+/* ==============================
    Hero image – pagine tecniche
+   (altezza controllata, no deformazioni)
 ============================== */
-
 .technique-hero-image{
   margin: 40px auto 30px;
   max-width: 1100px;
+  height: 420px;               /* <-- cambia qui se vuoi 380/360 */
   border-radius: 18px;
   overflow: hidden;
 }
 
 .technique-hero-image img{
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;           /* taglia senza deformare */
+  object-position: center 60%; /* focus: più mare, meno cielo (regolabile) */
   display: block;
-  object-fit: cover;
-  border-radius: 18px;
 }
 
+@media (max-width: 768px){
+  .technique-hero-image{
+    height: 280px;
+  }
+}
+
+/* safety: no overflow orizzontale */
+main, #site-header{
+  overflow-x: clip;
+  max-width: 100%;
+}
