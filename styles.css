@@ -460,38 +460,6 @@ details.menu:not([open]) .menu-panel{
 }
 
 /* ==========================
-   Pills (stile editoriale)
-========================== */
-.pill{
-  display:inline-block;
-  background: transparent;
-  color: var(--muted);
-  padding: 6px 0;
-  font-size: 13px;
-  font-weight: 500;
-  margin-right: 18px;
-  border: none;
-  position: relative;
-}
-
-.pill::after{
-  content: "•";
-  margin-left: 18px;
-  color: var(--line);
-}
-
-.pill:last-child::after{
-  content: "";
-}
-
-.pillrow{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin: 15px 0;
-}
-
-/* ==========================
    Foto placeholder (e futura immagine)
 ========================== */
 .photo-placeholder{
@@ -689,11 +657,6 @@ textarea{
   max-width: 860px; /* leggero, non “cono” */
 }
 
-/* Pill: stessa colonna, con un po’ di respiro */
-.technique-wrapper .pillrow{
-  margin: 22px 0 28px;
-}
-
 /* Longform allineata alla colonna */
 .technique-wrapper .longform{
   max-width: none;
@@ -738,9 +701,6 @@ textarea{
   .technique-wrapper .lead{
     font-size: 1.02rem;
   }
-  .technique-wrapper .pillrow{
-    margin: 18px 0 22px;
-  }
   .technique-wrapper .longform h2{
     font-size: 1.20rem;
     margin-top: 26px;
@@ -771,6 +731,7 @@ textarea{
   display: block;
 }
 
+/* Su tablet/mobile abbasso un filo l’altezza */
 @media (max-width: 768px){
   .technique-hero-image{
     height: 280px;
@@ -781,10 +742,4 @@ textarea{
 main, #site-header{
   overflow-x: clip;
   max-width: 100%;
-}/* Nascondo le parole chiave sotto l'immagine SOLO su mobile */
-@media (max-width: 768px){
-  .technique-wrapper .pillrow{
-    display: none;
-  }
 }
-
