@@ -714,11 +714,12 @@ textarea{
 /* ==============================
    Hero image – pagine tecniche
    (altezza controllata, no deformazioni)
+   RIDOTTA ~21–22%
 ============================== */
 .technique-hero-image{
   margin: 40px auto 30px;
   max-width: 1100px;
-  height: 420px;               /* <-- cambia qui se vuoi 380/360 */
+  height: 330px;               /* prima 420 */
   border-radius: 18px;
   overflow: hidden;
 }
@@ -731,10 +732,10 @@ textarea{
   display: block;
 }
 
-/* Su tablet/mobile abbasso un filo l’altezza */
+/* Su tablet/mobile abbasso l’altezza */
 @media (max-width: 768px){
   .technique-hero-image{
-    height: 280px;
+    height: 220px;             /* prima 280 */
   }
 }
 
