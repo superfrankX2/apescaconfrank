@@ -882,5 +882,23 @@ main, #site-header{
 
 .home .card > .actions{
   margin-top: 14px; /* prima 20px */
+}/* =========================================
+   Home – Card cliccabili (effetto hover coerente)
+========================================= */
+
+.home .card.technique-link{
+  transition: transform .18s ease, 
+              box-shadow .18s ease, 
+              border-color .18s ease,
+              background-color .18s ease;
 }
+
+.home .card.technique-link:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.10);
+  border-color: rgba(31,41,55,.20);
+  background: rgba(31,41,55,.03);
+  text-decoration: none;
+}
+
 
