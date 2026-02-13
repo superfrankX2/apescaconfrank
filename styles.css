@@ -53,7 +53,9 @@ a, button { max-width: 100%; }
   padding: 0 15px;
 }
 
-section{ padding: var(--section) 0; }
+section{
+  padding: 60px 0;
+}
 
 h1{ font-size: clamp(28px, 5.5vw, 44px); line-height:1.1; margin:0 0 10px; }
 h2{ font-size: clamp(20px, 4.2vw, 26px); line-height:1.2; margin:0 0 10px; }
