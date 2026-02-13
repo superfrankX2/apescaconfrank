@@ -900,5 +900,9 @@ main, #site-header{
   background: rgba(31,41,55,.03);
   text-decoration: none;
 }
+.home .card.technique-link:hover .more{
+  color: #111827;
+}
+
 
 
