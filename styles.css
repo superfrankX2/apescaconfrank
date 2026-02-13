@@ -797,3 +797,26 @@ main, #site-header{
   overflow-x: clip;
   max-width: 100%;
 }
+
+/* =========================================
+   Home – Chi sono: teaser compatto
+========================================= */
+.about-card{
+  gap: 10px;
+}
+
+.about-points{
+  margin: 6px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.about-points li{
+  margin: 6px 0;
+  line-height: 1.55;
+  color: #24303f;
+}
+
+.about-card .more{
+  padding-top: 6px;
+}
