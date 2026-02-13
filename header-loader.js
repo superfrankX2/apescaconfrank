@@ -4,28 +4,25 @@
 
   function cleanPath(p) {
     if (!p) return "/";
-    let s = p.split("?")[0].split("#")[0].toLowerCase();
+    let s = String(p).split("?")[0].split("#")[0].toLowerCase();
 
-    // normalizza home
-    if (s === "/index.html") return "/";
+    // home
+    if (s === "/index.html") s = "/";
 
-    // se finisce con / lascia /
+    // togli trailing slash
     if (s.length > 1 && s.endsWith("/")) s = s.slice(0, -1);
-
-    // normalizza: /chi-sono.html -> /chi-sono
-    if (s.endsWith(".html")) s = s.slice(0, -5);
 
     return s || "/";
   }
 
-  function setActiveNav(container) {
+  function setActiveNav(host) {
     const current = cleanPath(window.location.pathname);
 
-    // pulizia
-    container.querySelectorAll("a.is-active").forEach((a) => a.classList.remove("is-active"));
-    container.querySelectorAll("details.submenu.is-active").forEach((d) => d.classList.remove("is-active"));
+    // reset
+    host.querySelectorAll(".is-active").forEach((el) => el.classList.remove("is-active"));
 
-    const links = container.querySelectorAll('a[href^="/"]');
+    // trova tutti i link interni (esclusa brand)
+    const links = host.querySelectorAll('a[href^="/"]');
 
     links.forEach((a) => {
       if (a.classList.contains("brand") || a.closest(".brand")) return;
@@ -35,23 +32,22 @@
 
       const hrefPath = cleanPath(href);
 
-      // match robusto
+      // match esatto pagina
       if (hrefPath === current) {
         a.classList.add("is-active");
 
-        // se sta dentro submenu desktop
-        const submenu = a.closest("details.submenu");
-        if (submenu) {
-          submenu.classList.add("is-active");
-          submenu.open = true;
+        // se è in submenu desktop
+        const desktopDetails = a.closest("details.submenu");
+        if (desktopDetails) {
+          desktopDetails.classList.add("is-active");
+          desktopDetails.open = true;
         }
 
-        // se sta dentro submenu mobile
-        const mobileDetails = a.closest(".menu-panel")?.querySelector("li.submenu details");
-        if (mobileDetails) {
-          // non aprire tutto a caso: apri solo se il link è dentro quel details
-          const owner = a.closest("li.submenu")?.querySelector("details");
-          if (owner) owner.open = true;
+        // se è in submenu mobile (details dentro li.submenu)
+        const mobileOwnerDetails = a.closest("li.submenu")?.querySelector("details");
+        if (mobileOwnerDetails) {
+          mobileOwnerDetails.open = true;
+          mobileOwnerDetails.classList.add("is-active");
         }
       }
     });
@@ -71,7 +67,7 @@
         return;
       }
 
-      siteHeader.style.transform = (y > lastY) ? "translateY(-100%)" : "translateY(0)";
+      siteHeader.style.transform = y > lastY ? "translateY(-100%)" : "translateY(0)";
       lastY = y;
       ticking = false;
     }
@@ -102,7 +98,6 @@
       initHideShow(host);
     } catch (err) {
       console.error("Header load failed:", err);
-
       host.innerHTML = `
         <header>
           <div class="container">
@@ -113,7 +108,6 @@
           </div>
         </header>
       `;
-
       initHideShow(host);
     }
   }
