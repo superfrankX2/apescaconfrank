@@ -903,6 +903,43 @@ main, #site-header{
 .home .card.technique-link:hover .more{
   color: #111827;
 }
+/* =========================================
+   Home – Hero buttons: effetto "cliccabile" premium
+   (coerente con i bottoni tecniche)
+========================================= */
+.home .hero-actions .cta,
+.home .hero-actions .ghost{
+  transition: transform .18s ease,
+              box-shadow .18s ease,
+              border-color .18s ease,
+              background-color .18s ease,
+              opacity .18s ease;
+  will-change: transform;
+}
+
+/* Hover: micro lift + shadow */
+.home .hero-actions .cta:hover,
+.home .hero-actions .ghost:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.10);
+  text-decoration: none;
+}
+
+/* Rafforza leggermente il bordo del ghost come le card tecniche */
+.home .hero-actions .ghost:hover{
+  border-color: rgba(31,41,55,.20);
+  background: rgba(31,41,55,.03);
+}
+
+/* CTA scuro: solo un pelo più "pressabile" */
+.home .hero-actions .cta:hover{
+  opacity: .95; /* tu avevi .92, qui è più elegante */
+}
+.home .hero-actions .cta:active,
+.home .hero-actions .ghost:active{
+  transform: translateY(0px) scale(0.99);
+  box-shadow: 0 10px 20px rgba(0,0,0,.08);
+}
 
 
 
