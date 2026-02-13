@@ -1,56 +1,56 @@
+// header-loader.js
+// Carica header.html dentro #site-header + evidenzia voce attiva (data-nav) + hide/show su scroll
+
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
+  const VERSION = "20260213";
 
-  function cleanPath(p) {
-    if (!p) return "/";
-    let s = String(p).split("?")[0].split("#")[0].toLowerCase();
+  // Mappa path -> data-nav
+  function getNavKeyFromPath(pathname) {
+    const p = (pathname || "/").toLowerCase();
 
-    // home
-    if (s === "/index.html") s = "/";
+    // Home
+    if (p === "/" || p.endsWith("/index.html")) return "home";
 
-    // togli trailing slash
-    if (s.length > 1 && s.endsWith("/")) s = s.slice(0, -1);
+    // Pagine principali
+    if (p.endsWith("/chi-sono.html")) return "chi-sono";
+    if (p.endsWith("/pricing.html")) return "pricing";
 
-    return s || "/";
+    // Tecniche
+    if (p.endsWith("/surfcasting.html")) return "surfcasting";
+    if (p.endsWith("/beach-ledgering.html")) return "beach-ledgering";
+    if (p.endsWith("/spinning.html")) return "spinning";
+
+    return null;
   }
 
-  function setActiveNav(host) {
-    const current = cleanPath(window.location.pathname);
+  function setActiveNav(container) {
+    const key = getNavKeyFromPath(window.location.pathname);
 
-    // reset
-    host.querySelectorAll(".is-active").forEach((el) => el.classList.remove("is-active"));
+    // pulizia (se per qualche motivo ricarichi header più volte)
+    container.querySelectorAll(".is-active").forEach((el) => el.classList.remove("is-active"));
 
-    // trova tutti i link interni (esclusa brand)
-    const links = host.querySelectorAll('a[href^="/"]');
+    if (!key) return;
 
-    links.forEach((a) => {
-      if (a.classList.contains("brand") || a.closest(".brand")) return;
+    // evidenzia il link con data-nav corrispondente
+    const activeLink = container.querySelector(`[data-nav="${key}"]`);
+    if (activeLink) activeLink.classList.add("is-active");
 
-      const href = a.getAttribute("href");
-      if (!href) return;
-
-      const hrefPath = cleanPath(href);
-
-      // match esatto pagina
-      if (hrefPath === current) {
-        a.classList.add("is-active");
-
-        // se è in submenu desktop
-        const desktopDetails = a.closest("details.submenu");
-        if (desktopDetails) {
-          desktopDetails.classList.add("is-active");
-          desktopDetails.open = true;
-        }
-
-        // se è in submenu mobile (details dentro li.submenu)
-        const mobileOwnerDetails = a.closest("li.submenu")?.querySelector("details");
-        if (mobileOwnerDetails) {
-          mobileOwnerDetails.open = true;
-          mobileOwnerDetails.classList.add("is-active");
-        }
+    // se è una tecnica: attiva anche "Tecniche di pesca" (desktop details + mobile details)
+    const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
+    if (isTechnique) {
+      // Desktop: <details class="submenu" data-nav="tecniche">
+      const desktopDetails = container.querySelector(`details.submenu[data-nav="tecniche"]`);
+      if (desktopDetails) {
+        desktopDetails.classList.add("is-active");
+        desktopDetails.open = true;
       }
-    });
+
+      // Mobile: <li class="submenu"><details data-nav="tecniche">
+      const mobileDetails = container.querySelector(`.mobile-nav details[data-nav="tecniche"]`);
+      if (mobileDetails) mobileDetails.open = true;
+    }
   }
 
   function initHideShow(siteHeader) {
@@ -67,7 +67,9 @@
         return;
       }
 
-      siteHeader.style.transform = y > lastY ? "translateY(-100%)" : "translateY(0)";
+      if (y > lastY) siteHeader.style.transform = "translateY(-100%)";
+      else siteHeader.style.transform = "translateY(0)";
+
       lastY = y;
       ticking = false;
     }
@@ -89,7 +91,7 @@
     if (!host) return;
 
     try {
-      const res = await fetch(`${HEADER_URL}?v=20260213`, { cache: "no-store" });
+      const res = await fetch(`${HEADER_URL}?v=${VERSION}`, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status} loading ${HEADER_URL}`);
 
       host.innerHTML = await res.text();
@@ -98,6 +100,7 @@
       initHideShow(host);
     } catch (err) {
       console.error("Header load failed:", err);
+
       host.innerHTML = `
         <header>
           <div class="container">
@@ -108,6 +111,7 @@
           </div>
         </header>
       `;
+
       initHideShow(host);
     }
   }
