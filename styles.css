@@ -649,6 +649,8 @@ textarea{
 .technique-button:hover{
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(0,0,0,.10);
+  border-color: rgba(31,41,55,.20);
+  background: rgba(31,41,55,.03);
   text-decoration: none;
 }
 
