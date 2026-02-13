@@ -850,4 +850,19 @@ main, #site-header{
 .about-card .more{
   padding-top: 4px;
 }
+/* =========================================
+   Home – uniforma spazi interni card
+========================================= */
+.home .card > .grid,
+.home .card > .grid-3{
+  margin: 14px 0; /* prima 20px */
+}
+
+.home .card > .photo-placeholder{
+  margin: 14px 0; /* prima 20px */
+}
+
+.home .card > .actions{
+  margin-top: 14px; /* prima 20px */
+}
 
