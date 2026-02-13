@@ -522,6 +522,23 @@ details.submenu.is-active > summary{
   padding: 6px 10px;
   box-shadow: 0 6px 14px rgba(0,0,0,.05);
 }
+/* =========================================
+   NAV: link attivo (robusto, anche dentro #site-header)
+========================================= */
+#site-header a.is-active{
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  text-decoration: none !important;
+}
+
+#site-header details.submenu.is-active > summary{
+  background: rgba(255,255,255,.9);
+  border-radius: 10px;
+  padding: 6px 10px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.05);
+}
+
 
 form{
   display:flex;
