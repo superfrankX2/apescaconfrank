@@ -8,22 +8,30 @@
 
   // Mappa path -> data-nav
   function getNavKeyFromPath(pathname) {
-    const p = (pathname || "/").toLowerCase();
+  let p = (pathname || "/").toLowerCase();
 
-    // Home
-    if (p === "/" || p.endsWith("/index.html")) return "home";
+  // normalizza: toglie trailing slash (tranne "/")
+  if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
 
-    // Pagine principali
-    if (p.endsWith("/chi-sono.html")) return "chi-sono";
-    if (p.endsWith("/pricing.html")) return "pricing";
+  // home
+  if (p === "/" || p.endsWith("/index") || p.endsWith("/index.html")) return "home";
 
-    // Tecniche
-    if (p.endsWith("/surfcasting.html")) return "surfcasting";
-    if (p.endsWith("/beach-ledgering.html")) return "beach-ledgering";
-    if (p.endsWith("/spinning.html")) return "spinning";
+  // prende l'ultimo pezzo del path: "chi-sono" oppure "chi-sono.html"
+  const last = p.split("/").pop() || "";
+  const slug = last.replace(/\.html$/i, ""); // toglie .html se c'è
 
-    return null;
-  }
+  // mappa slug -> data-nav
+  const map = {
+    "chi-sono": "chi-sono",
+    "pricing": "pricing",
+    "surfcasting": "surfcasting",
+    "beach-ledgering": "beach-ledgering",
+    "spinning": "spinning",
+  };
+
+  return map[slug] || null;
+}
+
 
   function setActiveNav(container) {
     const key = getNavKeyFromPath(window.location.pathname);
