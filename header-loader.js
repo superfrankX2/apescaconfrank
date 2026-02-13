@@ -1,136 +1,60 @@
-// header-loader.js
-// Carica header.html dentro #site-header + evidenzia link attivo + hide/show su scroll + scrollspy in home
-
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
 
-  function normalizePath(pathname) {
-    if (!pathname || pathname === "") return "/";
-    if (pathname.endsWith("/")) return pathname;
-    return pathname;
+  function cleanPath(p) {
+    if (!p) return "/";
+    let s = p.split("?")[0].split("#")[0].toLowerCase();
+
+    // normalizza home
+    if (s === "/index.html") return "/";
+
+    // se finisce con / lascia /
+    if (s.length > 1 && s.endsWith("/")) s = s.slice(0, -1);
+
+    // normalizza: /chi-sono.html -> /chi-sono
+    if (s.endsWith(".html")) s = s.slice(0, -5);
+
+    return s || "/";
   }
 
-  function isHomePage() {
-    const p = normalizePath(window.location.pathname);
-    return p === "/" || p.endsWith("/index.html");
-  }
+  function setActiveNav(container) {
+    const current = cleanPath(window.location.pathname);
 
-  function clearActive(container) {
-    container.querySelectorAll("a.is-active").forEach((el) => el.classList.remove("is-active"));
-    container.querySelectorAll("details.submenu.is-active").forEach((el) => el.classList.remove("is-active"));
+    // pulizia
+    container.querySelectorAll("a.is-active").forEach((a) => a.classList.remove("is-active"));
+    container.querySelectorAll("details.submenu.is-active").forEach((d) => d.classList.remove("is-active"));
 
-    // mobile: details "Tecniche" non ha class submenu, ma ha data-nav="tecniche"
-    container.querySelectorAll('details[data-nav="tecniche"].is-active').forEach((el) => el.classList.remove("is-active"));
-  }
+    const links = container.querySelectorAll('a[href^="/"]');
 
-  function setActiveByDataNav(container, key) {
-    clearActive(container);
-
-    // attiva tutti i link (desktop+mobile) con quel data-nav
-    container.querySelectorAll(`a[data-nav="${key}"]`).forEach((a) => {
-      // NON evidenziare il brand
-      if (a.classList.contains("brand") || a.closest(".brand")) return;
-      a.classList.add("is-active");
-    });
-
-    // se è "tecniche", evidenzia anche il details
-    if (key === "tecniche") {
-      const dDesktop = container.querySelector('details.submenu[data-nav="tecniche"]');
-      if (dDesktop) dDesktop.classList.add("is-active");
-
-      const dMobile = container.querySelector('details.menu-panel details[data-nav="tecniche"], details.mobile-nav details[data-nav="tecniche"]');
-      if (dMobile) dMobile.classList.add("is-active");
-    }
-  }
-
-  function setActiveNavByPath(container) {
-    const current = normalizePath(window.location.pathname);
-
-    const links = container.querySelectorAll('a[href]');
     links.forEach((a) => {
+      if (a.classList.contains("brand") || a.closest(".brand")) return;
+
       const href = a.getAttribute("href");
       if (!href) return;
 
-      // NON evidenziare il brand
-      if (a.classList.contains("brand") || a.closest(".brand")) return;
+      const hrefPath = cleanPath(href);
 
-      // consideriamo solo link interni assoluti
-      if (!href.startsWith("/")) return;
-
-      const hrefOnlyPath = href.split("#")[0];
-      const hrefNorm = normalizePath(hrefOnlyPath);
-
-      if (hrefNorm === current) {
+      // match robusto
+      if (hrefPath === current) {
         a.classList.add("is-active");
 
-        // se è dentro submenu desktop
+        // se sta dentro submenu desktop
         const submenu = a.closest("details.submenu");
         if (submenu) {
           submenu.classList.add("is-active");
           submenu.open = true;
         }
 
-        // se è dentro submenu mobile (details dentro li.submenu)
-        const mobileSub = a.closest("li.submenu")?.querySelector("details");
-        if (mobileSub) mobileSub.open = true;
+        // se sta dentro submenu mobile
+        const mobileDetails = a.closest(".menu-panel")?.querySelector("li.submenu details");
+        if (mobileDetails) {
+          // non aprire tutto a caso: apri solo se il link è dentro quel details
+          const owner = a.closest("li.submenu")?.querySelector("details");
+          if (owner) owner.open = true;
+        }
       }
     });
-
-    // Se siamo in una pagina tecnica, evidenzia anche "Tecniche" (oltre al link specifico)
-    const techniquePages = ["/surfcasting.html", "/beach-ledgering.html", "/spinning.html"];
-    if (techniquePages.includes(current)) {
-      const dDesktop = container.querySelector('details.submenu[data-nav="tecniche"]');
-      if (dDesktop) dDesktop.classList.add("is-active");
-      const dMobile = container.querySelector('details.mobile-nav details[data-nav="tecniche"]');
-      if (dMobile) dMobile.classList.add("is-active");
-    }
-  }
-
-  function initScrollSpy(container) {
-    if (!isHomePage()) return;
-
-    const items = [
-      { id: "top", nav: "home" },
-      { id: "tecniche", nav: "tecniche" },
-      { id: "chi-sono", nav: "chi-sono" },
-      { id: "contatti", nav: "contatti" },
-    ];
-
-    const observed = [];
-    items.forEach((it) => {
-      const el = document.getElementById(it.id);
-      if (el) observed.push({ ...it, el });
-    });
-
-    if (observed.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
-
-        if (!visible) return;
-
-        const match = observed.find((o) => o.el === visible.target);
-        if (match) setActiveByDataNav(container, match.nav);
-      },
-      {
-        // header ~70px + un pelo di margine
-        rootMargin: "-90px 0px -60% 0px",
-        threshold: [0.15, 0.25, 0.4, 0.6],
-      }
-    );
-
-    observed.forEach((o) => observer.observe(o.el));
-
-    // Fallback iniziale: se non sei proprio in alto
-    // (così appena carichi a metà pagina, attiva la sezione giusta)
-    setTimeout(() => {
-      const y = window.scrollY || 0;
-      if (y < 60) setActiveByDataNav(container, "home");
-    }, 50);
   }
 
   function initHideShow(siteHeader) {
@@ -139,20 +63,15 @@
 
     function onScroll() {
       const y = window.scrollY || 0;
-
       const delta = y - lastY;
+
       if (Math.abs(delta) < 6) {
         lastY = y;
         ticking = false;
         return;
       }
 
-      if (y > lastY) {
-        siteHeader.style.transform = "translateY(-100%)";
-      } else {
-        siteHeader.style.transform = "translateY(0)";
-      }
-
+      siteHeader.style.transform = (y > lastY) ? "translateY(-100%)" : "translateY(0)";
       lastY = y;
       ticking = false;
     }
@@ -174,19 +93,12 @@
     if (!host) return;
 
     try {
-      const res = await fetch(`${HEADER_URL}?v=20260209`, { cache: "no-store" });
+      const res = await fetch(`${HEADER_URL}?v=20260213`, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status} loading ${HEADER_URL}`);
 
-      const html = await res.text();
-      host.innerHTML = html;
+      host.innerHTML = await res.text();
 
-      // evidenzia pagina attiva (sempre)
-      setActiveNavByPath(host);
-
-      // scrollspy solo in home
-      initScrollSpy(host);
-
-      // hide/show
+      setActiveNav(host);
       initHideShow(host);
     } catch (err) {
       console.error("Header load failed:", err);
