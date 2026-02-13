@@ -860,7 +860,25 @@ main, #site-header{
 
 .home .card > .photo-placeholder{
   margin: 14px 0; /* prima 20px */
+}/* =========================================
+   Home – uniforma distanza tra le sezioni
+   (replica la distanza "giusta" della hero)
+========================================= */
+.home section{
+  padding-top: 60px;
+  padding-bottom: 10px;
 }
+
+/* La hero resta come l'hai impostata tu */
+.home .hero{
+  padding: 26px 0 10px;
+}
+
+/* L'ultima sezione (prima del footer) deve respirare un po' */
+.home #contatti{
+  padding-bottom: 60px;
+}
+
 
 .home .card > .actions{
   margin-top: 14px; /* prima 20px */
