@@ -820,3 +820,32 @@ main, #site-header{
 .about-card .more{
   padding-top: 6px;
 }
+
+/* =========================================
+   Home – Chi sono (versione elegante)
+========================================= */
+
+.about-card{
+  gap: 14px;
+}
+
+.about-intro{
+  line-height: 1.65;
+  color: #24303f;
+}
+
+.about-points{
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+
+.about-points li{
+  margin: 6px 0;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.about-card .more{
+  padding-top: 4px;
+}
+
