@@ -1,12 +1,12 @@
 // header-loader.js
 // Header shared loader + active nav + hide/show scroll
-// + SAFARI FIX: dropdown "Tecniche" portaled to <body> (fixed) so it never goes behind
-// + iOS FIX: deterministic toggle for mobile <details class="menu"> (no double-toggle)
+// + SAFARI FIX: dropdown "Tecniche" portaled to <body> and styled via .is-portaled
+// + iOS FIX: deterministic toggle for mobile <details class="menu"> (guard anti double-event)
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260220";
+  const VERSION = "20260221";
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -61,7 +61,6 @@
     }
   }
 
-  // Hide/Show: trasformiamo l’header interno, non #site-header
   function initHideShow(container) {
     const innerHeader = container.querySelector(".site-header-inner") || container.querySelector("header");
     if (!innerHeader) return;
@@ -98,7 +97,7 @@
     );
   }
 
-  // ✅ FIX iOS Safari: menu mobile (evita doppio toggle touchstart+click)
+  // ✅ Mobile iOS: toggle deterministico (evita doppio evento)
   function initMobileMenuFix(container) {
     const menu = container.querySelector("details.menu.mobile-nav");
     if (!menu) return;
@@ -106,27 +105,28 @@
     const summary = menu.querySelector(":scope > summary");
     if (!summary) return;
 
-    let lastTouchTime = 0;
+    let ignoreClickUntil = 0;
 
-    function toggleOpen(e) {
+    function doToggle(e) {
       e.preventDefault();
       e.stopPropagation();
       menu.open = !menu.open;
     }
 
     summary.addEventListener(
-      "touchstart",
+      "pointerdown",
       (e) => {
-        lastTouchTime = Date.now();
-        toggleOpen(e);
+        // pointerdown è il più affidabile su iOS moderno
+        ignoreClickUntil = Date.now() + 800;
+        doToggle(e);
       },
       { passive: false }
     );
 
     summary.addEventListener("click", (e) => {
-      // Se è appena arrivato un touch, ignoro il click “fantasma”
-      if (Date.now() - lastTouchTime < 700) return;
-      toggleOpen(e);
+      // ignora il click fantasma dopo il tap
+      if (Date.now() < ignoreClickUntil) return;
+      doToggle(e);
     });
 
     // Chiudi quando clicchi un link
@@ -137,7 +137,7 @@
     });
   }
 
-  // ✅ SAFARI FIX: portal dropdown "Tecniche"
+  // ✅ Safari desktop: portal dropdown "Tecniche" + classe .is-portaled per stile globale
   function initSafariDropdownPortal(container) {
     if (!isSafari()) return;
 
@@ -165,6 +165,7 @@
       menu.style.transform = "translateZ(0)";
       menu.style.pointerEvents = "auto";
 
+      // rientro a destra
       const rect = menu.getBoundingClientRect();
       const maxRight = window.innerWidth - 10;
       if (rect.right > maxRight) {
@@ -172,6 +173,7 @@
         menu.style.left = `${left}px`;
       }
 
+      // rientro sotto
       const rect2 = menu.getBoundingClientRect();
       const maxBottom = window.innerHeight - 10;
       if (rect2.bottom > maxBottom) {
@@ -182,15 +184,20 @@
 
     function portalIn() {
       if (portaled) return;
+
       details.insertBefore(placeholder, menu);
       document.body.appendChild(menu);
+      menu.classList.add("is-portaled");
       portaled = true;
+
       menu.style.right = "auto";
       place();
     }
 
     function portalOut() {
       if (!portaled) return;
+
+      menu.classList.remove("is-portaled");
 
       menu.style.position = "";
       menu.style.top = "";
@@ -215,6 +222,7 @@
     window.addEventListener("scroll", () => place(), { passive: true });
     window.addEventListener("resize", () => place(), { passive: true });
 
+    // Chiudi cliccando fuori
     document.addEventListener("click", (e) => {
       if (!details.open) return;
       const clickInsideSummary = summary.contains(e.target);
