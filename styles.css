@@ -1270,4 +1270,30 @@ main, #site-header{
 
   background-size: 160px 160px;
 }
+/* =========================================
+   HOME – micro pattern “pesci random” (SVG tile)
+========================================= */
+
+.home{
+  position: relative;
+  isolation: isolate;
+}
+
+.home::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  /* tile con pesci diversi (dimensioni/direzioni) */
+  background-image: url("data:image/svg+xml,%3Csvg width='420' height='420' viewBox='0 0 420 420' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231f2937' fill-opacity='0.028'%3E%3C!-- Fish A (right) --%3E%3Cpath d='M60 90c14-16 40-16 54 0-14 16-40 16-54 0zm54 0l14-8v16z'/%3E%3C!-- Fish A (left, flipped) --%3E%3Cg transform='translate(330 120) scale(-1 1)'%3E%3Cpath d='M0 0c14-16 40-16 54 0-14 16-40 16-54 0zm54 0l14-8v16z'/%3E%3C/g%3E%3C!-- Fish B (bigger, right) --%3E%3Cg transform='translate(120 250) scale(1.25)'%3E%3Cpath d='M0 0c18-12 42-12 60 0-18 12-42 12-60 0zm60 0l14-9v18z'/%3E%3Ccircle cx='18' cy='-2' r='1.6'/%3E%3C/g%3E%3C!-- Fish B (small, left) --%3E%3Cg transform='translate(70 320) scale(-0.85 0.85)'%3E%3Cpath d='M0 0c18-12 42-12 60 0-18 12-42 12-60 0zm60 0l14-9v18z'/%3E%3Ccircle cx='18' cy='-2' r='1.6'/%3E%3C/g%3E%3C!-- Fish C (thin, angled) --%3E%3Cg transform='translate(285 285) rotate(-18)'%3E%3Cpath d='M0 0c10-10 28-10 38 0-10 10-28 10-38 0zm38 0l10-6v12z'/%3E%3C/g%3E%3C!-- Fish C (thin, opposite angle) --%3E%3Cg transform='translate(210 70) rotate(14) scale(-1 1)'%3E%3Cpath d='M0 0c10-10 28-10 38 0-10 10-28 10-38 0zm38 0l10-6v12z'/%3E%3C/g%3E%3C!-- Fish A (tiny) --%3E%3Cg transform='translate(310 40) scale(0.7)'%3E%3Cpath d='M0 0c14-16 40-16 54 0-14 16-40 16-54 0zm54 0l14-8v16z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  /* grandezza del pattern: più grande = più “random”, meno ripetizione evidente */
+  background-size: 520px 520px;
+  background-position: 0 0;
+
+  /* per non “sporcarsi” troppo nei monitor grandi */
+  opacity: 1;
+}
 
