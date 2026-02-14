@@ -1133,7 +1133,27 @@ main, #site-header{
   background-color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
 }
+/* =========================================
+   SAFARI + LAYER FIX (dropdown non va sotto)
+   Incolla in fondo a styles.css
+========================================= */
 
+/* Header sempre sopra */
+#site-header{
+  z-index: 999999 !important;
+  isolation: isolate;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Desktop dropdown: sopra a tutto */
+@media (min-width: 861px){
+  .desktop-nav details.submenu[open] .submenu-links{
+    z-index: 999999 !important;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
 
 
 
