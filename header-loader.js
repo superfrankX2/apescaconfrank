@@ -1,13 +1,12 @@
 // header-loader.js
-// Carica header.html dentro #site-header + evidenzia voce attiva
-// + hide/show su scroll (sul header interno)
-// + FIX Safari desktop dropdown (posizionamento fixed)
-// + FIX iOS Safari menu mobile (toggle affidabile)
+// Header shared loader + active nav + hide/show scroll
+// + SAFARI FIX: dropdown "Tecniche" portaled to <body> (fixed) so it never goes behind
+// + iOS FIX: deterministic toggle for mobile <details class="menu"> (no double-toggle)
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260217";
+  const VERSION = "20260220";
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -62,7 +61,7 @@
     }
   }
 
-  // Hide/Show: trasformiamo l’header interno, non #site-header (fixed)
+  // Hide/Show: trasformiamo l’header interno, non #site-header
   function initHideShow(container) {
     const innerHeader = container.querySelector(".site-header-inner") || container.querySelector("header");
     if (!innerHeader) return;
@@ -99,8 +98,47 @@
     );
   }
 
-  // ✅ FIX Safari desktop: dropdown “Tecniche” non va sotto (lo mettiamo fixed con coordinate)
-  function initSafariDesktopDropdownFix(container) {
+  // ✅ FIX iOS Safari: menu mobile (evita doppio toggle touchstart+click)
+  function initMobileMenuFix(container) {
+    const menu = container.querySelector("details.menu.mobile-nav");
+    if (!menu) return;
+
+    const summary = menu.querySelector(":scope > summary");
+    if (!summary) return;
+
+    let lastTouchTime = 0;
+
+    function toggleOpen(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      menu.open = !menu.open;
+    }
+
+    summary.addEventListener(
+      "touchstart",
+      (e) => {
+        lastTouchTime = Date.now();
+        toggleOpen(e);
+      },
+      { passive: false }
+    );
+
+    summary.addEventListener("click", (e) => {
+      // Se è appena arrivato un touch, ignoro il click “fantasma”
+      if (Date.now() - lastTouchTime < 700) return;
+      toggleOpen(e);
+    });
+
+    // Chiudi quando clicchi un link
+    menu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => {
+        menu.open = false;
+      });
+    });
+  }
+
+  // ✅ SAFARI FIX: portal dropdown "Tecniche"
+  function initSafariDropdownPortal(container) {
     if (!isSafari()) return;
 
     const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
@@ -110,81 +148,78 @@
     const menu = details.querySelector(":scope > .submenu-links");
     if (!summary || !menu) return;
 
-    function placeMenuFixed() {
-      if (!details.open) return;
+    const placeholder = document.createComment("submenu-links-placeholder");
+    let portaled = false;
+
+    function place() {
+      if (!details.open || !portaled) return;
 
       const r = summary.getBoundingClientRect();
-
-      // Posizioniamo sotto il summary
       const top = Math.round(r.bottom + 8);
-      const left = Math.round(r.left);
+      let left = Math.round(r.left);
 
       menu.style.position = "fixed";
       menu.style.top = `${top}px`;
       menu.style.left = `${left}px`;
-      menu.style.right = "auto";
-      menu.style.zIndex = "999999";
+      menu.style.zIndex = "2147483647";
       menu.style.transform = "translateZ(0)";
+      menu.style.pointerEvents = "auto";
 
-      // Se sfora a destra, rientra
-      const menuRect = menu.getBoundingClientRect();
-      const overflowRight = menuRect.right - (window.innerWidth - 10);
-      if (overflowRight > 0) {
-        menu.style.left = `${Math.max(10, left - overflowRight)}px`;
+      const rect = menu.getBoundingClientRect();
+      const maxRight = window.innerWidth - 10;
+      if (rect.right > maxRight) {
+        left = Math.max(10, left - (rect.right - maxRight));
+        menu.style.left = `${left}px`;
       }
 
-      // Se sfora sotto, prova ad aprire verso l’alto
-      const overflowBottom = menuRect.bottom - (window.innerHeight - 10);
-      if (overflowBottom > 0) {
-        const aboveTop = Math.max(10, Math.round(r.top - 8 - menuRect.height));
+      const rect2 = menu.getBoundingClientRect();
+      const maxBottom = window.innerHeight - 10;
+      if (rect2.bottom > maxBottom) {
+        const aboveTop = Math.max(10, Math.round(r.top - 8 - rect2.height));
         menu.style.top = `${aboveTop}px`;
       }
     }
 
-    function resetMenu() {
+    function portalIn() {
+      if (portaled) return;
+      details.insertBefore(placeholder, menu);
+      document.body.appendChild(menu);
+      portaled = true;
+      menu.style.right = "auto";
+      place();
+    }
+
+    function portalOut() {
+      if (!portaled) return;
+
       menu.style.position = "";
       menu.style.top = "";
       menu.style.left = "";
-      menu.style.right = "";
       menu.style.zIndex = "";
       menu.style.transform = "";
+      menu.style.pointerEvents = "";
+      menu.style.right = "";
+
+      if (placeholder.parentNode) {
+        placeholder.parentNode.insertBefore(menu, placeholder);
+        placeholder.parentNode.removeChild(placeholder);
+      }
+      portaled = false;
     }
 
     details.addEventListener("toggle", () => {
-      if (details.open) {
-        placeMenuFixed();
-      } else {
-        resetMenu();
-      }
+      if (details.open) portalIn();
+      else portalOut();
     });
 
-    window.addEventListener("resize", placeMenuFixed, { passive: true });
-    window.addEventListener("scroll", placeMenuFixed, { passive: true });
-  }
+    window.addEventListener("scroll", () => place(), { passive: true });
+    window.addEventListener("resize", () => place(), { passive: true });
 
-  // ✅ FIX iOS Safari: menu mobile che non si apre
-  function initMobileMenuFix(container) {
-    const menu = container.querySelector("details.menu.mobile-nav");
-    if (!menu) return;
-
-    const summary = menu.querySelector(":scope > summary");
-    if (!summary) return;
-
-    // Rendiamo il toggle deterministico su iOS/Safari
-    const toggle = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      menu.open = !menu.open;
-    };
-
-    summary.addEventListener("touchstart", toggle, { passive: false });
-    summary.addEventListener("click", toggle);
-
-    // Chiudi quando clicchi un link
-    menu.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        menu.open = false;
-      });
+    document.addEventListener("click", (e) => {
+      if (!details.open) return;
+      const clickInsideSummary = summary.contains(e.target);
+      const clickInsideMenu = menu.contains(e.target);
+      if (!clickInsideSummary && !clickInsideMenu) details.open = false;
     });
   }
 
@@ -201,7 +236,7 @@
       setActiveNav(host);
       initMobileMenuFix(host);
       initHideShow(host);
-      initSafariDesktopDropdownFix(host);
+      initSafariDropdownPortal(host);
 
       window.addEventListener("popstate", () => setActiveNav(host));
     } catch (err) {
