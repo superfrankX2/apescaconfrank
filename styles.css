@@ -1250,4 +1250,24 @@ main, #site-header{
 .home .technique-button:hover{
   box-shadow: 0 14px 34px rgba(16, 94, 120, .10);
 }
+/* =========================================
+   HOME – micro pattern mare (super soft)
+========================================= */
+
+.home{
+  position: relative;
+  isolation: isolate;
+}
+
+.home::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231f2937' fill-opacity='0.03'%3E%3Cpath d='M20 60c10-12 28-12 38 0-10 12-28 12-38 0zm38 0l10-6v12z'/%3E%3C/g%3E%3C/svg%3E");
+
+  background-size: 160px 160px;
+}
 
