@@ -1188,6 +1188,25 @@ main, #site-header{
   background-color: #f0f0f0;
   text-decoration: none;
 }
+/* =========================
+   FIX DESKTOP: dropdown "Tecniche" non deve essere sempre visibile
+========================= */
+@media (min-width: 861px){
+  /* di default nascosto */
+  .desktop-nav details.submenu > .submenu-links{
+    display: none;
+  }
+
+  /* visibile solo quando details è open */
+  .desktop-nav details.submenu[open] > .submenu-links{
+    display: flex;
+  }
+}
+
+/* Se Safari "porta" il menu in <body>, deve restare visibile quando portaled */
+.submenu-links.is-portaled{
+  display: flex;
+}
 
 
 
