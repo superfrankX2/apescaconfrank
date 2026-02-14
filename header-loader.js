@@ -1,7 +1,7 @@
 // header-loader.js
 // Header shared loader + active nav + hide/show scroll
 // + SAFARI FIX: dropdown "Tecniche" portaled to <body> and styled via .is-portaled
-// + iOS FIX: deterministic toggle for mobile <details class="menu"> (guard anti double-event)
+// + iOS FIX: robust toggle for mobile <details class="menu"> (avoid native double toggle)
 
 (function () {
   const HOST_ID = "site-header";
@@ -97,60 +97,24 @@
     );
   }
 
-  // ✅ Mobile iOS: toggle ultra-robusto per <details class="menu mobile-nav">
-function initMobileMenuFix(container) {
-  const menu = container.querySelector("details.menu.mobile-nav");
-  if (!menu) return;
+  // ✅ Mobile iOS: toggle robusto (NO variabili fantasma)
+  function initMobileMenuFix(container) {
+    const menu = container.querySelector("details.menu.mobile-nav");
+    if (!menu) return;
 
-  const summary = menu.querySelector(":scope > summary");
-  if (!summary) return;
+    const summary = menu.querySelector(":scope > summary");
+    if (!summary) return;
 
-  // 1) Toggle SOLO via JS (blocca sempre il comportamento nativo)
-  summary.addEventListener(
-    "click",
-    (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      menu.open = !menu.open;
-    },
-    { capture: true } // importante su iOS: intercetta prima del toggle nativo
-  );
-
-  // 2) Chiudi quando clicchi un link dentro al pannello
-  menu.querySelectorAll("a").forEach((a) => {
-    a.addEventListener("click", () => {
-      menu.open = false;
-    });
-  });
-
-  // 3) Chiudi cliccando fuori
-  document.addEventListener(
-    "click",
-    (e) => {
-      if (!menu.open) return;
-      if (menu.contains(e.target)) return;
-      menu.open = false;
-    },
-    { passive: true }
-  );
-
-  // 4) Safety: se per qualche motivo Safari toggla comunque, lo “accettiamo” ma non lo lasciamo glitchare
-  menu.addEventListener("toggle", () => {
-    // nessuna logica: serve solo a “stabilizzare” l’elemento su iOS
-  });
-}
-
-
-    summary.addEventListener("click", (e) => {
-  // ignora il click fantasma dopo il tap MA blocca comunque il default
-  if (Date.now() < ignoreClickUntil) {
-    e.preventDefault();
-    e.stopPropagation();
-    return;
-  }
-  doToggle(e);
-});
-
+    // Toggle SOLO via JS: blocca sempre il comportamento nativo del <details>
+    summary.addEventListener(
+      "click",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        menu.open = !menu.open;
+      },
+      { capture: true }
+    );
 
     // Chiudi quando clicchi un link
     menu.querySelectorAll("a").forEach((a) => {
@@ -158,6 +122,17 @@ function initMobileMenuFix(container) {
         menu.open = false;
       });
     });
+
+    // Chiudi cliccando fuori
+    document.addEventListener(
+      "click",
+      (e) => {
+        if (!menu.open) return;
+        if (menu.contains(e.target)) return;
+        menu.open = false;
+      },
+      { passive: true }
+    );
   }
 
   // ✅ Safari desktop: portal dropdown "Tecniche" + classe .is-portaled per stile globale
@@ -188,7 +163,6 @@ function initMobileMenuFix(container) {
       menu.style.transform = "translateZ(0)";
       menu.style.pointerEvents = "auto";
 
-      // rientro a destra
       const rect = menu.getBoundingClientRect();
       const maxRight = window.innerWidth - 10;
       if (rect.right > maxRight) {
@@ -196,7 +170,6 @@ function initMobileMenuFix(container) {
         menu.style.left = `${left}px`;
       }
 
-      // rientro sotto
       const rect2 = menu.getBoundingClientRect();
       const maxBottom = window.innerHeight - 10;
       if (rect2.bottom > maxBottom) {
@@ -245,7 +218,6 @@ function initMobileMenuFix(container) {
     window.addEventListener("scroll", () => place(), { passive: true });
     window.addEventListener("resize", () => place(), { passive: true });
 
-    // Chiudi cliccando fuori
     document.addEventListener("click", (e) => {
       if (!details.open) return;
       const clickInsideSummary = summary.contains(e.target);
@@ -277,3 +249,4 @@ function initMobileMenuFix(container) {
 
   document.addEventListener("DOMContentLoaded", loadHeader);
 })();
+
