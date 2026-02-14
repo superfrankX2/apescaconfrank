@@ -97,31 +97,49 @@
     );
   }
 
-  // ✅ Mobile iOS: toggle deterministico (evita doppio evento)
-  function initMobileMenuFix(container) {
-    const menu = container.querySelector("details.menu.mobile-nav");
-    if (!menu) return;
+  // ✅ Mobile iOS: toggle ultra-robusto per <details class="menu mobile-nav">
+function initMobileMenuFix(container) {
+  const menu = container.querySelector("details.menu.mobile-nav");
+  if (!menu) return;
 
-    const summary = menu.querySelector(":scope > summary");
-    if (!summary) return;
+  const summary = menu.querySelector(":scope > summary");
+  if (!summary) return;
 
-    let ignoreClickUntil = 0;
-
-    function doToggle(e) {
+  // 1) Toggle SOLO via JS (blocca sempre il comportamento nativo)
+  summary.addEventListener(
+    "click",
+    (e) => {
       e.preventDefault();
       e.stopPropagation();
       menu.open = !menu.open;
-    }
+    },
+    { capture: true } // importante su iOS: intercetta prima del toggle nativo
+  );
 
-    summary.addEventListener(
-      "pointerdown",
-      (e) => {
-        // pointerdown è il più affidabile su iOS moderno
-        ignoreClickUntil = Date.now() + 800;
-        doToggle(e);
-      },
-      { passive: false }
-    );
+  // 2) Chiudi quando clicchi un link dentro al pannello
+  menu.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", () => {
+      menu.open = false;
+    });
+  });
+
+  // 3) Chiudi cliccando fuori
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (!menu.open) return;
+      if (menu.contains(e.target)) return;
+      menu.open = false;
+    },
+    { passive: true }
+  );
+
+  // 4) Safety: se per qualche motivo Safari toggla comunque, lo “accettiamo” ma non lo lasciamo glitchare
+  menu.addEventListener("toggle", () => {
+    // nessuna logica: serve solo a “stabilizzare” l’elemento su iOS
+  });
+}
+
 
     summary.addEventListener("click", (e) => {
   // ignora il click fantasma dopo il tap MA blocca comunque il default
