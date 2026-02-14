@@ -987,6 +987,34 @@ main, #site-header{
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
+/* =========================================
+   SAFARI FIX: layering + tap su details/summary
+========================================= */
+
+#site-header{
+  z-index: 99999;
+  isolation: isolate;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* il dropdown desktop deve stare sopra */
+@media (min-width: 861px){
+  .desktop-nav details.submenu[open]{
+    z-index: 100000;
+  }
+  .desktop-nav details.submenu[open] .submenu-links{
+    z-index: 100001;
+  }
+}
+
+.menu > summary,
+.desktop-nav details.submenu > summary{
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
 
 
 
