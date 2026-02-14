@@ -1014,6 +1014,125 @@ main, #site-header{
   touch-action: manipulation;
   user-select: none;
 }
+/* =========================================
+   SAFARI-SAFE MENU (no <details>)
+   Incollare in fondo a styles.css
+========================================= */
+
+/* Header super sopra */
+#site-header{
+  z-index: 999999;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  will-change: transform;
+}
+
+/* --- Desktop dropdown --- */
+.nav-dropdown{ position: relative; }
+
+.nav-dropdown__toggle{
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 6px 8px;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.nav-dropdown__toggle:hover{ background: rgba(255,255,255,.6); }
+
+.nav-dropdown.is-active .nav-dropdown__toggle{
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 14px rgba(0,0,0,.05);
+}
+
+/* Il menu: di base nascosto */
+.nav-dropdown__menu{
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  min-width: 180px;
+  padding: 8px 0;
+  z-index: 999999; /* sopra tutto */
+}
+
+/* visibile quando aperto */
+.nav-dropdown.is-open .nav-dropdown__menu{ display: flex; flex-direction: column; }
+
+.nav-dropdown__menu a{
+  padding: 10px 16px;
+  text-decoration: none;
+}
+.nav-dropdown__menu a:hover{
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+
+/* --- Mobile menu button (al posto di details) --- */
+.mobile-menu-btn{
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.7);
+  font-weight:650;
+  min-height:38px;
+  user-select: none;
+}
+
+/* Riutilizziamo il tuo .menu-panel ma lo rendiamo compatibile col nuovo markup */
+.mobile-nav{ position: relative; } /* così il panel resta ancorato al bottone */
+
+.mobile-nav .menu-panel{
+  position:absolute;
+  right:0;
+  top: calc(var(--header-h) - 8px);
+  width: calc(100vw - 24px);
+  max-width: 320px;
+  z-index: 999999;
+}
+
+/* Submenu mobile */
+.mobile-submenu__toggle{
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.mobile-submenu__toggle:hover{ background-color: rgba(255, 255, 255, 0.6); }
+
+.mobile-submenu__links{
+  display: none;
+  padding: 0 0 8px;
+}
+.mobile-submenu.is-open .mobile-submenu__links{ display: block; }
+
+.mobile-submenu__links a{
+  display:block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.mobile-submenu__links a:hover{
+  background-color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}
 
 
 
