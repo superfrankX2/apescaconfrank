@@ -124,10 +124,15 @@
     );
 
     summary.addEventListener("click", (e) => {
-      // ignora il click fantasma dopo il tap
-      if (Date.now() < ignoreClickUntil) return;
-      doToggle(e);
-    });
+  // ignora il click fantasma dopo il tap MA blocca comunque il default
+  if (Date.now() < ignoreClickUntil) {
+    e.preventDefault();
+    e.stopPropagation();
+    return;
+  }
+  doToggle(e);
+});
+
 
     // Chiudi quando clicchi un link
     menu.querySelectorAll("a").forEach((a) => {
