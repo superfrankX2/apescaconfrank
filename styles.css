@@ -1209,57 +1209,45 @@ main, #site-header{
 }
 
 /* =========================================
-   HOME: mood “professionale + mare” (soft)
-   Incolla in fondo a styles.css
+   HOME: mood “professionale + mare” (SOFT premium)
 ========================================= */
 
-/* token soft mare/sabbia + shadow più “coastal” */
 :root{
-  --sea-soft: #eef4f6;     /* acqua-grigio chiarissimo */
-  --sand-soft:#f5f2ec;     /* sabbia chiarissima */
   --shadow-sea: 0 10px 30px rgba(16, 94, 120, .08);
 }
 
-/* 1) Aura marina dietro la HERO (molto premium, non invadente) */
-.home main{
+/* Aura marina SOLO dietro la hero (super discreta) */
+.home .hero{
   position: relative;
   isolation: isolate;
 }
 
-.home main::before{
+.home .hero::before{
   content:"";
   position:absolute;
-  inset: 0;
+  inset: -20px -20px -40px -20px; /* un pelo più grande della sezione */
   pointer-events:none;
-  z-index: -1;
-  /* due macchie morbide: una “mare”, una “sabbia” */
+  z-index:-1;
   background:
-    radial-gradient(900px 420px at 18% 10%, rgba(34,119,145,.10), transparent 65%),
-    radial-gradient(820px 380px at 82% 18%, rgba(210,190,150,.12), transparent 60%);
+    radial-gradient(820px 360px at 25% 25%, rgba(34,119,145,.08), transparent 65%),
+    radial-gradient(720px 320px at 80% 35%, rgba(34,119,145,.05), transparent 62%);
+  filter: blur(0.2px);
 }
 
-/* 2) Sezione “Dove andremo…” (è la section subito dopo la hero) */
-.home .hero + section{
-  background: var(--sea-soft);
-  border-top: 1px solid rgba(229,231,235,.7);
-  border-bottom: 1px solid rgba(229,231,235,.7);
-}
-
-/* 3) Piccolo richiamo “sabbia” sulla sezione Chi sono (leggerissimo) */
-.home #chi-sono{
-  background: linear-gradient(180deg, transparent, rgba(245,242,236,.55));
-}
-
-/* 4) Ombre leggermente più “fredde” sulle card (solo in home) */
+/* Ombra card leggermente più “coastal”, SOLO home */
 .home .card{
   box-shadow: var(--shadow-sea);
 }
 
-/* 5) Micro-tuning: hover un filo più elegante sulle card cliccabili */
-.home .card.technique-link:hover,
-.home .technique-button:hover{
-  box-shadow: 0 14px 34px rgba(16, 94, 120, .12);
+/* Micro-dettaglio: bordo superiore leggero sulle card hero */
+.home .hero .card{
+  border-top: 1px solid rgba(34,119,145,.12);
 }
 
-
+/* Hover un filo più elegante (senza cambiare colori) */
+.home .hero-actions .cta:hover,
+.home .hero-actions .ghost:hover,
+.home .technique-button:hover{
+  box-shadow: 0 14px 34px rgba(16, 94, 120, .10);
+}
 
