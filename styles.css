@@ -956,7 +956,38 @@ main, #site-header{
 .home .hero-actions .ghost:active{
   transform: translateY(0px) scale(0.99);
   box-shadow: 0 10px 20px rgba(0,0,0,.08);
+}/* =========================================
+   SAFARI FIX: dropdown sopra a tutto + details cliccabili
+========================================= */
+
+/* 1) forza il layer dell’header sopra al contenuto (Safari + backdrop-filter + transform) */
+#site-header{
+  z-index: 99999;         /* più alto */
+  isolation: isolate;     /* crea stacking context “pulito” */
+  transform: translateZ(0); /* compositing: evita che il dropdown finisca sotto */
 }
+
+/* 2) dropdown tecniche desktop sempre sopra */
+@media (min-width: 861px){
+  .desktop-nav details.submenu{
+    position: relative;
+    z-index: 100000;
+  }
+  .desktop-nav details.submenu[open]{
+    z-index: 100001; /* quando aperto sale ancora */
+  }
+  .desktop-nav .submenu-links{
+    z-index: 100002;
+  }
+}
+
+/* 3) iOS: miglior “tap” sui summary (riduce i casi in cui non si apre) */
+.menu > summary,
+.desktop-nav details.submenu > summary{
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
 
 
 
