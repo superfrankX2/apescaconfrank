@@ -12,15 +12,16 @@
           <li><a href="/" data-nav="home">Home</a></li>
           <li><a href="/chi-sono.html" data-nav="chi-sono">Chi sono</a></li>
 
-          <li>
-            <details class="submenu" data-nav="tecniche">
-              <summary>Tecniche di pesca ▾</summary>
-              <div class="submenu-links" role="menu" aria-label="Tecniche di pesca">
-                <a href="/surfcasting.html" data-nav="surfcasting">Surfcasting</a>
-                <a href="/beach-ledgering.html" data-nav="beach-ledgering">Beach ledgering</a>
-                <a href="/spinning.html" data-nav="spinning">Spinning</a>
-              </div>
-            </details>
+          <li class="nav-dropdown" data-nav="tecniche">
+            <button class="nav-dropdown__toggle" type="button" aria-haspopup="true" aria-expanded="false">
+              Tecniche di pesca ▾
+            </button>
+
+            <div class="nav-dropdown__menu" role="menu" aria-label="Tecniche di pesca">
+              <a href="/surfcasting.html" data-nav="surfcasting" role="menuitem">Surfcasting</a>
+              <a href="/beach-ledgering.html" data-nav="beach-ledgering" role="menuitem">Beach ledgering</a>
+              <a href="/spinning.html" data-nav="spinning" role="menuitem">Spinning</a>
+            </div>
           </li>
 
           <li><a href="/pricing.html" data-nav="pricing">Pricing</a></li>
@@ -29,31 +30,32 @@
       </nav>
 
       <!-- MOBILE NAV -->
-      <details class="menu mobile-nav">
-        <summary>Menu ▾</summary>
+      <div class="mobile-nav">
+        <button class="mobile-menu-btn" type="button" aria-controls="mobileMenuPanel" aria-expanded="false">
+          Menu ▾
+        </button>
 
-        <div class="menu-panel">
+        <div class="menu-panel" id="mobileMenuPanel" hidden>
           <ul>
             <li><a href="/" data-nav="home">Home</a></li>
             <li><a href="/chi-sono.html" data-nav="chi-sono">Chi sono</a></li>
 
-            <li class="submenu">
-              <details data-nav="tecniche">
-                <summary>Tecniche di pesca ▾</summary>
-                <div class="submenu-links" role="menu" aria-label="Tecniche di pesca">
-                  <a href="/surfcasting.html" data-nav="surfcasting">Surfcasting</a>
-                  <a href="/beach-ledgering.html" data-nav="beach-ledgering">Beach ledgering</a>
-                  <a href="/spinning.html" data-nav="spinning">Spinning</a>
-                </div>
-              </details>
+            <li class="mobile-submenu">
+              <button class="mobile-submenu__toggle" type="button" aria-expanded="false">
+                Tecniche di pesca ▾
+              </button>
+              <div class="mobile-submenu__links" role="menu" aria-label="Tecniche di pesca">
+                <a href="/surfcasting.html" data-nav="surfcasting" role="menuitem">Surfcasting</a>
+                <a href="/beach-ledgering.html" data-nav="beach-ledgering" role="menuitem">Beach ledgering</a>
+                <a href="/spinning.html" data-nav="spinning" role="menuitem">Spinning</a>
+              </div>
             </li>
 
             <li><a href="/pricing.html" data-nav="pricing">Pricing</a></li>
             <li><a class="cta" href="/#contatti">Contattami</a></li>
           </ul>
         </div>
-      </details>
+      </div>
     </div>
   </div>
 </header>
-
