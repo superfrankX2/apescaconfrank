@@ -1154,6 +1154,40 @@ main, #site-header{
     transform: translateZ(0);
   }
 }
+/* =========================================
+   SAFARI portal dropdown: stile identico anche fuori da .desktop-nav
+   (incolla in fondo a styles.css)
+========================================= */
+
+#site-header{
+  z-index: 999999 !important;
+  isolation: isolate;
+}
+
+/* Quando la submenu-links viene portata in <body> */
+.submenu-links.is-portaled{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  z-index: 2147483647 !important;
+}
+
+.submenu-links.is-portaled a{
+  padding: 10px 16px;
+  color: var(--text);
+  text-decoration: none;
+  display: block;
+}
+
+.submenu-links.is-portaled a:hover{
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
 
 
 
