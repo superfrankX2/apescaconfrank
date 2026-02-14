@@ -1,10 +1,10 @@
 // header-loader.js
-// Carica header.html dentro #site-header + evidenzia voce attiva + hide/show su scroll (Safari-safe) + fix menu iOS
+// Carica header.html dentro #site-header + evidenzia voce attiva + menu dropdown Safari-safe
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260215";
+  const VERSION = "20260216";
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -40,83 +40,122 @@
 
     if (activeLink) activeLink.classList.add("is-active");
 
+    // Tecniche: se sono su una tecnica, evidenzio anche il parent + apro i menu (desktop+mobile)
     const key = activeLink ? activeLink.getAttribute("data-nav") : null;
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
     if (isTechnique) {
-      const desktopDetails = container.querySelector(`details.submenu[data-nav="tecniche"]`);
-      if (desktopDetails) {
-        desktopDetails.classList.add("is-active");
-        desktopDetails.open = true;
-      }
-      const mobileDetails = container.querySelector(`.mobile-nav details[data-nav="tecniche"]`);
-      if (mobileDetails) mobileDetails.open = true;
+      const desktopWrap = container.querySelector('.nav-dropdown[data-nav="tecniche"]');
+      if (desktopWrap) desktopWrap.classList.add("is-active");
+
+      const mobileSub = container.querySelector(".mobile-submenu");
+      if (mobileSub) mobileSub.classList.add("is-open");
     }
   }
 
-  // 🔥 SAFARI SAFE: trasformiamo l’header interno, non il contenitore fixed
-  function initHideShow(container) {
-    const innerHeader = container.querySelector(".site-header-inner") || container.querySelector("header");
-    if (!innerHeader) return;
+  function initDesktopDropdown(container) {
+    const wrap = container.querySelector('.nav-dropdown[data-nav="tecniche"]');
+    if (!wrap) return;
 
-    let lastY = window.scrollY || 0;
-    let ticking = false;
+    const btn = wrap.querySelector(".nav-dropdown__toggle");
+    const menu = wrap.querySelector(".nav-dropdown__menu");
+    if (!btn || !menu) return;
 
-    function onScroll() {
-      const y = window.scrollY || 0;
-      const delta = y - lastY;
-
-      if (Math.abs(delta) < 6) {
-        lastY = y;
-        ticking = false;
-        return;
-      }
-
-      if (y > lastY) innerHeader.style.transform = "translateY(-110%)";
-      else innerHeader.style.transform = "translateY(0)";
-
-      lastY = y;
-      ticking = false;
+    function open() {
+      wrap.classList.add("is-open");
+      btn.setAttribute("aria-expanded", "true");
+    }
+    function close() {
+      wrap.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+    function toggle() {
+      if (wrap.classList.contains("is-open")) close();
+      else open();
     }
 
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(onScroll);
-        }
-      },
-      { passive: true }
-    );
-  }
-
-  // ✅ iOS Safari: toggle manuale del menu mobile (più affidabile)
-  function initMobileMenuFix(container) {
-    const menu = container.querySelector("details.menu.mobile-nav");
-    if (!menu) return;
-
-    const summary = menu.querySelector(":scope > summary");
-    if (!summary) return;
-
-    // pointerdown > click su iOS Safari
-    summary.addEventListener("pointerdown", (e) => {
+    // Click toggle (Safari-safe)
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      menu.open = !menu.open;
-    });
-
-    // Chiudi quando clicchi un link
-    menu.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        menu.open = false;
-      });
+      toggle();
     });
 
     // Chiudi cliccando fuori
-    document.addEventListener("pointerdown", (e) => {
-      if (!menu.open) return;
-      if (!menu.contains(e.target)) menu.open = false;
+    document.addEventListener("click", (e) => {
+      if (!wrap.contains(e.target)) close();
+    });
+
+    // Chiudi su ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+
+    // Apri anche su hover/focus (desktop)
+    wrap.addEventListener("mouseenter", open);
+    wrap.addEventListener("mouseleave", close);
+  }
+
+  function initMobileMenu(container) {
+    const btn = container.querySelector(".mobile-menu-btn");
+    const panel = container.querySelector("#mobileMenuPanel");
+    if (!btn || !panel) return;
+
+    const subBtn = panel.querySelector(".mobile-submenu__toggle");
+    const subWrap = panel.querySelector(".mobile-submenu");
+
+    function openPanel() {
+      panel.hidden = false;
+      btn.setAttribute("aria-expanded", "true");
+    }
+    function closePanel() {
+      panel.hidden = true;
+      btn.setAttribute("aria-expanded", "false");
+      // richiudo anche il submenu
+      if (subWrap) subWrap.classList.remove("is-open");
+      if (subBtn) subBtn.setAttribute("aria-expanded", "false");
+    }
+    function togglePanel() {
+      if (panel.hidden) openPanel();
+      else closePanel();
+    }
+
+    // iOS Safari: touchstart è più affidabile del click su elementi “in overlay”
+    const toggleEvt = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      togglePanel();
+    };
+
+    btn.addEventListener("touchstart", toggleEvt, { passive: false });
+    btn.addEventListener("click", toggleEvt);
+
+    // Submenu tecniche
+    if (subBtn && subWrap) {
+      const toggleSub = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = subWrap.classList.toggle("is-open");
+        subBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      };
+      subBtn.addEventListener("touchstart", toggleSub, { passive: false });
+      subBtn.addEventListener("click", toggleSub);
+    }
+
+    // Chiudi quando clicchi un link
+    panel.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => closePanel());
+    });
+
+    // Chiudi cliccando fuori
+    document.addEventListener("click", (e) => {
+      if (panel.hidden) return;
+      if (!panel.contains(e.target) && e.target !== btn) closePanel();
+    });
+
+    // Chiudi su ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closePanel();
     });
   }
 
@@ -131,25 +170,10 @@
       host.innerHTML = await res.text();
 
       setActiveNav(host);
-      initMobileMenuFix(host);
-      initHideShow(host);
-
-      window.addEventListener("popstate", () => setActiveNav(host));
+      initDesktopDropdown(host);
+      initMobileMenu(host);
     } catch (err) {
       console.error("Header load failed:", err);
-
-      host.innerHTML = `
-        <header class="site-header-inner">
-          <div class="container">
-            <div class="nav">
-              <a class="brand" href="/"><div class="logo">🎣</div><div>apescaconfrank</div></a>
-              <a class="cta" href="/#contatti">Contattami</a>
-            </div>
-          </div>
-        </header>
-      `;
-
-      initHideShow(host);
     }
   }
 
