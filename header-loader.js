@@ -1,10 +1,10 @@
 // header-loader.js
-// Carica header.html dentro #site-header + evidenzia voce attiva + hide/show su scroll + Safari fixes
+// Carica header.html dentro #site-header + evidenzia voce attiva + hide/show su scroll (Safari-safe) + fix menu iOS
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260214";
+  const VERSION = "20260215";
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -54,7 +54,11 @@
     }
   }
 
-  function initHideShow(siteHeader) {
+  // 🔥 SAFARI SAFE: trasformiamo l’header interno, non il contenitore fixed
+  function initHideShow(container) {
+    const innerHeader = container.querySelector(".site-header-inner") || container.querySelector("header");
+    if (!innerHeader) return;
+
     let lastY = window.scrollY || 0;
     let ticking = false;
 
@@ -68,8 +72,8 @@
         return;
       }
 
-      if (y > lastY) siteHeader.style.transform = "translateY(-100%)";
-      else siteHeader.style.transform = "translateY(0)";
+      if (y > lastY) innerHeader.style.transform = "translateY(-110%)";
+      else innerHeader.style.transform = "translateY(0)";
 
       lastY = y;
       ticking = false;
@@ -87,27 +91,32 @@
     );
   }
 
-  // Safari iOS: a volte <details><summary> non toggla bene in header fixed/trasformati.
-  // Forziamo il toggle SOLO sul menu mobile principale.
-  function initSafariDetailsFix(container) {
+  // ✅ iOS Safari: toggle manuale del menu mobile (più affidabile)
+  function initMobileMenuFix(container) {
     const menu = container.querySelector("details.menu.mobile-nav");
     if (!menu) return;
 
     const summary = menu.querySelector(":scope > summary");
     if (!summary) return;
 
-    summary.addEventListener("click", (e) => {
-      // Lasciamo che i browser “normali” facciano il loro lavoro,
-      // ma se Safari non apre, questo toggle lo rende deterministico.
+    // pointerdown > click su iOS Safari
+    summary.addEventListener("pointerdown", (e) => {
       e.preventDefault();
+      e.stopPropagation();
       menu.open = !menu.open;
     });
 
-    // Chiudi menu quando clicchi un link (più UX e evita stati strani su iOS)
+    // Chiudi quando clicchi un link
     menu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", () => {
         menu.open = false;
       });
+    });
+
+    // Chiudi cliccando fuori
+    document.addEventListener("pointerdown", (e) => {
+      if (!menu.open) return;
+      if (!menu.contains(e.target)) menu.open = false;
     });
   }
 
@@ -122,7 +131,7 @@
       host.innerHTML = await res.text();
 
       setActiveNav(host);
-      initSafariDetailsFix(host);
+      initMobileMenuFix(host);
       initHideShow(host);
 
       window.addEventListener("popstate", () => setActiveNav(host));
@@ -130,7 +139,7 @@
       console.error("Header load failed:", err);
 
       host.innerHTML = `
-        <header>
+        <header class="site-header-inner">
           <div class="container">
             <div class="nav">
               <a class="brand" href="/"><div class="logo">🎣</div><div>apescaconfrank</div></a>
