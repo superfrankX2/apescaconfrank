@@ -1253,14 +1253,16 @@ main, #site-header{
 .home .technique-button:hover{
   box-shadow: 0 14px 34px rgba(16, 94, 120, .10);
 }
-/* HOME – sfondo mare leggermente più intenso */
+/* HOME – sfondo più leggero e premium */
 .home{
   background: linear-gradient(
     180deg,
-    #f3f9fc 0%,
-    #e9f4f8 45%,
-    #e2eef4 100%
+    #eef4f7 0%,
+    #f6f9fb 35%,
+    #ffffff 100%
   );
+}
+
 }/* =========================================
    HOME – hover card più staccato dallo sfondo
 ========================================= */
