@@ -1,12 +1,12 @@
 // header-loader.js
-// Header shared loader + active nav + hide/show scroll
-// + SAFARI FIX: dropdown "Tecniche" portaled to <body> and styled via .is-portaled
-// + iOS FIX: robust toggle for mobile <details class="menu"> (avoid native double toggle)
+// Header shared loader + active nav
+// + Safari FIX: dropdown "Tecniche" portaled to <body> and styled via .is-portaled
+// + iOS FIX: robust toggle for mobile <details class="menu">
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260221";
+  const VERSION = "20260229"; // cambia quando vuoi bustare cache
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -47,30 +47,35 @@
 
     if (activeLink) activeLink.classList.add("is-active");
 
+    // Evidenzia "Tecniche" se siamo in una pagina tecnica, ma NON lasciarlo aperto su desktop
     const key = activeLink ? activeLink.getAttribute("data-nav") : null;
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
     if (isTechnique) {
-  const desktopDetails = container.querySelector(`details.submenu[data-nav="tecniche"]`);
-  if (desktopDetails) {
-    desktopDetails.classList.add("is-active");
-    desktopDetails.open = false; // ✅ desktop: NON lasciarlo aperto dopo reload
+      const desktopDetails = container.querySelector('details.submenu[data-nav="tecniche"]');
+      if (desktopDetails) {
+        desktopDetails.classList.add("is-active");
+        desktopDetails.open = false; // ✅ chiuso dopo reload
+      }
+
+      const mobileDetails = container.querySelector('.mobile-nav details[data-nav="tecniche"]');
+      if (mobileDetails) mobileDetails.open = true; // ok tenerlo aperto su mobile se vuoi
+    }
   }
 
-  const mobileDetails = container.querySelector(`.mobile-nav details[data-nav="tecniche"]`);
-  if (mobileDetails) mobileDetails.open = true; // mobile puoi lasciarlo comodo
-}
+  // Chiudi dropdown desktop quando clicchi una voce (prima del reload)
+  function initDesktopSubmenuCloseOnClick(container) {
+    const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
+    if (!details) return;
 
- function isIOS() {
-  // iPhone / iPad / iPod + iPadOS che si presenta come Macintosh con touch
-  return (
-    /iP(hone|od|ad)/.test(navigator.platform) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
-  );
-}
+    details.querySelectorAll('.submenu-links a').forEach((a) => {
+      a.addEventListener("click", () => {
+        details.open = false;
+      });
+    });
+  }
 
-
-  // ✅ Mobile iOS: toggle robusto (NO variabili fantasma)
+  // Mobile iOS: toggle robusto per il <details class="menu">
   function initMobileMenuFix(container) {
     const menu = container.querySelector("details.menu.mobile-nav");
     if (!menu) return;
@@ -78,7 +83,6 @@
     const summary = menu.querySelector(":scope > summary");
     if (!summary) return;
 
-    // Toggle SOLO via JS: blocca sempre il comportamento nativo del <details>
     summary.addEventListener(
       "click",
       (e) => {
@@ -89,14 +93,12 @@
       { capture: true }
     );
 
-    // Chiudi quando clicchi un link
     menu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", () => {
         menu.open = false;
       });
     });
 
-    // Chiudi cliccando fuori
     document.addEventListener(
       "click",
       (e) => {
@@ -108,7 +110,7 @@
     );
   }
 
-  // ✅ Safari desktop: portal dropdown "Tecniche" + classe .is-portaled per stile globale
+  // Safari desktop: portal dropdown "Tecniche" in <body>
   function initSafariDropdownPortal(container) {
     if (!isSafari()) return;
 
@@ -135,6 +137,7 @@
       menu.style.zIndex = "2147483647";
       menu.style.transform = "translateZ(0)";
       menu.style.pointerEvents = "auto";
+      menu.style.right = "auto";
 
       const rect = menu.getBoundingClientRect();
       const maxRight = window.innerWidth - 10;
@@ -153,13 +156,10 @@
 
     function portalIn() {
       if (portaled) return;
-
       details.insertBefore(placeholder, menu);
       document.body.appendChild(menu);
       menu.classList.add("is-portaled");
       portaled = true;
-
-      menu.style.right = "auto";
       place();
     }
 
@@ -167,7 +167,6 @@
       if (!portaled) return;
 
       menu.classList.remove("is-portaled");
-
       menu.style.position = "";
       menu.style.top = "";
       menu.style.left = "";
@@ -188,8 +187,8 @@
       else portalOut();
     });
 
-    window.addEventListener("scroll", () => place(), { passive: true });
-    window.addEventListener("resize", () => place(), { passive: true });
+    window.addEventListener("scroll", place, { passive: true });
+    window.addEventListener("resize", place, { passive: true });
 
     document.addEventListener("click", (e) => {
       if (!details.open) return;
@@ -198,17 +197,6 @@
       if (!clickInsideSummary && !clickInsideMenu) details.open = false;
     });
   }
-    function initDesktopSubmenuCloseOnClick(container) {
-  const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
-  if (!details) return;
-
-  details.querySelectorAll('.submenu-links a').forEach((a) => {
-    a.addEventListener("click", () => {
-      details.open = false;
-    });
-  });
-}
-
 
   async function loadHeader() {
     const host = document.getElementById(HOST_ID);
