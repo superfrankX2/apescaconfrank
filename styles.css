@@ -1308,4 +1308,7 @@ main, #site-header{
     #eef6f9 100%
   );
 }
+.home .card{
+  box-shadow: 0 10px 30px rgba(32, 120, 150, .08);
+}
 
