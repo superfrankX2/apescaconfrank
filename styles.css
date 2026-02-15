@@ -1663,3 +1663,16 @@ body:not(.home){
 .site-footer .footer-ico--wa{ color:#25D366 !important; }
 .site-footer .footer-ico--ig{ color:#E1306C !important; }
 
+/* Instagram */
+.site-footer .footer-ico--ig{
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* WhatsApp leggermente più grande per compensare proporzioni */
+.site-footer .footer-ico--wa{
+  width: 26px !important;
+  height: 26px !important;
+}
+
+
