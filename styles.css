@@ -1352,9 +1352,9 @@ body:not(.home){
 ========================================= */
 
 .home #site-header{
-  background: rgba(200, 220, 232, 0.96); /* un filo più deciso */
+  background: rgba(190, 205, 215, 0.92); /* blu-grigio più neutro */
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(31,41,55,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 /* HOME – fix bottone attivo (più elegante) */
