@@ -1719,4 +1719,19 @@ body:not(.home){
   display: block !important;
   object-fit: contain;
 }
+/* WhatsApp app-icon (SVG inline) */
+.site-footer .footer-social--wa{
+  width: 28px !important;
+  height: 28px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+}
+
+.site-footer .footer-ico--wa-app{
+  width: 24px !important;
+  height: 24px !important;
+  display:block !important;
+}
 
