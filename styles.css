@@ -1713,4 +1713,10 @@ body:not(.home){
   transform: translateY(-1px);
   opacity: .95;
 }
+.site-footer .footer-icoimg{
+  width: 24px !important;
+  height: 24px !important;
+  display: block !important;
+  object-fit: contain;
+}
 
