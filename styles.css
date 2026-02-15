@@ -1360,5 +1360,38 @@ body:not(.home){
   box-shadow: none;
 }
 
+/* =========================================
+   HOME – Hero: kicker chiaro (cosa faccio subito)
+========================================= */
+
+.home .hero-kicker{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin: 0 0 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: .2px;
+
+  color: rgba(31,41,55,.92);
+  background: rgba(255,255,255,.75);
+  border: 1px solid rgba(31,41,55,.08);
+}
+
+.home .hero-lead{
+  margin-top: 8px;
+  color: rgba(31,41,55,.86);
+  max-width: 55ch;
+}
+
+/* mobile: lascia aria e leggibilità */
+@media (max-width: 860px){
+  .home .hero-lead{ max-width: none; }
+  .home .hero-kicker{ font-size: 12.5px; }
+}
 
 
