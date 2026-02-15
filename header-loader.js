@@ -61,41 +61,55 @@
     }
   }
 
-  function initHideShow(container) {
-    const innerHeader = container.querySelector(".site-header-inner") || container.querySelector("header");
-    if (!innerHeader) return;
+ function isIOS() {
+  // iPhone / iPad / iPod + iPadOS che si presenta come Macintosh con touch
+  return (
+    /iP(hone|od|ad)/.test(navigator.platform) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
+}
 
-    let lastY = window.scrollY || 0;
-    let ticking = false;
+function initHideShow(container) {
+  const innerHeader = container.querySelector(".site-header-inner") || container.querySelector("header");
+  if (!innerHeader) return;
 
-    function onScroll() {
-      const y = window.scrollY || 0;
-      const delta = y - lastY;
+  // ✅ FIX: su iOS Safari disattiviamo il hide/show (evita header “vuoto” / repaint bug)
+  if (isIOS()) {
+    innerHeader.style.transform = "translate3d(0,0,0)";
+    return;
+  }
 
-      if (Math.abs(delta) < 6) {
-        lastY = y;
-        ticking = false;
-        return;
-      }
+  let lastY = window.scrollY || 0;
+  let ticking = false;
 
-      if (y > lastY) innerHeader.style.transform = "translateY(-110%)";
-      else innerHeader.style.transform = "translateY(0)";
+  function onScroll() {
+    const y = window.scrollY || 0;
+    const delta = y - lastY;
 
+    if (Math.abs(delta) < 6) {
       lastY = y;
       ticking = false;
+      return;
     }
 
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(onScroll);
-        }
-      },
-      { passive: true }
-    );
+    if (y > lastY) innerHeader.style.transform = "translate3d(0,-110%,0)";
+    else innerHeader.style.transform = "translate3d(0,0,0)";
+
+    lastY = y;
+    ticking = false;
   }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(onScroll);
+      }
+    },
+    { passive: true }
+  );
+}
 
   // ✅ Mobile iOS: toggle robusto (NO variabili fantasma)
   function initMobileMenuFix(container) {
