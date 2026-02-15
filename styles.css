@@ -1258,6 +1258,25 @@ main, #site-header{
     #e9f4f8 45%,
     #e2eef4 100%
   );
+}/* =========================================
+   HOME – hover card più staccato dallo sfondo
+========================================= */
+
+.home .card.technique-link{
+  background: #ffffff;
+  transition: transform .18s ease,
+              box-shadow .18s ease,
+              border-color .18s ease,
+              background-color .18s ease;
 }
+
+/* Hover più leggibile */
+.home .card.technique-link:hover{
+  background: #ffffff; /* niente trasparenze */
+  border-color: rgba(20, 100, 130, .18);
+  box-shadow: 0 18px 40px rgba(20, 100, 130, .15);
+  transform: translateY(-3px);
+}
+
 
 
