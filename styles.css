@@ -1366,7 +1366,6 @@ body:not(.home){
 
 .home .hero-role{
   display: inline-block;
-
   margin: 0 0 14px;
   padding: 8px 14px;
 
@@ -1374,17 +1373,16 @@ body:not(.home){
   font-weight: 800;
   letter-spacing: .4px;
 
-  color: #163646; /* blu mare più deciso */
+  color: #163646;
   background: rgba(28, 90, 120, 0.10);
   border: 1px solid rgba(28, 90, 120, 0.18);
   border-radius: 999px;
 }
 
-
-/* mobile: lascia aria e leggibilità */
+/* mobile */
 @media (max-width: 860px){
   .home .hero-lead{ max-width: none; }
-  .home .hero-kicker{ font-size: 12.5px; }
+  .home .hero-role{ font-size: 13px; }
 }
 
 
