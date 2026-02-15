@@ -69,47 +69,6 @@
   );
 }
 
-function initHideShow(container) {
-  const innerHeader = container.querySelector(".site-header-inner") || container.querySelector("header");
-  if (!innerHeader) return;
-
-  // ✅ FIX: su iOS Safari disattiviamo il hide/show (evita header “vuoto” / repaint bug)
-  if (isIOS()) {
-    innerHeader.style.transform = "translate3d(0,0,0)";
-    return;
-  }
-
-  let lastY = window.scrollY || 0;
-  let ticking = false;
-
-  function onScroll() {
-    const y = window.scrollY || 0;
-    const delta = y - lastY;
-
-    if (Math.abs(delta) < 6) {
-      lastY = y;
-      ticking = false;
-      return;
-    }
-
-    if (y > lastY) innerHeader.style.transform = "translate3d(0,-110%,0)";
-    else innerHeader.style.transform = "translate3d(0,0,0)";
-
-    lastY = y;
-    ticking = false;
-  }
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(onScroll);
-      }
-    },
-    { passive: true }
-  );
-}
 
   // ✅ Mobile iOS: toggle robusto (NO variabili fantasma)
   function initMobileMenuFix(container) {
@@ -252,7 +211,6 @@ function initHideShow(container) {
 
       setActiveNav(host);
       initMobileMenuFix(host);
-      initHideShow(host);
       initSafariDropdownPortal(host);
 
       window.addEventListener("popstate", () => setActiveNav(host));
