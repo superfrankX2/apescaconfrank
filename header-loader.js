@@ -51,15 +51,15 @@
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
     if (isTechnique) {
-      const desktopDetails = container.querySelector(`details.submenu[data-nav="tecniche"]`);
-      if (desktopDetails) {
-        desktopDetails.classList.add("is-active");
-        desktopDetails.open = true;
-      }
-      const mobileDetails = container.querySelector(`.mobile-nav details[data-nav="tecniche"]`);
-      if (mobileDetails) mobileDetails.open = true;
-    }
+  const desktopDetails = container.querySelector(`details.submenu[data-nav="tecniche"]`);
+  if (desktopDetails) {
+    desktopDetails.classList.add("is-active");
+    desktopDetails.open = false; // ✅ desktop: NON lasciarlo aperto dopo reload
   }
+
+  const mobileDetails = container.querySelector(`.mobile-nav details[data-nav="tecniche"]`);
+  if (mobileDetails) mobileDetails.open = true; // mobile puoi lasciarlo comodo
+}
 
  function isIOS() {
   // iPhone / iPad / iPod + iPadOS che si presenta come Macintosh con touch
@@ -198,6 +198,17 @@
       if (!clickInsideSummary && !clickInsideMenu) details.open = false;
     });
   }
+    function initDesktopSubmenuCloseOnClick(container) {
+  const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
+  if (!details) return;
+
+  details.querySelectorAll('.submenu-links a').forEach((a) => {
+    a.addEventListener("click", () => {
+      details.open = false;
+    });
+  });
+}
+
 
   async function loadHeader() {
     const host = document.getElementById(HOST_ID);
@@ -210,6 +221,7 @@
       host.innerHTML = await res.text();
 
       setActiveNav(host);
+      initDesktopSubmenuCloseOnClick(host);
       initMobileMenuFix(host);
       initSafariDropdownPortal(host);
 
