@@ -1639,4 +1639,27 @@ body:not(.home){
   .footer-center{
     justify-content:center;
   }
+}/* === FOOTER ICONS: fix definitivo (anti svg giganti) === */
+.site-footer .footer-social{
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
+
+.site-footer .footer-ico{
+  width: 20px !important;
+  height: 20px !important;
+  max-width: none !important;   /* disinnesca img,svg{max-width:100%} */
+  display: block !important;
+}
+
+/* colori originali */
+.site-footer .footer-ico--wa{ color:#25D366 !important; }
+.site-footer .footer-ico--ig{ color:#E1306C !important; }
+
