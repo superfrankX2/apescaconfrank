@@ -1250,19 +1250,14 @@ main, #site-header{
 .home .technique-button:hover{
   box-shadow: 0 14px 34px rgba(16, 94, 120, .10);
 }
-/* =========================================
-   HOME – sfondo mare elegante
-========================================= */
-
+/* HOME – sfondo mare leggermente più intenso */
 .home{
   background: linear-gradient(
     180deg,
-    #f8fbfc 0%,
-    #f3f9fb 30%,
-    #eef6f9 100%
+    #f3f9fc 0%,
+    #e9f4f8 45%,
+    #e2eef4 100%
   );
 }
-.home .card{
-  box-shadow: 0 10px 30px rgba(32, 120, 150, .08);
-}
+
 
