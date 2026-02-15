@@ -1278,5 +1278,16 @@ main, #site-header{
   transform: translateY(-3px);
 }
 
+/* =========================
+   iOS SAFARI: anti “header vuoto” (repaint fix)
+========================= */
+#site-header,
+.site-header-inner{
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+}
 
 
