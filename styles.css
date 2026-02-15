@@ -1734,4 +1734,28 @@ body:not(.home){
   height: 24px !important;
   display:block !important;
 }
+/* =========================================
+   FOOTER SOCIAL ICONS — dimensione uniforme
+========================================= */
+
+.site-footer .footer-social{
+  width: 34px;          /* dimensione esterna */
+  height: 34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.15s ease;
+}
+
+.site-footer .footer-ico,
+.site-footer .footer-ico--wa-app{
+  width: 26px;          /* dimensione reale icona */
+  height: 26px;
+  display:block;
+}
+
+.site-footer .footer-social:hover{
+  transform: translateY(-2px);
+  opacity:.9;
+}
 
