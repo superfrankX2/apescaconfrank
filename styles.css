@@ -1296,4 +1296,16 @@ main, #site-header{
   /* per non “sporcarsi” troppo nei monitor grandi */
   opacity: 1;
 }
+/* =========================================
+   HOME – sfondo mare elegante
+========================================= */
+
+.home{
+  background: linear-gradient(
+    180deg,
+    #f8fbfc 0%,
+    #f3f9fb 30%,
+    #eef6f9 100%
+  );
+}
 
