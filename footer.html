@@ -1,69 +1,68 @@
 <footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <!-- COL 1: Brand + micro copy -->
-      <div class="footer-col">
-        <div class="footer-brand">
-          <span class="footer-logo">🎣</span>
-          <span class="footer-name">apescaconfrank</span>
-        </div>
-        <p class="footer-muted">
-          Guida e charter di pesca in Liguria. Uscite guidate, tecnica, mare e passione.
-        </p>
-      </div>
+  <div class="container footer-row">
 
-      <!-- COL 2: Link -->
-      <div class="footer-col">
-        <div class="footer-title">Link</div>
-        <ul class="footer-links">
-          <li><a href="/#contatti">Contatti</a></li>
-          <li><a href="/#tecniche">Tecniche</a></li>
-          <li><a href="/chi-sono.html">Chi sono</a></li>
-          <li><a href="/pricing.html">Pricing</a></li>
-        </ul>
-      </div>
-
-      <!-- COL 3: Contatti + Social -->
-      <div class="footer-col">
-        <div class="footer-title">Contatti</div>
-
-        <div class="footer-actions">
-          <a class="footer-pill" href="mailto:vtin.andrea@gmail.com?subject=Info%20A%20pesca%20con%20Frank">
-            Email
-          </a>
-
-          <a class="footer-pill footer-pill--wa"
-             href="https://wa.me/393882496553?text=Ciao%20Frank,%20vorrei%20info%20per%20un%27uscita%20di%20pesca"
-             target="_blank" rel="noopener">
-            WhatsApp
-          </a>
-
-          <a class="footer-pill footer-pill--ig"
-             href="https://instagram.com/apescaconfrank"
-             target="_blank" rel="noopener">
-            Instagram
-          </a>
-        </div>
-
-        <p class="footer-muted footer-small">
-          P.IVA: <strong>123456789</strong>
-        </p>
-      </div>
+    <!-- SINISTRA: Brand -->
+    <div class="footer-left">
+      <span class="footer-mark">🎣</span>
+      <span class="footer-name">apescaconfrank</span>
     </div>
 
-    <div class="footer-bottom">
-      <span>© <span id="year"></span> @apescaconfrank — apescaconfrank.it</span>
-      <span class="footer-bottom-links">
-        <a href="/privacy.html">Privacy</a>
-        <span class="dot">•</span>
-        <a href="/cookie.html">Cookie</a>
+    <!-- CENTRO: Contatti -->
+    <div class="footer-center">
+      <span class="footer-contact">
+        Tel: <a href="tel:+39TUONUMERO">+39 TUONUMERO</a>
+      </span>
+
+      <span class="dot">•</span>
+
+      <span class="footer-contact">
+        Email: <a href="mailto:vtin.andrea@gmail.com">vtin.andrea@gmail.com</a>
+      </span>
+
+      <span class="dot">•</span>
+
+      <span class="footer-contact">
+        P.IVA: <strong>INSERISCI_LA_TUA_PIVA</strong>
       </span>
     </div>
+
+    <!-- DESTRA: Social -->
+    <div class="footer-right">
+
+      <a class="footer-social"
+         href="https://instagram.com/TUOUSERNAME"
+         target="_blank" rel="noopener"
+         aria-label="Instagram">
+
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M7.5 3.8h9A3.7 3.7 0 0 1 20.2 7.5v9a3.7 3.7 0 0 1-3.7 3.7h-9A3.7 3.7 0 0 1 3.8 16.5v-9A3.7 3.7 0 0 1 7.5 3.8Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 15.7a3.7 3.7 0 1 0 0-7.4 3.7 3.7 0 0 0 0 7.4Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M17.5 6.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </a>
+
+      <a class="footer-social"
+         href="https://wa.me/39TUONUMERO"
+         target="_blank" rel="noopener"
+         aria-label="WhatsApp">
+
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 21a9 9 0 1 0-7.7-4.3L3 21l4.5-1.2A9 9 0 0 0 12 21Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M9.2 8.6c.2-.4.3-.4.6-.4h.6c.2 0 .4 0 .5.4l.6 1.4c.1.2.1.4-.1.6l-.4.5c-.1.2-.2.3 0 .6.2.4.7 1.2 1.5 1.9.8.8 1.6 1.3 2 1.5.3.1.4 0 .6 0l.5-.4c.2-.2.4-.2.6-.1l1.4.6c.4.2.4.3.4.5v.6c0 .3 0 .4-.4.6-.5.3-1.4.7-2.5.5-1.2-.2-2.6-1-4.1-2.6-1.6-1.6-2.4-2.9-2.6-4.1-.2-1.1.2-2 .5-2.5Z" fill="currentColor"/>
+        </svg>
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © <span id="year"></span> A pesca con Frank
   </div>
 
   <script>
-    // aggiorna l'anno anche nel footer condiviso
     const y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();
   </script>
 </footer>
+
