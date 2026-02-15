@@ -1583,30 +1583,39 @@ body:not(.home){
 .footer-right{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:12px;
+  margin-left:auto;
 }
 
 .footer-social{
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:rgba(255,255,255,0.9);
-  border:1px solid rgba(31,41,55,0.12);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:20px;
+  height:20px;
   transition:.15s ease;
-  color:var(--text);
-}
-
-.footer-social:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 18px rgba(0,0,0,.08);
 }
 
 .footer-social svg{
-  width:18px;
-  height:18px;
+  width:20px;
+  height:20px;
 }
+
+/* COLORI ORIGINALI */
+
+.footer-social[aria-label="Instagram"]{
+  color:#E1306C;
+}
+
+.footer-social[aria-label="WhatsApp"]{
+  color:#25D366;
+}
+
+.footer-social:hover{
+  transform:translateY(-1px);
+  opacity:.85;
+}
+
 
 .footer-bottom{
   margin-top:12px;
