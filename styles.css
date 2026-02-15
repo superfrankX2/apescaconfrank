@@ -1292,5 +1292,44 @@ main, #site-header{
   transform: translateZ(0);
   will-change: transform;
 }
+/* =========================================
+   HEADER – Brand desktop raffinato
+========================================= */
+
+/* Mai sottolineare il brand */
+.brand,
+.brand:hover,
+.brand:focus,
+.brand:active{
+  text-decoration: none !important;
+}
+
+/* Layout interno */
+.brand-text{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+}
+
+/* Nome principale */
+.brand-name{
+  font-weight:800;
+  letter-spacing:.2px;
+}
+
+/* Tagline */
+.brand-tagline{
+  font-weight:500;
+  color: var(--muted);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Mobile: nascondiamo la tagline */
+@media (max-width: 860px){
+  .brand-tagline{
+    display:none;
+  }
+}
 
 
