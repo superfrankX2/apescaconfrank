@@ -1,0 +1,69 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- COL 1: Brand + micro copy -->
+      <div class="footer-col">
+        <div class="footer-brand">
+          <span class="footer-logo">🎣</span>
+          <span class="footer-name">apescaconfrank</span>
+        </div>
+        <p class="footer-muted">
+          Guida e charter di pesca in Liguria. Uscite guidate, tecnica, mare e passione.
+        </p>
+      </div>
+
+      <!-- COL 2: Link -->
+      <div class="footer-col">
+        <div class="footer-title">Link</div>
+        <ul class="footer-links">
+          <li><a href="/#contatti">Contatti</a></li>
+          <li><a href="/#tecniche">Tecniche</a></li>
+          <li><a href="/chi-sono.html">Chi sono</a></li>
+          <li><a href="/pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+
+      <!-- COL 3: Contatti + Social -->
+      <div class="footer-col">
+        <div class="footer-title">Contatti</div>
+
+        <div class="footer-actions">
+          <a class="footer-pill" href="mailto:vtin.andrea@gmail.com?subject=Info%20A%20pesca%20con%20Frank">
+            Email
+          </a>
+
+          <a class="footer-pill footer-pill--wa"
+             href="https://wa.me/393882496553?text=Ciao%20Frank,%20vorrei%20info%20per%20un%27uscita%20di%20pesca"
+             target="_blank" rel="noopener">
+            WhatsApp
+          </a>
+
+          <a class="footer-pill footer-pill--ig"
+             href="https://instagram.com/apescaconfrank"
+             target="_blank" rel="noopener">
+            Instagram
+          </a>
+        </div>
+
+        <p class="footer-muted footer-small">
+          P.IVA: <strong>123456789</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> @apescaconfrank — apescaconfrank.it</span>
+      <span class="footer-bottom-links">
+        <a href="/privacy.html">Privacy</a>
+        <span class="dot">•</span>
+        <a href="/cookie.html">Cookie</a>
+      </span>
+    </div>
+  </div>
+
+  <script>
+    // aggiorna l'anno anche nel footer condiviso
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+</footer>
