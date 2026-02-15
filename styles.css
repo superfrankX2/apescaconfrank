@@ -148,11 +148,14 @@ a.technique-link:hover { text-decoration: none; }
   top:0;
   left:0;
   right:0;
-  z-index:9999;
-  background: rgba(244,247,248,.88);
+  z-index:999999;
+  background: rgba(244,247,248,.95);
   backdrop-filter: blur(12px);
   border-bottom:1px solid var(--line);
-  transition: transform .25s ease;
+
+  /* IMPORTANTISSIMO */
+  transform: none !important;
+  transition: none !important;
 }
 
 header{ position:relative; }
