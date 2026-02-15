@@ -1346,43 +1346,51 @@ body:not(.home){
     #ffffff;
 }
 /* =========================================
-   HOME – Header soft premium
+   HOME – Header soft premium (più contrasto)
 ========================================= */
 
 .home #site-header{
-  background: rgba(210, 226, 235, 0.95); /* blu-grigio chiaro */
+  background: rgba(200, 220, 232, 0.96); /* un filo più deciso */
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(31,41,55,0.06);
-}/* HOME – fix bottone attivo */
-.home #site-header a.is-active{
-  background: rgba(31,41,55,0.12);
-  border: none;
-  box-shadow: none;
+  border-bottom: 1px solid rgba(31,41,55,0.08);
 }
 
+/* HOME – fix bottone attivo (più elegante) */
+.home #site-header a.is-active{
+  background: rgba(31,41,55,0.10);
+  border: 1px solid rgba(31,41,55,0.08);
+  box-shadow: 0 6px 14px rgba(0,0,0,.04);
+}
+
+
 /* =========================================
-   HOME – Mini card identità (più presente)
+   HOME – Mini card identità (SALTO QUALITÀ)
 ========================================= */
 
 .home .hero-role{
   display: inline-block;
-  margin: 0 0 14px;
-  padding: 8px 14px;
+  margin: 0 0 18px;
+  padding: 9px 18px;
 
-  font-size: 14.5px;
-  font-weight: 800;
-  letter-spacing: .4px;
+  font-size: 15.5px;
+  font-weight: 850;
+  letter-spacing: .3px;
 
-  color: #163646;
-  background: rgba(28, 90, 120, 0.10);
-  border: 1px solid rgba(28, 90, 120, 0.18);
+  color: #143240;
+  background: rgba(28, 90, 120, 0.16);
+  border: 1px solid rgba(28, 90, 120, 0.28);
   border-radius: 999px;
 }
 
 /* mobile */
 @media (max-width: 860px){
   .home .hero-lead{ max-width: none; }
-  .home .hero-role{ font-size: 13px; }
+  .home .hero-role{
+    font-size: 13.5px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+  }
 }
+
 
 
