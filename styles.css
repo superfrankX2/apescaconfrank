@@ -1346,20 +1346,19 @@ body:not(.home){
     #ffffff;
 }
 /* =========================================
-   HOME – Header più deciso e marino
+   HOME – Header soft premium
 ========================================= */
 
 .home #site-header{
-  background: rgba(28, 45, 58, 0.92); /* blu-grigio marino */
+  background: rgba(210, 226, 235, 0.95); /* blu-grigio chiaro */
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(31,41,55,0.06);
+}/* HOME – fix bottone attivo */
+.home #site-header a.is-active{
+  background: rgba(31,41,55,0.12);
+  border: none;
+  box-shadow: none;
 }
 
-/* Testi header chiari solo in home */
-.home #site-header a,
-.home #site-header summary,
-.home #site-header .brand-name{
-  color: #ffffff;
-}
 
 
