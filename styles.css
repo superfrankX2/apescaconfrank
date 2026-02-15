@@ -1674,5 +1674,12 @@ body:not(.home){
   width: 26px !important;
   height: 26px !important;
 }
+/* WhatsApp versione app */
+.site-footer .footer-ico--wa{
+  width: 26px !important;
+  height: 26px !important;
+  max-width: none !important;
+  display:block !important;
+}
 
 
