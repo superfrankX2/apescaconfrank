@@ -1,12 +1,12 @@
 // header-loader.js
 // Header shared loader + active nav
-// + Safari FIX: dropdown "Tecniche" portaled to <body> and styled via .is-portaled
+// + Universal FIX: dropdown "Tecniche" portaled to <body> (click sempre ok su tutti i browser)
 // + iOS FIX: robust toggle for mobile <details class="menu">
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260229"; // cambia quando vuoi bustare cache
+  const VERSION = "20260301"; // cambia per bustare cache
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -15,11 +15,6 @@
     p = p.replace(/\.html$/i, "");
     if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
     return p;
-  }
-
-  function isSafari() {
-    const ua = navigator.userAgent;
-    return /safari/i.test(ua) && !/chrome|crios|android/i.test(ua);
   }
 
   function setActiveNav(container) {
@@ -47,7 +42,7 @@
 
     if (activeLink) activeLink.classList.add("is-active");
 
-    // Evidenzia "Tecniche" se siamo in una pagina tecnica, ma NON lasciarlo aperto su desktop
+    // Evidenzia "Tecniche" se siamo in una pagina tecnica (ma non lasciarlo aperto su desktop)
     const key = activeLink ? activeLink.getAttribute("data-nav") : null;
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
@@ -55,11 +50,11 @@
       const desktopDetails = container.querySelector('details.submenu[data-nav="tecniche"]');
       if (desktopDetails) {
         desktopDetails.classList.add("is-active");
-        desktopDetails.open = false; // ✅ chiuso dopo reload
+        desktopDetails.open = false;
       }
 
       const mobileDetails = container.querySelector('.mobile-nav details[data-nav="tecniche"]');
-      if (mobileDetails) mobileDetails.open = true; // ok tenerlo aperto su mobile se vuoi
+      if (mobileDetails) mobileDetails.open = true;
     }
   }
 
@@ -110,10 +105,8 @@
     );
   }
 
-  // Safari desktop: portal dropdown "Tecniche" in <body>
-  function initSafariDropdownPortal(container) {
-    if (!isSafari()) return;
-
+  // ✅ Universal FIX: portal dropdown desktop "Tecniche" in <body> per click garantiti su tutti i browser
+  function initDropdownPortalAllBrowsers(container) {
     const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
     if (!details) return;
 
@@ -134,11 +127,12 @@
       menu.style.position = "fixed";
       menu.style.top = `${top}px`;
       menu.style.left = `${left}px`;
-      menu.style.zIndex = "2147483647";
-      menu.style.transform = "translateZ(0)";
-      menu.style.pointerEvents = "auto";
       menu.style.right = "auto";
+      menu.style.zIndex = "2147483647";
+      menu.style.pointerEvents = "auto";
+      menu.style.transform = "translateZ(0)";
 
+      // se esce a destra, rientra
       const rect = menu.getBoundingClientRect();
       const maxRight = window.innerWidth - 10;
       if (rect.right > maxRight) {
@@ -146,6 +140,7 @@
         menu.style.left = `${left}px`;
       }
 
+      // se esce in basso, prova sopra
       const rect2 = menu.getBoundingClientRect();
       const maxBottom = window.innerHeight - 10;
       if (rect2.bottom > maxBottom) {
@@ -170,10 +165,10 @@
       menu.style.position = "";
       menu.style.top = "";
       menu.style.left = "";
-      menu.style.zIndex = "";
-      menu.style.transform = "";
-      menu.style.pointerEvents = "";
       menu.style.right = "";
+      menu.style.zIndex = "";
+      menu.style.pointerEvents = "";
+      menu.style.transform = "";
 
       if (placeholder.parentNode) {
         placeholder.parentNode.insertBefore(menu, placeholder);
@@ -182,19 +177,31 @@
       portaled = false;
     }
 
+    // Importantissimo: quando si apre/chiude
     details.addEventListener("toggle", () => {
       if (details.open) portalIn();
       else portalOut();
     });
 
+    // Reposition on scroll/resize
     window.addEventListener("scroll", place, { passive: true });
     window.addEventListener("resize", place, { passive: true });
 
+    // Chiudi se click fuori
     document.addEventListener("click", (e) => {
       if (!details.open) return;
       const clickInsideSummary = summary.contains(e.target);
       const clickInsideMenu = menu.contains(e.target);
       if (!clickInsideSummary && !clickInsideMenu) details.open = false;
+    });
+
+    // ✅ FIX click “sempre”: se per qualche motivo il click non parte, navighiamo noi
+    menu.addEventListener("click", (e) => {
+      const a = e.target.closest && e.target.closest("a[href]");
+      if (!a) return;
+      e.preventDefault();
+      const href = a.getAttribute("href");
+      if (href) window.location.href = href;
     });
   }
 
@@ -211,7 +218,7 @@
       setActiveNav(host);
       initDesktopSubmenuCloseOnClick(host);
       initMobileMenuFix(host);
-      initSafariDropdownPortal(host);
+      initDropdownPortalAllBrowsers(host);
 
       window.addEventListener("popstate", () => setActiveNav(host));
     } catch (err) {
@@ -221,4 +228,3 @@
 
   document.addEventListener("DOMContentLoaded", loadHeader);
 })();
-
