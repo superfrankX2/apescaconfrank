@@ -880,7 +880,7 @@ main, #site-header{
 
 .home .card > .photo-placeholder{
   margin: 14px 0; /* prima 20px */
-}/* =========================================
+
    Home – uniforma distanza tra le sezioni
    (replica la distanza "giusta" della hero)
 ========================================= */
@@ -902,7 +902,7 @@ main, #site-header{
 
 .home .card > .actions{
   margin-top: 14px; /* prima 20px */
-}/* =========================================
+
    Home – Card cliccabili (effetto hover coerente)
 ========================================= */
 
@@ -959,7 +959,7 @@ main, #site-header{
 .home .hero-actions .ghost:active{
   transform: translateY(0px) scale(0.99);
   box-shadow: 0 10px 20px rgba(0,0,0,.08);
-}/* =========================================
+
    SAFARI FIX: dropdown sopra a tutto + details cliccabili
 ========================================= */
 
@@ -1263,7 +1263,7 @@ main, #site-header{
   );
 }
 
-}/* =========================================
+
 /* =========================================
    HOME – hover card più staccato dallo sfondo
 ========================================= */
@@ -1802,3 +1802,52 @@ body:not(.home){
   transform: translateY(-2px);
   opacity:.9;
 }
+   /* =========================================================
+   UNIFORMITÀ COLORI (HOME + PAGINE INTERNE)
+   Incolla in fondo a styles.css
+========================================================= */
+
+/* 0) Fix: se nel file hai una '}' fuori posto, rimuovila manualmente.
+   Cerca la riga: "}/* =========================================" e cancella SOLO quella graffa. */
+
+/* 1) Background unico per TUTTE le pagine (bianco premium) */
+body{
+  background:
+    radial-gradient(1200px 420px at 50% -120px, rgba(34,119,145,0.08), rgba(34,119,145,0.03) 42%, rgba(255,255,255,0) 72%),
+    #ffffff;
+}
+
+/* 2) Home non deve avere un background diverso */
+.home{
+  background: transparent !important;
+}
+
+/* 3) Header identico ovunque (anche in home) */
+#site-header{
+  background: rgba(244,247,248,.95) !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(31,41,55,0.10) !important;
+  box-shadow: 0 10px 26px rgba(10, 20, 28, 0.06) !important;
+}
+
+.home #site-header{
+  background: rgba(244,247,248,.95) !important;
+  border-bottom: 1px solid rgba(31,41,55,0.10) !important;
+  box-shadow: 0 10px 26px rgba(10, 20, 28, 0.06) !important;
+}
+
+/* 4) Card: più “premium” su bianco (vale ovunque, ma in pratica le usi in home) */
+.card{
+  background: #ffffff;
+  border: 1px solid rgba(31,41,55,0.10);
+  box-shadow: 0 18px 45px rgba(10, 20, 28, 0.08);
+}
+
+/* 5) Hover card cliccabili: stacco leggibile, coerente */
+.home .card.technique-link:hover{
+  background: #ffffff;
+  border-color: rgba(20, 100, 130, .18);
+  box-shadow: 0 22px 55px rgba(20, 100, 130, .14);
+}
+
