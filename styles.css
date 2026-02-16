@@ -1263,7 +1263,7 @@ main, #site-header{
   );
 }
 
-}/* =========================================
+/* =========================================
    HOME – hover card più staccato dallo sfondo
 ========================================= */
 
@@ -1486,32 +1486,53 @@ body:not(.home){
 
 
 /* =========================================
-   WhatsApp – Bottone flottante globale
+   WhatsApp – Bottone flottante (icona app pulita)
 ========================================= */
 
 .whatsapp-float{
   position: fixed;
-  bottom: 24px;
   right: 24px;
+  bottom: 24px;
 
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 
-  background:#25D366;
-  color:white;
-  font-size:24px;
+  /* cerchio perfetto + niente artefatti */
+  background-color: #25D366;
+  background-image: url("/images/whatsapp.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 62%;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+  z-index: 999999;
 
-  border-radius:50%;
-  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+  /* elimina underline/effetti strani */
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 
-  z-index:999999;
-  text-decoration:none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
 
-  transition: transform .15s ease;
+.whatsapp-float:hover{
+  transform: scale(1.06);
+  box-shadow: 0 16px 36px rgba(0,0,0,.26);
+}
+
+.whatsapp-float:active{
+  transform: scale(0.98);
+}
+
+/* Mobile: un filo più grande e distanziato */
+@media (max-width: 480px){
+  .whatsapp-float{
+    right: 18px;
+    bottom: 18px;
+    width: 64px;
+    height: 64px;
+    background-size: 60%;
+  }
 }
 
 .whatsapp-float:hover{
