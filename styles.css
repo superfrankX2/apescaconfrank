@@ -1084,6 +1084,18 @@ footer{
       0 6px 14px rgba(0,0,0,.10);
   }
 }
+/* Dropdown desktop: sempre cliccabile sopra al resto */
+@media (min-width: 861px){
+  .desktop-nav details.submenu { position: relative; z-index: 100000; }
+  .desktop-nav details.submenu[open] { z-index: 100001; }
+  .desktop-nav details.submenu .submenu-links { pointer-events: auto; }
+}
+
+/* Se portaled (Safari): layer massimo */
+.submenu-links.is-portaled{
+  pointer-events: auto;
+  z-index: 2147483647 !important;
+}
 
 
 
