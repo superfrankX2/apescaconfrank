@@ -1,11 +1,11 @@
 // header-loader.js
 // Shared header loader + active nav
-// Robust <details> toggling across browsers (esp. iOS WebKit: Safari/Chrome/Firefox/DuckDuckGo/Edge)
+// Mobile menu: manual toggle ALWAYS (cross-device, cross-browser)
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260303"; // cambia per bustare cache
+  const VERSION = "20260305"; // cambia per bustare cache
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -14,14 +14,6 @@
     p = p.replace(/\.html$/i, "");
     if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
     return p;
-  }
-
-  // iOS WebKit = tutti i browser su iPhone/iPad (Safari + Chrome + Firefox + DuckDuckGo + Edge ecc.)
-  function isIOSWebKit() {
-    const ua = navigator.userAgent || "";
-    const isIOS = /iphone|ipad|ipod/i.test(ua);
-    const isWebKit = /webkit/i.test(ua);
-    return isIOS && isWebKit;
   }
 
   function setActiveNav(container) {
@@ -49,6 +41,7 @@
 
     if (activeLink) activeLink.classList.add("is-active");
 
+    // Evidenzia "Tecniche" se siamo in una pagina tecnica
     const key = activeLink ? activeLink.getAttribute("data-nav") : null;
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
@@ -56,87 +49,94 @@
       const desktopDetails = container.querySelector('details.submenu[data-nav="tecniche"]');
       if (desktopDetails) {
         desktopDetails.classList.add("is-active");
-        desktopDetails.open = false; // desktop: NON aperto di default
+        desktopDetails.open = false;
       }
 
       const mobileDetails = container.querySelector('.mobile-nav details[data-nav="tecniche"]');
-      if (mobileDetails) mobileDetails.open = true; // mobile: ok aperto (se ti piace)
+      if (mobileDetails) mobileDetails.open = true;
     }
   }
 
-  // Utility: close <details> when clicking outside
-  function closeOnOutsideClick(detailsEl, whitelistEls = []) {
+  // Chiudi un <details> cliccando/toccando fuori (robusto)
+  function closeOnOutside(detailsEl, extraInsideEls = []) {
+    function isInside(target) {
+      if (detailsEl.contains(target)) return true;
+      for (const el of extraInsideEls) {
+        if (el && el.contains && el.contains(target)) return true;
+      }
+      return false;
+    }
+
     function handler(e) {
       if (!detailsEl.open) return;
-      const target = e.target;
-      if (detailsEl.contains(target)) return;
-      for (const el of whitelistEls) {
-        if (el && el.contains && el.contains(target)) return;
-      }
+      if (isInside(e.target)) return;
       detailsEl.open = false;
     }
-    // capture per evitare “race conditions”
+
+    // pointerdown in capture = il più affidabile
     document.addEventListener("pointerdown", handler, true);
     document.addEventListener("touchstart", handler, { passive: true, capture: true });
   }
 
-  // Desktop: chiudi dropdown tecniche quando clicchi una voce + fuori
+  // Desktop dropdown "Tecniche": chiudi su click link + fuori
   function initDesktopDropdown(container) {
     const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
     if (!details) return;
 
-    // chiudi quando clicchi un link nel dropdown
     details.querySelectorAll(".submenu-links a").forEach((a) => {
-      a.addEventListener("click", () => {
-        details.open = false;
-      });
+      a.addEventListener("click", () => (details.open = false));
     });
 
-    // chiudi cliccando fuori
-    closeOnOutsideClick(details);
+    closeOnOutside(details);
   }
 
-  // Mobile: gestione robusta del <details class="menu mobile-nav">
+  // ⭐ Mobile menu: toggle manuale SEMPRE (tutti i browser, tutti i device)
   function initMobileMenu(container) {
     const menu = container.querySelector("details.menu.mobile-nav");
     if (!menu) return;
 
     const summary = menu.querySelector("summary");
     const panel = menu.querySelector(".menu-panel");
+    if (!summary) return;
 
-    // Sempre: chiudi quando clicchi un link
-    menu.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => (menu.open = false));
-    });
+    // Anti doppio evento (pointer + click): evita “apre/chiude subito”
+    let lastToggleAt = 0;
+    function safeToggle(e) {
+      // blocca completamente il comportamento nativo di <details>
+      e.preventDefault();
+      e.stopPropagation();
 
-    // Chiudi cliccando fuori
-    closeOnOutsideClick(menu);
+      const now = Date.now();
+      if (now - lastToggleAt < 350) return; // ignora doppioni ravvicinati
+      lastToggleAt = now;
 
-    // Evita che il click dentro il pannello venga interpretato come “fuori”
+      menu.open = !menu.open;
+    }
+
+    // IMPORTANTISSIMO: usare pointerdown (il più consistente su mobile)
+    summary.addEventListener("pointerdown", safeToggle, { passive: false });
+    summary.addEventListener("click", safeToggle, { passive: false });
+    summary.addEventListener("touchend", safeToggle, { passive: false });
+
+    // click dentro panel non deve propagare
     if (panel) {
       panel.addEventListener("pointerdown", (e) => e.stopPropagation(), true);
       panel.addEventListener("click", (e) => e.stopPropagation(), true);
       panel.addEventListener("touchstart", (e) => e.stopPropagation(), { passive: true, capture: true });
     }
 
-    // Su iOS WebKit, NON fidarti del toggle nativo di <details>
-    // → intercettiamo il tap sul summary e toggliamo noi
-    if (isIOSWebKit() && summary) {
-      const toggle = (e) => {
-        // blocca il comportamento nativo (che su iOS WebKit è spesso buggato/incoerente)
-        e.preventDefault();
-        e.stopPropagation();
-        menu.open = !menu.open;
-      };
+    // chiudi quando clicchi un link (prima del cambio pagina)
+    menu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => (menu.open = false));
+      a.addEventListener("pointerdown", () => (menu.open = false), { passive: true });
+      a.addEventListener("touchstart", () => (menu.open = false), { passive: true });
+    });
 
-      summary.addEventListener("pointerup", toggle, { passive: false });
-      summary.addEventListener("click", toggle, { passive: false });
-      summary.addEventListener("touchend", toggle, { passive: false });
-    }
+    // chiudi cliccando fuori
+    closeOnOutside(menu, panel ? [panel] : []);
   }
 
-  // Mobile: submenu “Tecniche” dentro il pannello (opzionale ma aiuta)
-  // Chiude gli altri submenu quando ne apri uno (mantiene ordine)
+  // Mobile submenu "Tecniche": se apri uno, chiudi gli altri (ordine pulito)
   function initMobileSubmenu(container) {
     const mobileMenu = container.querySelector("details.menu.mobile-nav");
     if (!mobileMenu) return;
