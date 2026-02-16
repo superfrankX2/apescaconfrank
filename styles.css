@@ -1508,7 +1508,7 @@ body:not(.home){
   font-size:24px;
   /* cerchio perfetto + niente artefatti */
   background-color: #25D366;
-  background-image: url("/images/whatsapp.png");
+  background-image: none; /* MOD: prima url("/images/whatsapp.png") */
   background-repeat: no-repeat;
   background-position: center;
   background-size: 62%;
@@ -1528,6 +1528,13 @@ body:not(.home){
   z-index:999999;
   text-decoration:none;
   transition: transform .15s ease, box-shadow .15s ease;
+}
+
+/* MOD: lo svg dentro il bottone flottante */
+.whatsapp-float__svg{
+  width: 62%;
+  height: 62%;
+  display: block;
 }
 
   transition: transform .15s ease;
