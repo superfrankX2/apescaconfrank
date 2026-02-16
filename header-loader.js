@@ -1,14 +1,12 @@
 // header-loader.js
-// Header shared loader + active nav
-// + Safari FIX: dropdown "Tecniche" portaled to <body> and styled via .is-portaled
-// + Universal FIX: dropdown "Tecniche" portaled to <body> (click sempre ok su tutti i browser)
-// + iOS FIX: robust toggle for mobile <details class="menu">
+// Shared header loader + active nav
+// + Safari desktop FIX: portal dropdown "Tecniche" in <body> (solo Safari desktop)
+// + iOS Safari FIX: toggle robusto per mobile <details class="menu"> (solo iOS Safari)
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260229"; // cambia quando vuoi bustare cache
-  const VERSION = "20260301"; // cambia per bustare cache
+  const VERSION = "20260303"; // cambia per bustare cache
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -19,9 +17,18 @@
     return p;
   }
 
-  function isSafari() {
+  function isSafariDesktop() {
     const ua = navigator.userAgent;
-    return /safari/i.test(ua) && !/chrome|crios|android/i.test(ua);
+    // Safari desktop: contiene "Safari" ma NON Chrome/Edge/Firefox/Android
+    return /safari/i.test(ua) && !/chrome|crios|android|edg|fxios|firefox/i.test(ua);
+  }
+
+  function isIOSSafari() {
+    const ua = navigator.userAgent;
+    const isIOS = /iphone|ipad|ipod/i.test(ua);
+    const isWebKit = /webkit/i.test(ua);
+    const notOther = !/crios|fxios|edg/i.test(ua);
+    return isIOS && isWebKit && notOther;
   }
 
   function setActiveNav(container) {
@@ -49,8 +56,7 @@
 
     if (activeLink) activeLink.classList.add("is-active");
 
-    // Evidenzia "Tecniche" se siamo in una pagina tecnica, ma NON lasciarlo aperto su desktop
-    // Evidenzia "Tecniche" se siamo in una pagina tecnica (ma non lasciarlo aperto su desktop)
+    // Evidenzia "Tecniche" se siamo in una pagina tecnica
     const key = activeLink ? activeLink.getAttribute("data-nav") : null;
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
@@ -58,13 +64,11 @@
       const desktopDetails = container.querySelector('details.submenu[data-nav="tecniche"]');
       if (desktopDetails) {
         desktopDetails.classList.add("is-active");
-        desktopDetails.open = false; // ✅ chiuso dopo reload
-        desktopDetails.open = false;
+        desktopDetails.open = false; // desktop: NON aperto di default
       }
 
       const mobileDetails = container.querySelector('.mobile-nav details[data-nav="tecniche"]');
-      if (mobileDetails) mobileDetails.open = true; // ok tenerlo aperto su mobile se vuoi
-      if (mobileDetails) mobileDetails.open = true;
+      if (mobileDetails) mobileDetails.open = true; // mobile: ok aperto (se vuoi)
     }
   }
 
@@ -80,29 +84,45 @@
     });
   }
 
-  // Mobile iOS: toggle robusto per il <details class="menu">
+  // ✅ iOS Safari ONLY: toggle manuale menu mobile (su altri browser lasciamo nativo)
   function initMobileMenuFix(container) {
     const menu = container.querySelector("details.menu.mobile-nav");
     if (!menu) return;
 
-    const summary = menu.querySelector(":scope > summary");
+    // Browser normali: lascia nativo
+    if (!isIOSSafari()) {
+      menu.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", () => (menu.open = false));
+      });
+      return;
+    }
+
+    const summary = menu.querySelector("summary");
     if (!summary) return;
 
-    summary.addEventListener(
-      "click",
-      (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        menu.open = !menu.open;
-      },
-      { capture: true }
-    );
+    const toggle = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      menu.open = !menu.open;
+    };
+
+    summary.addEventListener("touchend", toggle, { passive: false });
+    summary.addEventListener("click", toggle, { passive: false });
 
     menu.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        menu.open = false;
-      });
+      a.addEventListener("click", () => (menu.open = false));
+      a.addEventListener("touchend", () => (menu.open = false), { passive: true });
     });
+
+    document.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!menu.open) return;
+        if (menu.contains(e.target)) return;
+        menu.open = false;
+      },
+      { passive: true }
+    );
 
     document.addEventListener(
       "click",
@@ -115,17 +135,15 @@
     );
   }
 
-  // Safari desktop: portal dropdown "Tecniche" in <body>
+  // ✅ Safari desktop: portal dropdown "Tecniche" in <body> + click sempre cliccabile
   function initSafariDropdownPortal(container) {
-    if (!isSafari()) return;
+    if (!isSafariDesktop()) return;
 
-  // ✅ Universal FIX: portal dropdown desktop "Tecniche" in <body> per click garantiti su tutti i browser
-  function initDropdownPortalAllBrowsers(container) {
     const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
     if (!details) return;
 
-    const summary = details.querySelector(":scope > summary");
-    const menu = details.querySelector(":scope > .submenu-links");
+    const summary = details.querySelector("summary");
+    const menu = details.querySelector(".submenu-links");
     if (!summary || !menu) return;
 
     const placeholder = document.createComment("submenu-links-placeholder");
@@ -143,12 +161,10 @@
       menu.style.left = `${left}px`;
       menu.style.right = "auto";
       menu.style.zIndex = "2147483647";
-      menu.style.transform = "translateZ(0)";
       menu.style.pointerEvents = "auto";
-      menu.style.right = "auto";
       menu.style.transform = "translateZ(0)";
 
-      // se esce a destra, rientra
+      // rientra a destra se sfora
       const rect = menu.getBoundingClientRect();
       const maxRight = window.innerWidth - 10;
       if (rect.right > maxRight) {
@@ -156,7 +172,7 @@
         menu.style.left = `${left}px`;
       }
 
-      // se esce in basso, prova sopra
+      // se sfora in basso, prova sopra
       const rect2 = menu.getBoundingClientRect();
       const maxBottom = window.innerHeight - 10;
       if (rect2.bottom > maxBottom) {
@@ -183,9 +199,7 @@
       menu.style.left = "";
       menu.style.right = "";
       menu.style.zIndex = "";
-      menu.style.transform = "";
       menu.style.pointerEvents = "";
-      menu.style.right = "";
       menu.style.transform = "";
 
       if (placeholder.parentNode) {
@@ -195,32 +209,24 @@
       portaled = false;
     }
 
-    // Importantissimo: quando si apre/chiude
     details.addEventListener("toggle", () => {
       if (details.open) portalIn();
       else portalOut();
     });
 
-    // Reposition on scroll/resize
     window.addEventListener("scroll", place, { passive: true });
     window.addEventListener("resize", place, { passive: true });
 
-    // Chiudi se click fuori
-    document.addEventListener("click", (e) => {
+    // 🔥 fondamentale: NON chiudere prima che il click sul link venga processato
+    document.addEventListener("pointerdown", (e) => {
       if (!details.open) return;
-      const clickInsideSummary = summary.contains(e.target);
-      const clickInsideMenu = menu.contains(e.target);
-      if (!clickInsideSummary && !clickInsideMenu) details.open = false;
+      const insideSummary = summary.contains(e.target);
+      const insideMenu = menu.contains(e.target);
+      if (!insideSummary && !insideMenu) details.open = false;
     });
 
-    // ✅ FIX click “sempre”: se per qualche motivo il click non parte, navighiamo noi
-    menu.addEventListener("click", (e) => {
-      const a = e.target.closest && e.target.closest("a[href]");
-      if (!a) return;
-      e.preventDefault();
-      const href = a.getAttribute("href");
-      if (href) window.location.href = href;
-    });
+    // stop propagation dentro menu (evita chiusure aggressive)
+    menu.addEventListener("pointerdown", (e) => e.stopPropagation());
   }
 
   async function loadHeader() {
@@ -237,7 +243,6 @@
       initDesktopSubmenuCloseOnClick(host);
       initMobileMenuFix(host);
       initSafariDropdownPortal(host);
-      initDropdownPortalAllBrowsers(host);
 
       window.addEventListener("popstate", () => setActiveNav(host));
     } catch (err) {
