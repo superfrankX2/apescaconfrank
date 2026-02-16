@@ -1084,10 +1084,6 @@ footer{
       0 6px 14px rgba(0,0,0,.10);
   }
 }
-details.menu.mobile-nav[open] .menu-panel{
-  display: block;
-  z-index: 2147483647;
-  pointer-events: auto;
-}
+
 
 
