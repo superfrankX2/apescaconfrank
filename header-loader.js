@@ -1,12 +1,12 @@
 // header-loader.js
 // Header shared loader + active nav
 // + Safari FIX: dropdown "Tecniche" portaled to <body> and styled via .is-portaled
-// + Mobile FIX: robust toggle for <details class="menu mobile-nav"> (iOS/Firefox/Chrome)
+// + iOS FIX: robust toggle for mobile <details class="menu">
 
 (function () {
   const HOST_ID = "site-header";
   const HEADER_URL = "/header.html";
-  const VERSION = "20260301"; // bump quando vuoi bustare cache
+  const VERSION = "20260229"; // cambia quando vuoi bustare cache
 
   function normalizePath(pathname) {
     let p = (pathname || "/").toLowerCase();
@@ -47,6 +47,7 @@
 
     if (activeLink) activeLink.classList.add("is-active");
 
+    // Evidenzia "Tecniche" se siamo in una pagina tecnica, ma NON lasciarlo aperto su desktop
     const key = activeLink ? activeLink.getAttribute("data-nav") : null;
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
@@ -54,14 +55,15 @@
       const desktopDetails = container.querySelector('details.submenu[data-nav="tecniche"]');
       if (desktopDetails) {
         desktopDetails.classList.add("is-active");
-        desktopDetails.open = false; // desktop chiuso di default
+        desktopDetails.open = false; // ✅ chiuso dopo reload
       }
 
       const mobileDetails = container.querySelector('.mobile-nav details[data-nav="tecniche"]');
-      if (mobileDetails) mobileDetails.open = true;
+      if (mobileDetails) mobileDetails.open = true; // ok tenerlo aperto su mobile se vuoi
     }
   }
 
+  // Chiudi dropdown desktop quando clicchi una voce (prima del reload)
   function initDesktopSubmenuCloseOnClick(container) {
     const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
     if (!details) return;
@@ -73,7 +75,7 @@
     });
   }
 
-  // ✅ MOBILE: toggle robustissimo (iOS/Firefox/Chrome)
+  // Mobile iOS: toggle robusto per il <details class="menu">
   function initMobileMenuFix(container) {
     const menu = container.querySelector("details.menu.mobile-nav");
     if (!menu) return;
@@ -81,42 +83,30 @@
     const summary = menu.querySelector(":scope > summary");
     if (!summary) return;
 
-    // Evita doppio toggle nativo e “click fantasma”
-    const toggleMenu = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      menu.open = !menu.open;
-    };
-
-    // Pointerdown è la cosa più stabile su mobile
-    summary.addEventListener("pointerdown", toggleMenu, { capture: true });
-
-    // Fallback: alcuni browser chiamano comunque click
     summary.addEventListener(
       "click",
       (e) => {
         e.preventDefault();
         e.stopPropagation();
+        menu.open = !menu.open;
       },
       { capture: true }
     );
 
-    // Click su link -> chiudi menu
     menu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", () => {
         menu.open = false;
       });
     });
 
-    // Click fuori -> chiudi menu (in capture, così non viene “mangiato”)
     document.addEventListener(
-      "pointerdown",
+      "click",
       (e) => {
         if (!menu.open) return;
         if (menu.contains(e.target)) return;
         menu.open = false;
       },
-      { capture: true }
+      { passive: true }
     );
   }
 
