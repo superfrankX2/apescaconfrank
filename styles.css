@@ -859,61 +859,66 @@ footer{
   text-decoration:none;
 }
 
-/* ==========================
-   WhatsApp – Floating (SVG) FIX DEFINITIVO
-   (mai gigante, sempre sopra tutto)
-========================== */
-a.whatsapp-float{
-  position: fixed !important;
-  right: 24px !important;
-  bottom: 24px !important;
+/* =========================================
+   WhatsApp floating — CERCHIO pulito (globale)
+========================================= */
 
-  width: 60px !important;
-  height: 60px !important;
+.whatsapp-float{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
 
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  overflow: hidden;
 
-  border-radius: 50% !important;
-  overflow:hidden !important;
+  background: #25D366;
+  color: #ffffff;
 
-  z-index: 2147483647 !important;
-  isolation: isolate !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  text-decoration:none !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+  z-index: 2147483647;
+
+  text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 
-  box-shadow: 0 12px 30px rgba(0,0,0,.22) !important;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
-a.whatsapp-float > svg.whatsapp-float__svg{
-  width: 84% !important;   /* +12% circa rispetto al 75%/78% */
-  height: 84% !important;
-  display:block !important;
-  max-width:none !important;
-  max-height:none !important;
-  flex: 0 0 auto !important;
+.whatsapp-float:hover{
+  transform: scale(1.06);
+  box-shadow: 0 16px 36px rgba(0,0,0,.26);
 }
+.whatsapp-float:active{ transform: scale(0.98); }
 
-a.whatsapp-float:hover{
-  transform: scale(1.06) !important;
-  box-shadow: 0 16px 36px rgba(0,0,0,.26) !important;
+.whatsapp-float__svg{
+  width: 72%;
+  height: 72%;
+  display: block;
+
+  /* important: evita che regole globali tipo svg{max-width:100%} facciano casino */
+  max-width: none;
+  max-height: none;
+  flex: 0 0 auto;
 }
-a.whatsapp-float:active{ transform: scale(0.98) !important; }
 
 @media (max-width: 480px){
-  a.whatsapp-float{
-    right: 18px !important;
-    bottom: 18px !important;
-    width: 64px !important;
-    height: 64px !important;
+  .whatsapp-float{
+    right: 18px;
+    bottom: 18px;
+    width: 64px;
+    height: 64px;
   }
-  a.whatsapp-float > svg.whatsapp-float__svg{
-    width: 84% !important;
-    height: 84% !important;
+  .whatsapp-float__svg{
+    width: 72%;
+    height: 72%;
   }
 }
+
 
 /* ==========================
    Footer comune (site-footer)
