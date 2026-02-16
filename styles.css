@@ -1850,4 +1850,55 @@ body{
   border-color: rgba(20, 100, 130, .18);
   box-shadow: 0 22px 55px rgba(20, 100, 130, .14);
 }
+/* =========================================
+   FIX WhatsApp floating (SVG gigante + sotto tutto)
+   Incolla in fondo a styles.css
+========================================= */
+
+.whatsapp-float{
+  position: fixed !important;
+  right: 24px !important;
+  bottom: 24px !important;
+
+  width: 60px !important;
+  height: 60px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+  overflow: hidden !important;              /* IMPORTANT: taglia eventuali sbordi */
+
+  z-index: 2147483647 !important;           /* sopra a TUTTO */
+  isolation: isolate !important;            /* stacking context pulito */
+  pointer-events: auto !important;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,.22) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* lo SVG deve stare “dentro” e non prendere dimensioni strane */
+.whatsapp-float__svg{
+  width: 78% !important;                    /* + o - qui regoli quanto grande è il logo */
+  height: 78% !important;
+  display: block !important;
+  flex: 0 0 auto !important;
+  max-width: none !important;               /* evita interferenze di img/svg globali */
+  max-height: none !important;
+}
+
+/* mobile */
+@media (max-width: 480px){
+  .whatsapp-float{
+    right: 18px !important;
+    bottom: 18px !important;
+    width: 64px !important;
+    height: 64px !important;
+  }
+  .whatsapp-float__svg{
+    width: 78% !important;
+    height: 78% !important;
+  }
+}
 
