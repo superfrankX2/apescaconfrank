@@ -542,6 +542,7 @@ details.submenu.is-active > summary{
   box-shadow: 0 6px 14px rgba(0,0,0,.05);
 }
 
+
 form{
   display:flex;
   flex-direction: column;
@@ -820,8 +821,32 @@ main, #site-header{
 }
 
 /* =========================================
+   Home – Chi sono: teaser compatto
+========================================= */
+.about-card{
+  gap: 10px;
+}
+
+.about-points{
+  margin: 6px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.about-points li{
+  margin: 6px 0;
+  line-height: 1.55;
+  color: #24303f;
+}
+
+.about-card .more{
+  padding-top: 6px;
+}
+
+/* =========================================
    Home – Chi sono (versione elegante)
 ========================================= */
+
 .about-card{
   gap: 14px;
 }
@@ -845,7 +870,6 @@ main, #site-header{
 .about-card .more{
   padding-top: 4px;
 }
-
 /* =========================================
    Home – uniforma spazi interni card
 ========================================= */
@@ -856,10 +880,9 @@ main, #site-header{
 
 .home .card > .photo-placeholder{
   margin: 14px 0; /* prima 20px */
-}
-
-/* =========================================
+}/* =========================================
    Home – uniforma distanza tra le sezioni
+   (replica la distanza "giusta" della hero)
 ========================================= */
 .home section{
   padding-top: 60px;
@@ -876,16 +899,16 @@ main, #site-header{
   padding-bottom: 60px;
 }
 
+
 .home .card > .actions{
   margin-top: 14px; /* prima 20px */
-}
-
-/* =========================================
+}/* =========================================
    Home – Card cliccabili (effetto hover coerente)
 ========================================= */
+
 .home .card.technique-link{
-  transition: transform .18s ease,
-              box-shadow .18s ease,
+  transition: transform .18s ease, 
+              box-shadow .18s ease, 
               border-color .18s ease,
               background-color .18s ease;
 }
@@ -900,14 +923,303 @@ main, #site-header{
 .home .card.technique-link:hover .more{
   color: #111827;
 }
+/* =========================================
+   Home – Hero buttons: effetto "cliccabile" premium
+   (coerente con i bottoni tecniche)
+========================================= */
+.home .hero-actions .cta,
+.home .hero-actions .ghost{
+  transition: transform .18s ease,
+              box-shadow .18s ease,
+              border-color .18s ease,
+              background-color .18s ease,
+              opacity .18s ease;
+  will-change: transform;
+}
+
+/* Hover: micro lift + shadow */
+.home .hero-actions .cta:hover,
+.home .hero-actions .ghost:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.10);
+  text-decoration: none;
+}
+
+/* Rafforza leggermente il bordo del ghost come le card tecniche */
+.home .hero-actions .ghost:hover{
+  border-color: rgba(31,41,55,.20);
+  background: rgba(31,41,55,.03);
+}
+
+/* CTA scuro: solo un pelo più "pressabile" */
+.home .hero-actions .cta:hover{
+  opacity: .95; /* tu avevi .92, qui è più elegante */
+}
+.home .hero-actions .cta:active,
+.home .hero-actions .ghost:active{
+  transform: translateY(0px) scale(0.99);
+  box-shadow: 0 10px 20px rgba(0,0,0,.08);
+}/* =========================================
+   SAFARI FIX: dropdown sopra a tutto + details cliccabili
+========================================= */
+
+/* 1) forza il layer dell’header sopra al contenuto (Safari + backdrop-filter + transform) */
+#site-header{
+  z-index: 99999;         /* più alto */
+  isolation: isolate;     /* crea stacking context “pulito” */
+  transform: translateZ(0); /* compositing: evita che il dropdown finisca sotto */
+}
+
+/* 2) dropdown tecniche desktop sempre sopra */
+@media (min-width: 861px){
+  .desktop-nav details.submenu{
+    position: relative;
+    z-index: 100000;
+  }
+  .desktop-nav details.submenu[open]{
+    z-index: 100001; /* quando aperto sale ancora */
+  }
+  .desktop-nav .submenu-links{
+    z-index: 100002;
+  }
+}
+
+/* 3) iOS: miglior “tap” sui summary (riduce i casi in cui non si apre) */
+.menu > summary,
+.desktop-nav details.submenu > summary{
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* =========================================
+   SAFARI FIX: layering + tap su details/summary
+========================================= */
+
+#site-header{
+  z-index: 99999;
+  isolation: isolate;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* il dropdown desktop deve stare sopra */
+@media (min-width: 861px){
+  .desktop-nav details.submenu[open]{
+    z-index: 100000;
+  }
+  .desktop-nav details.submenu[open] .submenu-links{
+    z-index: 100001;
+  }
+}
+
+.menu > summary,
+.desktop-nav details.submenu > summary{
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+/* =========================================
+   SAFARI-SAFE MENU (no <details>)
+   Incollare in fondo a styles.css
+========================================= */
+
+/* Header super sopra */
+#site-header{
+  z-index: 999999;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  will-change: transform;
+}
+
+/* --- Desktop dropdown --- */
+.nav-dropdown{ position: relative; }
+
+.nav-dropdown__toggle{
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 6px 8px;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.nav-dropdown__toggle:hover{ background: rgba(255,255,255,.6); }
+
+.nav-dropdown.is-active .nav-dropdown__toggle{
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 14px rgba(0,0,0,.05);
+}
+
+/* Il menu: di base nascosto */
+.nav-dropdown__menu{
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  min-width: 180px;
+  padding: 8px 0;
+  z-index: 999999; /* sopra tutto */
+}
+
+/* visibile quando aperto */
+.nav-dropdown.is-open .nav-dropdown__menu{ display: flex; flex-direction: column; }
+
+.nav-dropdown__menu a{
+  padding: 10px 16px;
+  text-decoration: none;
+}
+.nav-dropdown__menu a:hover{
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+
+/* --- Mobile menu button (al posto di details) --- */
+.mobile-menu-btn{
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.7);
+  font-weight:650;
+  min-height:38px;
+  user-select: none;
+}
+
+/* Riutilizziamo il tuo .menu-panel ma lo rendiamo compatibile col nuovo markup */
+.mobile-nav{ position: relative; } /* così il panel resta ancorato al bottone */
+
+.mobile-nav .menu-panel{
+  position:absolute;
+  right:0;
+  top: calc(var(--header-h) - 8px);
+  width: calc(100vw - 24px);
+  max-width: 320px;
+  z-index: 999999;
+}
+
+/* Submenu mobile */
+.mobile-submenu__toggle{
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.mobile-submenu__toggle:hover{ background-color: rgba(255, 255, 255, 0.6); }
+
+.mobile-submenu__links{
+  display: none;
+  padding: 0 0 8px;
+}
+.mobile-submenu.is-open .mobile-submenu__links{ display: block; }
+
+.mobile-submenu__links a{
+  display:block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.mobile-submenu__links a:hover{
+  background-color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}
+/* =========================================
+   SAFARI + LAYER FIX (dropdown non va sotto)
+   Incolla in fondo a styles.css
+========================================= */
+
+/* Header sempre sopra */
+#site-header{
+  z-index: 999999 !important;
+  isolation: isolate;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Desktop dropdown: sopra a tutto */
+@media (min-width: 861px){
+  .desktop-nav details.submenu[open] .submenu-links{
+    z-index: 999999 !important;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+/* =========================================
+   SAFARI portal dropdown: stile identico anche fuori da .desktop-nav
+   (incolla in fondo a styles.css)
+========================================= */
+
+#site-header{
+  z-index: 999999 !important;
+  isolation: isolate;
+}
+
+/* Quando la submenu-links viene portata in <body> */
+.submenu-links.is-portaled{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  z-index: 2147483647 !important;
+}
+
+.submenu-links.is-portaled a{
+  padding: 10px 16px;
+  color: var(--text);
+  text-decoration: none;
+  display: block;
+}
+
+.submenu-links.is-portaled a:hover{
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+/* =========================
+   FIX DESKTOP: dropdown "Tecniche" non deve essere sempre visibile
+========================= */
+@media (min-width: 861px){
+  /* di default nascosto */
+  .desktop-nav details.submenu > .submenu-links{
+    display: none;
+  }
+
+  /* visibile solo quando details è open */
+  .desktop-nav details.submenu[open] > .submenu-links{
+    display: flex;
+  }
+}
+
+/* Se Safari "porta" il menu in <body>, deve restare visibile quando portaled */
+.submenu-links.is-portaled{
+  display: flex;
+}
 
 /* =========================================
    HOME: mood “professionale + mare” (SOFT premium)
 ========================================= */
+
 :root{
   --shadow-sea: 0 10px 30px rgba(16, 94, 120, .08);
 }
 
+/* Aura marina SOLO dietro la hero (super discreta) */
 .home .hero{
   position: relative;
   isolation: isolate;
@@ -916,7 +1228,7 @@ main, #site-header{
 .home .hero::before{
   content:"";
   position:absolute;
-  inset: -20px -20px -40px -20px;
+  inset: -20px -20px -40px -20px; /* un pelo più grande della sezione */
   pointer-events:none;
   z-index:-1;
   background:
@@ -925,31 +1237,48 @@ main, #site-header{
   filter: blur(0.2px);
 }
 
+/* Ombra card leggermente più “coastal”, SOLO home */
 .home .card{
   box-shadow: var(--shadow-sea);
 }
 
+/* Micro-dettaglio: bordo superiore leggero sulle card hero */
 .home .hero .card{
   border-top: 1px solid rgba(34,119,145,.12);
 }
 
+/* Hover un filo più elegante (senza cambiare colori) */
+.home .hero-actions .cta:hover,
+.home .hero-actions .ghost:hover,
+.home .technique-button:hover{
+  box-shadow: 0 14px 34px rgba(16, 94, 120, .10);
+}
 /* HOME – sfondo più leggero e premium */
 .home{
   background: linear-gradient(
     180deg,
-    #f2f6f8 0%,
-    #f7fafb 36%,
+    #eef4f7 0%,
+    #f6f9fb 35%,
     #ffffff 100%
   );
 }
 
-/* HOME – hover card più staccato dallo sfondo */
+}/* =========================================
+/* =========================================
+   HOME – hover card più staccato dallo sfondo
+========================================= */
+
 .home .card.technique-link{
   background: #ffffff;
+  transition: transform .18s ease,
+              box-shadow .18s ease,
+              border-color .18s ease,
+              background-color .18s ease;
 }
 
+/* Hover più leggibile */
 .home .card.technique-link:hover{
-  background: #ffffff;
+  background: #ffffff; /* niente trasparenze */
   border-color: rgba(20, 100, 130, .18);
   box-shadow: 0 18px 40px rgba(20, 100, 130, .15);
   transform: translateY(-3px);
@@ -966,10 +1295,11 @@ main, #site-header{
   transform: translateZ(0);
   will-change: transform;
 }
-
 /* =========================================
    HEADER – Brand desktop raffinato
 ========================================= */
+
+/* Mai sottolineare il brand */
 .brand,
 .brand:hover,
 .brand:focus,
@@ -977,17 +1307,20 @@ main, #site-header{
   text-decoration: none !important;
 }
 
+/* Layout interno */
 .brand-text{
   display:flex;
   align-items:baseline;
   gap:10px;
 }
 
+/* Nome principale */
 .brand-name{
   font-weight:800;
   letter-spacing:.2px;
 }
 
+/* Tagline */
 .brand-tagline{
   font-weight:500;
   color: var(--muted);
@@ -995,15 +1328,16 @@ main, #site-header{
   white-space: nowrap;
 }
 
+/* Mobile: nascondiamo la tagline */
 @media (max-width: 860px){
   .brand-tagline{
     display:none;
   }
 }
-
 /* =========================================
    Pagine interne – sfumatura mare premium
 ========================================= */
+
 body:not(.home){
   background:
     radial-gradient(
@@ -1014,37 +1348,28 @@ body:not(.home){
     ),
     #ffffff;
 }
-
 /* =========================================
-   HOME – Header soft premium
+   HOME – Header soft premium (più contrasto)
 ========================================= */
+
 .home #site-header{
-  background: rgba(176, 195, 205, 0.86);
-  -webkit-backdrop-filter: blur(14px) saturate(120%);
-  backdrop-filter: blur(14px) saturate(120%);
-  border-bottom: 1px solid rgba(10, 20, 28, 0.10);
-  box-shadow: 0 10px 26px rgba(10, 20, 28, 0.08);
+  background: rgba(178, 195, 205, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-.home #site-header .desktop-nav a:hover,
-.home #site-header .desktop-nav details.submenu > summary:hover{
-  background: rgba(255,255,255,0.30);
-}
-
+/* HOME – fix bottone attivo (più elegante) */
 .home #site-header a.is-active{
-  background: rgba(255,255,255,0.38);
-  border: 1px solid rgba(255,255,255,0.35);
-  box-shadow: none;
+  background: rgba(31,41,55,0.10);
+  border: 1px solid rgba(31,41,55,0.08);
+  box-shadow: 0 6px 14px rgba(0,0,0,.04);
 }
 
-.home #site-header .cta{
-  background: rgba(20, 32, 44, 0.92);
-}
-.home #site-header .cta:hover{ opacity: .95; }
 
 /* =========================================
-   HOME – Mini card identità
+   HOME – Mini card identità (SALTO QUALITÀ)
 ========================================= */
+
 .home .hero-role{
   display: inline-block;
   margin: 0 0 18px;
@@ -1054,12 +1379,13 @@ body:not(.home){
   font-weight: 850;
   letter-spacing: .3px;
 
-  color: rgba(12, 28, 38, 0.92);
-  background: rgba(18, 80, 110, 0.12);
-  border: 1px solid rgba(18, 80, 110, 0.22);
+  color: #143240;
+  background: rgba(28, 90, 120, 0.16);
+  border: 1px solid rgba(28, 90, 120, 0.28);
   border-radius: 999px;
 }
 
+/* mobile */
 @media (max-width: 860px){
   .home .hero-lead{ max-width: none; }
   .home .hero-role{
@@ -1068,10 +1394,72 @@ body:not(.home){
     margin-bottom: 14px;
   }
 }
+/* =========================================================
+   HOME – PALETTE “SEA PREMIUM” (header + background + pill)
+   Incolla in fondo a styles.css
+========================================================= */
+
+/* Sfondo home: quasi bianco con un filo di freddo (premium, non piscina) */
+.home{
+  background: linear-gradient(
+    180deg,
+    #f2f6f8 0%,
+    #f7fafb 36%,
+    #ffffff 100%
+  );
+}
+
+/* Header home: slate sea (integrato, non blocco) */
+.home #site-header{
+  background: rgba(176, 195, 205, 0.86); /* slate sea */
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  border-bottom: 1px solid rgba(10, 20, 28, 0.10);
+  box-shadow: 0 10px 26px rgba(10, 20, 28, 0.08);
+}
+
+/* Link hover più coerente su header home */
+.home #site-header .desktop-nav a:hover,
+.home #site-header .desktop-nav details.submenu > summary:hover{
+  background: rgba(255,255,255,0.30);
+}
+
+/* Stato attivo in header: pill soft, leggibile (niente “grigione”) */
+.home #site-header a.is-active{
+  background: rgba(255,255,255,0.38);
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: none;
+}
+
+/* CTA “Contattami” resta protagonista anche sull’header chiaro */
+.home #site-header .cta{
+  background: rgba(20, 32, 44, 0.92);
+}
+.home #site-header .cta:hover{ opacity: .95; }
+
+/* Brand sempre pulito (mai underline) */
+.home #site-header .brand,
+.home #site-header .brand:hover,
+.home #site-header .brand:focus{
+  text-decoration: none !important;
+}
+
+/* Pill identità: più “ink” (cattura l’occhio) ma coerente */
+.home .hero-role{
+  color: rgba(12, 28, 38, 0.92);
+  background: rgba(18, 80, 110, 0.12);
+  border: 1px solid rgba(18, 80, 110, 0.22);
+}
+
+/* Facoltativo: rende le card un pelo più “staccate” dal fondo */
+.home .card{
+  box-shadow: 0 18px 45px rgba(10, 20, 28, 0.08);
+}
 
 /* =========================================
    WhatsApp – Bottone sezione contatti
 ========================================= */
+
 .whatsapp-btn{
   display:flex;
   align-items:center;
@@ -1097,43 +1485,55 @@ body:not(.home){
   text-decoration:none;
 }
 
+
 /* =========================================
-   WhatsApp – Bottone flottante (PNG in <img>)
-   DEFINITIVO + premium + zero deformazioni
+   WhatsApp – Bottone flottante globale
+   WhatsApp – Bottone flottante (icona app pulita)
 ========================================= */
+
 .whatsapp-float{
   position: fixed;
+  bottom: 24px;
   right: 24px;
   bottom: 24px;
 
-  width: 62px;
-  height: 62px;
-  border-radius: 999px;
+  width: 56px;
+  height: 56px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 
-  display: grid;
-  place-items: center;
+  background:#25D366;
+  color:white;
+  font-size:24px;
+  /* cerchio perfetto + niente artefatti */
+  background-color: #25D366;
+  background-image: url("/images/whatsapp.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 62%;
 
-  background: #25D366;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   box-shadow: 0 12px 30px rgba(0,0,0,.22);
-
   z-index: 999999;
+
+  border-radius:50%;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+  /* elimina underline/effetti strani */
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 
+  z-index:999999;
+  text-decoration:none;
   transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.whatsapp-float img{
-  width: 62%;
-  height: 62%;
-  display: block;
-  object-fit: contain;
-}
-
+  transition: transform .15s ease;
 .whatsapp-float:hover{
   transform: scale(1.06);
   box-shadow: 0 16px 36px rgba(0,0,0,.26);
-  text-decoration: none;
 }
 
 .whatsapp-float:active{
@@ -1145,25 +1545,19 @@ body:not(.home){
   .whatsapp-float{
     right: 18px;
     bottom: 18px;
-    width: 66px;
-    height: 66px;
-  }
-  .whatsapp-float img{
-    width: 60%;
-    height: 60%;
+    width: 64px;
+    height: 64px;
+    background-size: 60%;
   }
 }
 
-/* Accessibilità: riduci animazioni */
-@media (prefers-reduced-motion: reduce){
-  .whatsapp-float{
-    transition: none;
-  }
+.whatsapp-float:hover{
+  transform: scale(1.08);
 }
-
 /* =========================================
    FOOTER compatto corporate
 ========================================= */
+
 .site-footer{
   margin-top: 60px;
   padding: 18px 0 12px;
@@ -1245,13 +1639,20 @@ body:not(.home){
 }
 
 /* COLORI ORIGINALI */
-.footer-social[aria-label="Instagram"]{ color:#E1306C; }
-.footer-social[aria-label="WhatsApp"]{ color:#25D366; }
+
+.footer-social[aria-label="Instagram"]{
+  color:#E1306C;
+}
+
+.footer-social[aria-label="WhatsApp"]{
+  color:#25D366;
+}
 
 .footer-social:hover{
   transform:translateY(-1px);
   opacity:.85;
 }
+
 
 .footer-bottom{
   margin-top:12px;
@@ -1260,21 +1661,122 @@ body:not(.home){
   color:var(--muted);
 }
 
-.dot{ opacity:.5; }
+.dot{
+  opacity:.5;
+}
+
+/* MOBILE */
 
 @media (max-width: 900px){
   .footer-row{
     flex-direction:column;
     gap:14px;
   }
+
   .footer-center{
     justify-content:center;
   }
+}/* === FOOTER ICONS: fix definitivo (anti svg giganti) === */
+.site-footer .footer-social{
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
-/* FOOTER SOCIAL ICONS — dimensione uniforme */
+.site-footer .footer-ico{
+  width: 20px !important;
+  height: 20px !important;
+  max-width: none !important;   /* disinnesca img,svg{max-width:100%} */
+  display: block !important;
+}
+
+/* colori originali */
+.site-footer .footer-ico--wa{ color:#25D366 !important; }
+.site-footer .footer-ico--ig{ color:#E1306C !important; }
+
+/* Instagram */
+.site-footer .footer-ico--ig{
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* WhatsApp leggermente più grande per compensare proporzioni */
+.site-footer .footer-ico--wa{
+  width: 26px !important;
+  height: 26px !important;
+}
+/* WhatsApp versione app */
+.site-footer .footer-ico--wa{
+  width: 26px !important;
+  height: 26px !important;
+  max-width: none !important;
+  display:block !important;
+}
+
+.site-footer .footer-ico--wa{
+  width: 26px !important;
+  height: 26px !important;
+  max-width: none !important;
+  display:block !important;
+}
+/* WhatsApp come icona app (file ufficiale) */
+.site-footer .footer-social--wa{
+  width: 28px !important;
+  height: 28px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  background: transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+.site-footer .footer-icoimg{
+  width: 24px !important;
+  height: 24px !important;
+  display:block !important;
+  border-radius: 6px; /* coerente con l’icona app */
+}
+
+/* hover premium */
+.site-footer .footer-social--wa:hover{
+  transform: translateY(-1px);
+  opacity: .95;
+}
+.site-footer .footer-icoimg{
+  width: 24px !important;
+  height: 24px !important;
+  display: block !important;
+  object-fit: contain;
+}
+/* WhatsApp app-icon (SVG inline) */
+.site-footer .footer-social--wa{
+  width: 28px !important;
+  height: 28px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+}
+
+.site-footer .footer-ico--wa-app{
+  width: 24px !important;
+  height: 24px !important;
+  display:block !important;
+}
+/* =========================================
+   FOOTER SOCIAL ICONS — dimensione uniforme
+========================================= */
+
 .site-footer .footer-social{
-  width: 34px;
+  width: 34px;          /* dimensione esterna */
   height: 34px;
   display:flex;
   align-items:center;
@@ -1284,7 +1786,7 @@ body:not(.home){
 
 .site-footer .footer-ico,
 .site-footer .footer-ico--wa-app{
-  width: 26px;
+  width: 26px;          /* dimensione reale icona */
   height: 26px;
   display:block;
 }
@@ -1293,4 +1795,3 @@ body:not(.home){
   transform: translateY(-2px);
   opacity:.9;
 }
-
