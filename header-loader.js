@@ -1,7 +1,6 @@
 // header-loader.js
 // Shared header loader + active nav
-// + Safari desktop FIX: portal dropdown "Tecniche" in <body> (solo Safari desktop)
-// + iOS Safari FIX: toggle robusto per mobile <details class="menu"> (solo iOS Safari)
+// Robust <details> toggling across browsers (esp. iOS WebKit: Safari/Chrome/Firefox/DuckDuckGo/Edge)
 
 (function () {
   const HOST_ID = "site-header";
@@ -17,18 +16,12 @@
     return p;
   }
 
-  function isSafariDesktop() {
-    const ua = navigator.userAgent;
-    // Safari desktop: contiene "Safari" ma NON Chrome/Edge/Firefox/Android
-    return /safari/i.test(ua) && !/chrome|crios|android|edg|fxios|firefox/i.test(ua);
-  }
-
-  function isIOSSafari() {
-    const ua = navigator.userAgent;
+  // iOS WebKit = tutti i browser su iPhone/iPad (Safari + Chrome + Firefox + DuckDuckGo + Edge ecc.)
+  function isIOSWebKit() {
+    const ua = navigator.userAgent || "";
     const isIOS = /iphone|ipad|ipod/i.test(ua);
     const isWebKit = /webkit/i.test(ua);
-    const notOther = !/crios|fxios|edg/i.test(ua);
-    return isIOS && isWebKit && notOther;
+    return isIOS && isWebKit;
   }
 
   function setActiveNav(container) {
@@ -56,7 +49,6 @@
 
     if (activeLink) activeLink.classList.add("is-active");
 
-    // Evidenzia "Tecniche" se siamo in una pagina tecnica
     const key = activeLink ? activeLink.getAttribute("data-nav") : null;
     const isTechnique = ["surfcasting", "beach-ledgering", "spinning"].includes(key);
 
@@ -68,165 +60,98 @@
       }
 
       const mobileDetails = container.querySelector('.mobile-nav details[data-nav="tecniche"]');
-      if (mobileDetails) mobileDetails.open = true; // mobile: ok aperto (se vuoi)
+      if (mobileDetails) mobileDetails.open = true; // mobile: ok aperto (se ti piace)
     }
   }
 
-  // Chiudi dropdown desktop quando clicchi una voce (prima del reload)
-  function initDesktopSubmenuCloseOnClick(container) {
+  // Utility: close <details> when clicking outside
+  function closeOnOutsideClick(detailsEl, whitelistEls = []) {
+    function handler(e) {
+      if (!detailsEl.open) return;
+      const target = e.target;
+      if (detailsEl.contains(target)) return;
+      for (const el of whitelistEls) {
+        if (el && el.contains && el.contains(target)) return;
+      }
+      detailsEl.open = false;
+    }
+    // capture per evitare “race conditions”
+    document.addEventListener("pointerdown", handler, true);
+    document.addEventListener("touchstart", handler, { passive: true, capture: true });
+  }
+
+  // Desktop: chiudi dropdown tecniche quando clicchi una voce + fuori
+  function initDesktopDropdown(container) {
     const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
     if (!details) return;
 
-    details.querySelectorAll('.submenu-links a').forEach((a) => {
+    // chiudi quando clicchi un link nel dropdown
+    details.querySelectorAll(".submenu-links a").forEach((a) => {
       a.addEventListener("click", () => {
         details.open = false;
       });
     });
+
+    // chiudi cliccando fuori
+    closeOnOutsideClick(details);
   }
 
-  // ✅ iOS Safari ONLY: toggle manuale menu mobile (su altri browser lasciamo nativo)
-  function initMobileMenuFix(container) {
+  // Mobile: gestione robusta del <details class="menu mobile-nav">
+  function initMobileMenu(container) {
     const menu = container.querySelector("details.menu.mobile-nav");
     if (!menu) return;
 
-    // Browser normali: lascia nativo
-    if (!isIOSSafari()) {
-      menu.querySelectorAll("a").forEach((a) => {
-        a.addEventListener("click", () => (menu.open = false));
-      });
-      return;
-    }
-
     const summary = menu.querySelector("summary");
-    if (!summary) return;
+    const panel = menu.querySelector(".menu-panel");
 
-    const toggle = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      menu.open = !menu.open;
-    };
-
-    summary.addEventListener("touchend", toggle, { passive: false });
-    summary.addEventListener("click", toggle, { passive: false });
-
+    // Sempre: chiudi quando clicchi un link
     menu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", () => (menu.open = false));
-      a.addEventListener("touchend", () => (menu.open = false), { passive: true });
     });
 
-    document.addEventListener(
-      "touchstart",
-      (e) => {
-        if (!menu.open) return;
-        if (menu.contains(e.target)) return;
-        menu.open = false;
-      },
-      { passive: true }
-    );
+    // Chiudi cliccando fuori
+    closeOnOutsideClick(menu);
 
-    document.addEventListener(
-      "click",
-      (e) => {
-        if (!menu.open) return;
-        if (menu.contains(e.target)) return;
-        menu.open = false;
-      },
-      { passive: true }
-    );
+    // Evita che il click dentro il pannello venga interpretato come “fuori”
+    if (panel) {
+      panel.addEventListener("pointerdown", (e) => e.stopPropagation(), true);
+      panel.addEventListener("click", (e) => e.stopPropagation(), true);
+      panel.addEventListener("touchstart", (e) => e.stopPropagation(), { passive: true, capture: true });
+    }
+
+    // Su iOS WebKit, NON fidarti del toggle nativo di <details>
+    // → intercettiamo il tap sul summary e toggliamo noi
+    if (isIOSWebKit() && summary) {
+      const toggle = (e) => {
+        // blocca il comportamento nativo (che su iOS WebKit è spesso buggato/incoerente)
+        e.preventDefault();
+        e.stopPropagation();
+        menu.open = !menu.open;
+      };
+
+      summary.addEventListener("pointerup", toggle, { passive: false });
+      summary.addEventListener("click", toggle, { passive: false });
+      summary.addEventListener("touchend", toggle, { passive: false });
+    }
   }
 
-  // ✅ Safari desktop: portal dropdown "Tecniche" in <body> + click sempre cliccabile
-  function initSafariDropdownPortal(container) {
-    if (!isSafariDesktop()) return;
+  // Mobile: submenu “Tecniche” dentro il pannello (opzionale ma aiuta)
+  // Chiude gli altri submenu quando ne apri uno (mantiene ordine)
+  function initMobileSubmenu(container) {
+    const mobileMenu = container.querySelector("details.menu.mobile-nav");
+    if (!mobileMenu) return;
 
-    const details = container.querySelector('.desktop-nav details.submenu[data-nav="tecniche"]');
-    if (!details) return;
+    const submenus = Array.from(mobileMenu.querySelectorAll('details[data-nav="tecniche"]'));
+    if (!submenus.length) return;
 
-    const summary = details.querySelector("summary");
-    const menu = details.querySelector(".submenu-links");
-    if (!summary || !menu) return;
-
-    const placeholder = document.createComment("submenu-links-placeholder");
-    let portaled = false;
-
-    function place() {
-      if (!details.open || !portaled) return;
-
-      const r = summary.getBoundingClientRect();
-      const top = Math.round(r.bottom + 8);
-      let left = Math.round(r.left);
-
-      menu.style.position = "fixed";
-      menu.style.top = `${top}px`;
-      menu.style.left = `${left}px`;
-      menu.style.right = "auto";
-      menu.style.zIndex = "2147483647";
-      menu.style.pointerEvents = "auto";
-      menu.style.transform = "translateZ(0)";
-
-      // rientra a destra se sfora
-      const rect = menu.getBoundingClientRect();
-      const maxRight = window.innerWidth - 10;
-      if (rect.right > maxRight) {
-        left = Math.max(10, left - (rect.right - maxRight));
-        menu.style.left = `${left}px`;
-      }
-
-      // se sfora in basso, prova sopra
-      const rect2 = menu.getBoundingClientRect();
-      const maxBottom = window.innerHeight - 10;
-      if (rect2.bottom > maxBottom) {
-        const aboveTop = Math.max(10, Math.round(r.top - 8 - rect2.height));
-        menu.style.top = `${aboveTop}px`;
-      }
-    }
-
-    function portalIn() {
-      if (portaled) return;
-      details.insertBefore(placeholder, menu);
-      document.body.appendChild(menu);
-      menu.classList.add("is-portaled");
-      portaled = true;
-      place();
-    }
-
-    function portalOut() {
-      if (!portaled) return;
-
-      menu.classList.remove("is-portaled");
-      menu.style.position = "";
-      menu.style.top = "";
-      menu.style.left = "";
-      menu.style.right = "";
-      menu.style.zIndex = "";
-      menu.style.pointerEvents = "";
-      menu.style.transform = "";
-
-      if (placeholder.parentNode) {
-        placeholder.parentNode.insertBefore(menu, placeholder);
-        placeholder.parentNode.removeChild(placeholder);
-      }
-      portaled = false;
-    }
-
-    details.addEventListener("toggle", () => {
-      if (details.open) portalIn();
-      else portalOut();
+    submenus.forEach((d) => {
+      d.addEventListener("toggle", () => {
+        if (!d.open) return;
+        submenus.forEach((other) => {
+          if (other !== d) other.open = false;
+        });
+      });
     });
-
-    window.addEventListener("scroll", place, { passive: true });
-    window.addEventListener("resize", place, { passive: true });
-
-    // 🔥 fondamentale: NON chiudere prima che il click sul link venga processato
-    document.addEventListener("pointerdown", (e) => {
-      if (!details.open) return;
-      const insideSummary = summary.contains(e.target);
-      const insideMenu = menu.contains(e.target);
-      if (!insideSummary && !insideMenu) details.open = false;
-    });
-
-    // stop propagation dentro menu (evita chiusure aggressive)
-    menu.addEventListener("pointerdown", (e) => e.stopPropagation());
   }
 
   async function loadHeader() {
@@ -240,9 +165,9 @@
       host.innerHTML = await res.text();
 
       setActiveNav(host);
-      initDesktopSubmenuCloseOnClick(host);
-      initMobileMenuFix(host);
-      initSafariDropdownPortal(host);
+      initDesktopDropdown(host);
+      initMobileMenu(host);
+      initMobileSubmenu(host);
 
       window.addEventListener("popstate", () => setActiveNav(host));
     } catch (err) {
