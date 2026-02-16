@@ -1097,5 +1097,26 @@ footer{
   z-index: 2147483647 !important;
 }
 
+/* =========================================
+   HEADER FIX CROSS-BROWSER (menu sempre sopra e non tagliato)
+========================================= */
+
+/* il pannello mobile deve stare sopra a QUALSIASI cosa */
+.menu-panel{
+  z-index: 2147483647 !important;
+}
+
+/* evita clipping verticale in casi strani (alcuni browser “tagliano” i dropdown) */
+#site-header{
+  overflow: visible !important;
+}
+
+/* solo per sicurezza: dettagli/summary più affidabili */
+details > summary{
+  list-style: none;
+}
+details > summary::-webkit-details-marker{
+  display: none;
+}
 
 
