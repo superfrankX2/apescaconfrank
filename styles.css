@@ -1048,4 +1048,25 @@ a.whatsapp-float:active{ transform: scale(0.98) !important; }
 
   .actions{ gap: 8px; }
 }
+/* =========================================
+   HEADER – CTA "Contattami" hover/active (no bianco su bianco)
+========================================= */
+
+/* Evita che le regole hover dei link desktop tocchino la CTA */
+@media (min-width: 861px){
+  #site-header .desktop-nav a.cta:hover{
+    background: var(--text) !important;
+    color: #fff !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+
+    transform: scale(1.04);
+    box-shadow: 0 14px 30px rgba(0,0,0,.12);
+  }
+
+  #site-header .desktop-nav a.cta:active{
+    transform: scale(0.99);
+    box-shadow: 0 10px 20px rgba(0,0,0,.10);
+  }
+}
 
