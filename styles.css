@@ -1532,8 +1532,8 @@ body:not(.home){
 
 /* MOD: lo svg dentro il bottone flottante */
 .whatsapp-float__svg{
-  width: 95%;
-  height: 95%;
+  width: 90%;
+  height: 90%;
   display: block;
 }
 
