@@ -922,15 +922,15 @@ footer{
 
 
 /* ==========================
-   Footer comune (site-footer)
+   Footer comune (site-footer) — premium
 ========================== */
 .site-footer{
   margin-top: 60px;
   padding: 18px 0 12px;
   border-top: 1px solid rgba(31,41,55,0.10);
   background: rgba(255,255,255,0.75);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
 }
 
 .footer-row{
@@ -941,6 +941,7 @@ footer{
   flex-wrap:wrap;
 }
 
+/* LEFT */
 .footer-left{
   display:flex;
   align-items:center;
@@ -961,8 +962,10 @@ footer{
 .footer-name{
   font-size: 15px;
   letter-spacing: .2px;
+  color: rgba(31,41,55,0.75);
 }
 
+/* CENTER */
 .footer-center{
   display:flex;
   align-items:center;
@@ -974,13 +977,59 @@ footer{
   text-align:center;
 }
 
+/* contatto “pill” con icona */
+.footer-contact{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:999px;
+  background: rgba(255,255,255,0.70);
+  border: 1px solid rgba(31,41,55,0.08);
+  box-shadow: 0 10px 22px rgba(10,20,28,0.06);
+}
+
+.footer-mini-ico{
+  width:16px;
+  height:16px;
+  display:block;
+  color: rgba(31,41,55,0.55); /* icone telefono/mail */
+  flex: 0 0 auto;
+}
+
+/* link contatti */
 .footer-contact a{
-  color: var(--text);
+  color: rgba(31,41,55,0.78);
   text-decoration:none;
-  font-weight:600;
+  font-weight:650;
 }
 .footer-contact a:hover{ text-decoration:underline; }
 
+.footer-mini-label{
+  font-size: 12px;
+  font-weight: 750;
+  color: rgba(31,41,55,0.50);
+  letter-spacing: .2px;
+}
+
+.footer-contact strong{
+  color: rgba(31,41,55,0.78);
+  font-weight: 750;
+}
+
+/* separatore */
+.dot{
+  opacity:.45;
+  margin: 0 2px;
+}
+
+/* hover premium */
+.footer-contact:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(10,20,28,0.08);
+}
+
+/* RIGHT */
 .footer-right{
   display:flex;
   align-items:center;
@@ -988,7 +1037,7 @@ footer{
   margin-left:auto;
 }
 
-/* icone social uniformi ( +27% ) */
+/* icone social uniformi (+27%) */
 .site-footer .footer-social{
   width: 43px;
   height: 43px;
@@ -1010,32 +1059,31 @@ footer{
   transform: translateY(-2px);
   opacity:.98;
 }
+
 .site-footer .footer-social:active{
   transform: translateY(0px) scale(0.98);
 }
 
+/* bottom line */
 .footer-bottom{
-  margin-top: 12px;
+  margin-top: 10px;
   text-align:center;
   font-size:12px;
-  color: var(--muted);
+  color: rgba(31,41,55,0.45);
 }
 
-.dot{ opacity:.5; }
-
+/* responsive */
 @media (max-width: 900px){
   .footer-row{
     flex-direction: column;
     gap: 14px;
   }
+  .footer-right{ margin-left: 0; }
   .footer-center{ justify-content:center; }
-}
 
-/* fallback se qualche browser fa lo schizzinoso col text-clip */
-@supports not (-webkit-background-clip: text){
-  .site-footer .footer-social[aria-label="Instagram"]{
-    color: #d62976; /* magenta Instagram */
-    background: none;
+  /* su mobile: pill più “compatte” */
+  .footer-contact{
+    padding:7px 10px;
   }
 }
 
