@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>apescaconfrank</title>
   <meta name="description" content="Supporto pesca e guida in Liguria: surfcasting, beach ledgering, rockfishing e spinning. Attrezzatura inclusa e aperitivo. Contattami." />
-  <link rel="stylesheet" href="/styles.css?v=10096" />
-  <script src="/header-loader.js?v=20260296" defer></script>
-  <script src="/footer-loader.js?v=20260296" defer></script>
-  <script src="/floating-loader.js?v=20260296" defer></script>
+
+  <!-- bump -->
+  <link rel="stylesheet" href="/styles.css?v=10097" />
+
+  <!-- bump -->
+  <script src="/header-loader.js?v=20260297" defer></script>
+  <script src="/footer-loader.js?v=20260297" defer></script>
+  <script src="/floating-loader.js?v=20260297" defer></script>
 </head>
 
 <body class="home">
@@ -128,7 +132,7 @@
             <input type="text" name="nome" placeholder="Nome" />
             <input type="email" name="email" placeholder="Email" />
             <textarea name="messaggio" placeholder="Il tuo messaggio"></textarea>
-            <a class="cta" href="mailto:vtin.andrea@gmail.com?subject=Info%20A%20pesca%20con%20Frank">Invia via Email</a>
+            <a class="cta" href="mailto:vttn.andrea@gmail.com?subject=Info%20A%20pesca%20con%20Frank">Invia via Email</a>
           </form>
 
           <a class="whatsapp-btn"
@@ -136,25 +140,16 @@
              target="_blank" rel="noopener">
             💬 Scrivimi su WhatsApp
           </a>
-
-          <p class="fineprint" style="margin-top:12px;">
-            Preferisci WhatsApp? Lo aggiungiamo quando vuoi con un pulsante dedicato.
-          </p>
         </div>
       </div>
     </section>
 
-    <footer>
-      <div class="container">
-        © <span id="year"></span> A pesca con Frank — apescaconfrank.it
-      </div>
-    </footer>
+    <!-- FOOTER CONDIVISO (caricato via JS da footer.html) -->
+    <div id="site-footer"></div>
+
   </main>
 
   <script>
-    // anno
-    document.getElementById("year").textContent = new Date().getFullYear();
-
     // slider (solo se trova le immagini)
     const slides = document.querySelectorAll(".hero-slider .slide");
     const fallback = document.querySelector(".hero-slider .slider-fallback");
@@ -170,6 +165,8 @@
       }, 3000);
     }
   </script>
-<div id="floating-ui"></div>
+
+  <div id="floating-ui"></div>
 </body>
 </html>
+
