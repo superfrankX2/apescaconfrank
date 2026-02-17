@@ -6,13 +6,16 @@
   <title>Chi sono | apescaconfrank</title>
   <meta name="description" content="Mi chiamo Andrea (Frank). Pesco da sempre: dal torrente col nonno alla Liguria di oggi. Ti accompagno a pescare con un approccio tecnico ma rilassato." />
 
-  <link rel="stylesheet" href="/styles.css?v=10084" />
-  <script src="/header-loader.js?v=20260284" defer></script>
-  <script src="/footer-loader.js?v=20260284" defer></script>
-  <script src="/floating-loader.js?v=20260285" defer></script>
+  <!-- bump -->
+  <link rel="stylesheet" href="/styles.css?v=10098" />
+
+  <!-- bump -->
+  <script src="/header-loader.js?v=20260298" defer></script>
+  <script src="/footer-loader.js?v=20260298" defer></script>
+  <script src="/floating-loader.js?v=20260298" defer></script>
 </head>
 
-<body style="padding-top:70px;">
+<body>
   <!-- HEADER CONDIVISO -->
   <div id="site-header"></div>
 
@@ -71,16 +74,11 @@
         </div>
       </div>
     </section>
+
+    <!-- FOOTER CONDIVISO (caricato via JS da footer.html) -->
+    <div id="site-footer"></div>
   </main>
 
-  <footer>
-    <div class="container">
-      © <span id="year"></span> A pesca con Frank — apescaconfrank.it
-    </div>
-  </footer>
-<div id="floating-ui"></div>
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <div id="floating-ui"></div>
 </body>
 </html>
