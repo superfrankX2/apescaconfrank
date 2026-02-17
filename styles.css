@@ -982,19 +982,25 @@ footer{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  padding:8px 10px;
+
+  padding:8px 12px;
   border-radius:999px;
+
   background: rgba(255,255,255,0.70);
   border: 1px solid rgba(31,41,55,0.08);
   box-shadow: 0 10px 22px rgba(10,20,28,0.06);
+
+  line-height: 1;             /* allinea tutto su una riga */
+  white-space: nowrap;        /* evita che "P.IVA: ..." vada a capo */
 }
 
 .footer-mini-ico{
   width:16px;
   height:16px;
   display:block;
-  color: rgba(31,41,55,0.55); /* icone telefono/mail */
   flex: 0 0 auto;
+  color: rgba(31,41,55,0.55);
+  transform: translateY(0.5px); /* micro-allineamento ottico */
 }
 
 /* link contatti */
@@ -1002,25 +1008,15 @@ footer{
   color: rgba(31,41,55,0.78);
   text-decoration:none;
   font-weight:650;
+  line-height: 1;            /* stessa altezza della pill */
 }
 .footer-contact a:hover{ text-decoration:underline; }
 
-.footer-mini-label{
-  font-size: 12px;
-  font-weight: 750;
-  color: rgba(31,41,55,0.50);
-  letter-spacing: .2px;
-}
-
-.footer-contact strong{
+/* P.IVA uniforme (stesso colore dei numeri/link) */
+.footer-vat{
   color: rgba(31,41,55,0.78);
-  font-weight: 750;
-}
-
-/* separatore */
-.dot{
-  opacity:.45;
-  margin: 0 2px;
+  font-weight:650;
+  line-height: 1;
 }
 
 /* hover premium */
@@ -1028,6 +1024,10 @@ footer{
   transform: translateY(-1px);
   box-shadow: 0 14px 28px rgba(10,20,28,0.08);
 }
+.footer-contact:active{
+  transform: translateY(0px) scale(0.99);
+}
+
 
 /* RIGHT */
 .footer-right{
@@ -1085,6 +1085,7 @@ footer{
   .footer-contact{
     padding:7px 10px;
   }
+   .footer-contact{ white-space: normal; }
 }
 
 /* ==========================
@@ -1251,5 +1252,4 @@ details > summary::-webkit-details-marker{
 .mobile-nav .menu-panel a.cta{
   margin-top: 6px;
 }
-
 
