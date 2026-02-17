@@ -962,7 +962,7 @@ footer{
 .footer-name{
   font-size: 15px;
   letter-spacing: .2px;
-  color: rgba(31,41,55,0.75);
+  color: #000;
 }
 
 /* CENTER */
@@ -999,13 +999,13 @@ footer{
   height:16px;
   display:block;
   flex: 0 0 auto;
-  color: rgba(31,41,55,0.55);
+  color: #000;
   transform: translateY(0.5px); /* micro-allineamento ottico */
 }
 
 /* link contatti */
 .footer-contact a{
-  color: rgba(31,41,55,0.78);
+  color: #000;
   text-decoration:none;
   font-weight:650;
   line-height: 1;            /* stessa altezza della pill */
@@ -1014,7 +1014,7 @@ footer{
 
 /* P.IVA uniforme (stesso colore dei numeri/link) */
 .footer-vat{
-  color: rgba(31,41,55,0.78);
+  color: #000;
   font-weight:650;
   line-height: 1;
 }
