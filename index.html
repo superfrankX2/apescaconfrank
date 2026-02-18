@@ -66,7 +66,7 @@
             L’obiettivo è farti vivere un’uscita bella, sicura e formativa.
           </p>
 
-          <!-- CAROSELLO FOTO SPOT (STEP 1: SOLO HTML) -->
+          <!-- CAROSELLO FOTO SPOT (MANUALE + FRECCE) -->
           <div class="spot-carousel" id="spotCarousel">
 
             <div class="spot-slide is-active">
@@ -103,6 +103,10 @@
               <img src="/images/cervo.jpg" alt="Cervo">
               <div class="spot-caption">Cervo</div>
             </div>
+
+            <!-- FRECCE (STEP 2) -->
+            <button class="spot-arrow spot-prev" aria-label="Precedente">‹</button>
+            <button class="spot-arrow spot-next" aria-label="Successiva">›</button>
 
           </div>
           <!-- /CAROSELLO FOTO SPOT -->
@@ -201,21 +205,9 @@
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add("active");
       }, 3000);
-    }  // =========================
-  // Carosello SPOT (Dove andremo)
-  // =========================
-  const spotSlides = document.querySelectorAll(".spot-slide");
+    }
 
-  if (spotSlides.length > 0) {
-    let currentSpot = 0;
-
-    setInterval(() => {
-      spotSlides[currentSpot].classList.remove("is-active");
-      currentSpot = (currentSpot + 1) % spotSlides.length;
-      spotSlides[currentSpot].classList.add("is-active");
-    }, 3000);
-  }
-
+    // ✅ STEP 1: tolto autoplay SPOT (nessun setInterval qui)
   </script>
 
   <div id="floating-ui"></div>
