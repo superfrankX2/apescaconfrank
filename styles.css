@@ -1345,4 +1345,25 @@ details > summary::-webkit-details-marker{
     font-size: 24px;
   }
 }
+/* ===== FIX logo header ===== */
+.site-header-inner .brand{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-header-inner .brand-logo{
+  width: 34px !important;
+  height: 34px !important;
+  max-width: 34px !important;
+  max-height: 34px !important;
+  object-fit: contain;
+  display: block;
+  flex: 0 0 34px;
+}
+
+/* se ti resta spazio strano */
+.site-header-inner .brand-text{
+  line-height: 1;
+}
 
