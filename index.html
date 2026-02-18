@@ -207,7 +207,31 @@
       }, 3000);
     }
 
-    // ✅ STEP 1: tolto autoplay SPOT (nessun setInterval qui)
+    // ✅ STEP 1: tolto autoplay SPOT (nessun setInterval qui)  // =========================
+  // Carosello SPOT manuale (frecce)
+  // =========================
+  (function(){
+    const spotCarousel = document.getElementById("spotCarousel");
+    if (!spotCarousel) return;
+
+    const spotSlides = Array.from(spotCarousel.querySelectorAll(".spot-slide"));
+    const prev = spotCarousel.querySelector(".spot-prev");
+    const next = spotCarousel.querySelector(".spot-next");
+    if (spotSlides.length === 0 || !prev || !next) return;
+
+    let current = spotSlides.findIndex(s => s.classList.contains("is-active"));
+    if (current < 0) current = 0;
+
+    function show(index){
+      spotSlides[current].classList.remove("is-active");
+      current = (index + spotSlides.length) % spotSlides.length;
+      spotSlides[current].classList.add("is-active");
+    }
+
+    prev.addEventListener("click", () => show(current - 1));
+    next.addEventListener("click", () => show(current + 1));
+  })();
+
   </script>
 
   <div id="floating-ui"></div>
