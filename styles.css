@@ -214,7 +214,7 @@ header{ position: relative; }
 
 /* ✅ LOGO IMMAGINE (più grande, header uguale) */
 .brand-logo{
-  height: 48px;          /* <-- cambia qui (46–54 consigliato) */
+  height: 58px;          /* <-- cambia qui (46–54 consigliato) */
   width: auto;
   display:block;
   flex: 0 0 auto;
