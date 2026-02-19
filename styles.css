@@ -1369,3 +1369,155 @@ details > summary::-webkit-details-marker{
     font-size: 24px;
   }
 }
+/* =========================================
+   FOOTER – layout "tutto a sinistra" (desktop) + mobile ok
+   (Incolla in fondo al CSS per sovrascrivere il vecchio)
+========================================= */
+
+.site-footer{
+  margin-top: 60px;
+  padding: 34px 0 18px;
+  border-top: 1px solid rgba(31,41,55,0.10);
+  background: rgba(255,255,255,0.75);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* container interno: non più "3 colonne", ma un blocco unico */
+.site-footer .footer-row{
+  display: block;
+}
+
+/* colonna sinistra (desktop): logo grande, poi contatti, poi icone */
+.site-footer .footer-left{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* LOGO wordmark grande */
+.site-footer .footer-brand{
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.site-footer .footer-brand-logo{
+  width: clamp(220px, 28vw, 360px);
+  height: auto;
+  display: block;
+}
+
+/* contatti: in verticale e allineati a sinistra */
+.site-footer .footer-center{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  text-align: left;
+  color: var(--muted);
+}
+
+/* pill contatti: un filo più “importanti” */
+.site-footer .footer-contact{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.80);
+  border: 1px solid rgba(31,41,55,0.08);
+  box-shadow: 0 10px 22px rgba(10,20,28,0.06);
+
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.site-footer .footer-mini-ico{
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: #000;
+  transform: translateY(0.5px);
+}
+
+.site-footer .footer-contact a{
+  color: #000;
+  text-decoration: none;
+  font-weight: 650;
+}
+.site-footer .footer-contact a:hover{ text-decoration: underline; }
+
+.site-footer .footer-vat{
+  color: #000;
+  font-weight: 650;
+}
+
+/* social: sotto ai contatti, sempre a sinistra */
+.site-footer .footer-right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-left: 0; /* importante: niente "spinta a destra" */
+}
+
+/* icone un po' più grandi */
+.site-footer .footer-social{
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.site-footer .footer-ico,
+.site-footer .footer-ico--wa-app{
+  width: 36px;
+  height: 36px;
+  display: block;
+  max-width: none;
+}
+
+.site-footer .footer-social:hover{
+  transform: translateY(-2px);
+  opacity: .98;
+}
+.site-footer .footer-social:active{
+  transform: translateY(0px) scale(0.98);
+}
+
+/* riga copyright: a sinistra su desktop */
+.site-footer .footer-bottom{
+  margin-top: 16px;
+  text-align: left;
+  font-size: 12px;
+  color: rgba(31,41,55,0.45);
+}
+
+/* MOBILE: centra e compatta un po' */
+@media (max-width: 900px){
+  .site-footer .footer-left{
+    align-items: center;
+  }
+  .site-footer .footer-center{
+    align-items: center;
+    text-align: center;
+  }
+  .site-footer .footer-right{
+    justify-content: center;
+  }
+  .site-footer .footer-bottom{
+    text-align: center;
+  }
+  .site-footer .footer-brand-logo{
+    width: min(280px, 80vw);
+  }
+  .site-footer .footer-contact{
+    white-space: normal;
+    text-align: center;
+  }
+}
