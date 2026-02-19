@@ -212,9 +212,9 @@ header{ position: relative; }
   .brand-tagline{ display:none; }
 }
 
-/* ✅ LOGO IMMAGINE (più grande, header uguale) */
+/* ✅ LOGO IMMAGINE (30% più grande, header uguale) */
 .brand-logo{
-  height: 58px;          /* <-- cambia qui (46–54 consigliato) */
+  height: 62px;     /* +30% circa: molto più presente */
   width: auto;
   display:block;
   flex: 0 0 auto;
@@ -1094,7 +1094,7 @@ footer{
   .footer-contact{
     padding:7px 10px;
   }
-   .footer-contact{ white-space: normal; }
+  .footer-contact{ white-space: normal; }
 }
 
 /* ==========================
@@ -1123,8 +1123,8 @@ footer{
 
   .actions{ gap: 8px; }
 
-  /* su mobile logo leggermente più piccolo */
-  .brand-logo{ height: 42px; }
+  /* mobile: non enorme come desktop, ma comunque “presente” */
+  .brand-logo{ height: 55px; }
 }
 /* =========================================
    HEADER – CTA "Contattami" hover elegante (ombra soft)
