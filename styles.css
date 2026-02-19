@@ -205,13 +205,23 @@ header{ position: relative; }
 }
 
 /* opzionale (se nel markup hai brand-text / brand-name / brand-tagline) */
-.brand-text{ display:flex; align-items:baseline; gap:10px; }
+.brand-text{ display:flex; align-items:baseline; gap:10px; line-height:1; }
 .brand-name{ font-weight:800; letter-spacing:.2px; }
 .brand-tagline{ font-weight:500; color:var(--muted); font-size:14px; white-space:nowrap; }
 @media (max-width: 860px){
   .brand-tagline{ display:none; }
 }
 
+/* ✅ LOGO IMMAGINE (più grande, header uguale) */
+.brand-logo{
+  height: 48px;          /* <-- cambia qui (46–54 consigliato) */
+  width: auto;
+  display:block;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+/* (se in altri punti usi ancora il vecchio .logo con emoji, lo lascio) */
 .logo{
   width:34px;
   height:34px;
@@ -899,7 +909,7 @@ footer{
 
 /* +10–15% rispetto a prima: qui la controlli */
 .whatsapp-float__svg{
-  width: 88% !important;    /* era ~78–80: ora è più grande (10–15%) */
+  width: 88% !important;
   height: 88% !important;
   display: block !important;
 
@@ -990,8 +1000,8 @@ footer{
   border: 1px solid rgba(31,41,55,0.08);
   box-shadow: 0 10px 22px rgba(10,20,28,0.06);
 
-  line-height: 1;             /* allinea tutto su una riga */
-  white-space: nowrap;        /* evita che "P.IVA: ..." vada a capo */
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .footer-mini-ico{
@@ -1000,7 +1010,7 @@ footer{
   display:block;
   flex: 0 0 auto;
   color: #000;
-  transform: translateY(0.5px); /* micro-allineamento ottico */
+  transform: translateY(0.5px);
 }
 
 /* link contatti */
@@ -1008,11 +1018,11 @@ footer{
   color: #000;
   text-decoration:none;
   font-weight:650;
-  line-height: 1;            /* stessa altezza della pill */
+  line-height: 1;
 }
 .footer-contact a:hover{ text-decoration:underline; }
 
-/* P.IVA uniforme (stesso colore dei numeri/link) */
+/* P.IVA uniforme */
 .footer-vat{
   color: #000;
   font-weight:650;
@@ -1081,7 +1091,6 @@ footer{
   .footer-right{ margin-left: 0; }
   .footer-center{ justify-content:center; }
 
-  /* su mobile: pill più “compatte” */
   .footer-contact{
     padding:7px 10px;
   }
@@ -1113,6 +1122,9 @@ footer{
   .grid-3{ gap: 12px; }
 
   .actions{ gap: 8px; }
+
+  /* su mobile logo leggermente più piccolo */
+  .brand-logo{ height: 42px; }
 }
 /* =========================================
    HEADER – CTA "Contattami" hover elegante (ombra soft)
@@ -1127,12 +1139,12 @@ footer{
 
   /* hover: ombra grigia soft attorno */
   #site-header .desktop-nav a.cta:hover{
-    background: var(--text) !important;  /* resta scuro */
+    background: var(--text) !important;
     color: #fff !important;
 
-    box-shadow: 
-      0 0 0 3px rgba(0,0,0,.05),   /* alone leggero attorno */
-      0 10px 22px rgba(0,0,0,.12); /* profondità sotto */
+    box-shadow:
+      0 0 0 3px rgba(0,0,0,.05),
+      0 10px 22px rgba(0,0,0,.12);
 
     text-decoration: none !important;
   }
@@ -1166,7 +1178,7 @@ footer{
   z-index: 2147483647 !important;
 }
 
-/* evita clipping verticale in casi strani (alcuni browser “tagliano” i dropdown) */
+/* evita clipping verticale */
 #site-header{
   overflow: visible !important;
 }
@@ -1192,7 +1204,7 @@ details > summary::-webkit-details-marker{
   gap:6px;
 }
 
-/* stessa estetica per link e summary (Tecniche) */
+/* stessa estetica per link e summary */
 .mobile-nav .menu-panel a:not(.cta),
 .mobile-nav .menu-panel details > summary{
   display:flex;
@@ -1223,7 +1235,7 @@ details > summary::-webkit-details-marker{
   display:none;
 }
 
-/* chevron coerente (niente simboli “a caso” nel testo) */
+/* chevron coerente */
 .mobile-nav .menu-panel details > summary::after{
   content:"▾";
   font-size:14px;
@@ -1235,7 +1247,7 @@ details > summary::-webkit-details-marker{
   transform: rotate(180deg) translateY(-1px);
 }
 
-/* submenu più leggibile e “gerarchico” */
+/* submenu più leggibile */
 .mobile-nav .menu-panel .submenu-links{
   margin: 6px 0 2px 10px;
   padding-left: 10px;
@@ -1248,7 +1260,7 @@ details > summary::-webkit-details-marker{
   border-radius:10px;
 }
 
-/* CTA sempre separata e centrata */
+/* CTA sempre separata */
 .mobile-nav .menu-panel a.cta{
   margin-top: 6px;
 }
@@ -1286,7 +1298,7 @@ details > summary::-webkit-details-marker{
   display: block;
 }
 
-/* Ombra leggera sopra la foto per leggere meglio il testo */
+/* Ombra leggera sopra la foto */
 .spot-slide::after{
   content:"";
   position:absolute;
@@ -1345,25 +1357,3 @@ details > summary::-webkit-details-marker{
     font-size: 24px;
   }
 }
-/* ===== FIX logo header ===== */
-.site-header-inner .brand{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.site-header-inner .brand-logo{
-  width: 34px !important;
-  height: 34px !important;
-  max-width: 34px !important;
-  max-height: 34px !important;
-  object-fit: contain;
-  display: block;
-  flex: 0 0 34px;
-}
-
-/* se ti resta spazio strano */
-.site-header-inner .brand-text{
-  line-height: 1;
-}
-
