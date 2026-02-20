@@ -1365,3 +1365,41 @@ details > summary::-webkit-details-marker{
     justify-content: center;
   }
 }
+/* ==========================
+   CTA HOME — tipografia omologata (stile "Chi sono")
+========================== */
+.cta-card{
+  gap: 12px;
+}
+
+/* la frase “Il mare cambia ogni giorno.” non deve sembrare un titolo gigante */
+.cta-title{
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #24303f; /* come about-intro */
+}
+
+/* testo principale: stesso feeling del paragrafo di Chi sono */
+.cta-lead{
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #24303f;
+  max-width: 78ch;
+}
+
+/* nota: più piccola e muted */
+.cta-note{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 82ch;
+}
+
+.cta-note strong{
+  color: var(--text);
+  font-weight: 750;
+}
