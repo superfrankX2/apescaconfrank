@@ -1435,3 +1435,18 @@ details > summary::-webkit-details-marker{
   color: #24303f;
   font-weight: 700;
 }
+/* ==========================
+   CTA HOME — paragrafi IDENTICI
+========================== */
+
+.cta-body{
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #24303f; /* stesso colore della card "Chi sono" */
+}
+
+.cta-body strong{
+  font-weight: 700;
+  color: #24303f;
+}
