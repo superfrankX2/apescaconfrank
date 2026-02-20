@@ -1403,3 +1403,35 @@ details > summary::-webkit-details-marker{
   color: var(--text);
   font-weight: 750;
 }
+/* ==========================
+   CTA HOME — testo identico a "Chi sono"
+   (override finale: incolla in fondo)
+========================== */
+.cta-card{
+  gap: 14px;
+}
+
+/* Forza TUTTA la tipografia a inherit (stesso font di tutto il sito) */
+.cta-card, 
+.cta-card *{
+  font-family: inherit;
+}
+
+/* Testo principale: uguale a .about-intro */
+.cta-body{
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #24303f; /* uguale a about-intro */
+}
+
+/* Secondo paragrafo: stesso font ma leggermente più “soft” (non più piccolo) */
+.cta-body--muted{
+  color: rgba(36,48,63,.78);
+}
+
+/* Il bold resta come nel resto del sito */
+.cta-body strong{
+  color: #24303f;
+  font-weight: 700;
+}
