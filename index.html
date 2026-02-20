@@ -104,7 +104,7 @@
               <div class="spot-caption">Cervo</div>
             </div>
 
-            <!-- FRECCE (STEP 2) -->
+            <!-- FRECCE -->
             <button class="spot-arrow spot-prev" aria-label="Precedente">‹</button>
             <button class="spot-arrow spot-next" aria-label="Successiva">›</button>
 
@@ -161,27 +161,21 @@
       </div>
     </section>
 
-    <!-- CONTATTI -->
-    <section id="contatti">
+    <!-- CTA (ex CONTATTI) -->
+    <section id="contatti" class="cta-panel">
       <div class="container">
-        <div class="card">
-          <h2 class="section-title">Contatti</h2>
-          <p class="section-sub">
-            Scrivimi e dimmi che tipo di pesca ti piacerebbe provare, dove sei e in che periodo.
+        <div class="card cta-card">
+          <h2 class="section-title cta-title">Il mare cambia ogni giorno.</h2>
+
+          <p class="section-sub cta-lead">
+            Ogni uscita va organizzata in base a vento, corrente e stagione.
+            Se vuoi programmare la tua giornata di pesca, scrivimi e vediamo insieme il momento giusto.
           </p>
 
-          <form>
-            <input type="text" name="nome" placeholder="Nome" />
-            <input type="email" name="email" placeholder="Email" />
-            <textarea name="messaggio" placeholder="Il tuo messaggio"></textarea>
-            <a class="cta" href="mailto:vttn.andrea@gmail.com?subject=Info%20A%20pesca%20con%20Frank">Invia via Email</a>
-          </form>
-
-          <a class="whatsapp-btn"
-             href="https://wa.me/393882496553?text=Ciao%20Frank,%20vorrei%20info%20per%20un'uscita%20di%20pesca"
-             target="_blank" rel="noopener">
-            💬 Scrivimi su WhatsApp
-          </a>
+          <p class="cta-note">
+            Per contattarmi, usa il pulsante WhatsApp <strong>in basso a destra</strong>.
+            In alternativa trovi numero ed email nel footer.
+          </p>
         </div>
       </div>
     </section>
@@ -207,31 +201,30 @@
       }, 3000);
     }
 
-    // ✅ STEP 1: tolto autoplay SPOT (nessun setInterval qui)  // =========================
-  // Carosello SPOT manuale (frecce)
-  // =========================
-  (function(){
-    const spotCarousel = document.getElementById("spotCarousel");
-    if (!spotCarousel) return;
+    // =========================
+    // Carosello SPOT manuale (frecce)
+    // =========================
+    (function(){
+      const spotCarousel = document.getElementById("spotCarousel");
+      if (!spotCarousel) return;
 
-    const spotSlides = Array.from(spotCarousel.querySelectorAll(".spot-slide"));
-    const prev = spotCarousel.querySelector(".spot-prev");
-    const next = spotCarousel.querySelector(".spot-next");
-    if (spotSlides.length === 0 || !prev || !next) return;
+      const spotSlides = Array.from(spotCarousel.querySelectorAll(".spot-slide"));
+      const prev = spotCarousel.querySelector(".spot-prev");
+      const next = spotCarousel.querySelector(".spot-next");
+      if (spotSlides.length === 0 || !prev || !next) return;
 
-    let current = spotSlides.findIndex(s => s.classList.contains("is-active"));
-    if (current < 0) current = 0;
+      let current = spotSlides.findIndex(s => s.classList.contains("is-active"));
+      if (current < 0) current = 0;
 
-    function show(index){
-      spotSlides[current].classList.remove("is-active");
-      current = (index + spotSlides.length) % spotSlides.length;
-      spotSlides[current].classList.add("is-active");
-    }
+      function show(index){
+        spotSlides[current].classList.remove("is-active");
+        current = (index + spotSlides.length) % spotSlides.length;
+        spotSlides[current].classList.add("is-active");
+      }
 
-    prev.addEventListener("click", () => show(current - 1));
-    next.addEventListener("click", () => show(current + 1));
-  })();
-
+      prev.addEventListener("click", () => show(current - 1));
+      next.addEventListener("click", () => show(current + 1));
+    })();
   </script>
 
   <div id="floating-ui"></div>
