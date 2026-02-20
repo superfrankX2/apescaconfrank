@@ -1532,4 +1532,99 @@ details > summary::-webkit-details-marker{
     width: min(260px, 78vw);
   }
 }
+/* =========================================
+   FOOTER v2: logo sx | contatti vicini + divider | social dx
+========================================= */
 
+.footer-row--v2{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 18px;
+  flex-wrap: nowrap;
+}
+
+/* SINISTRA: logo */
+.site-footer .footer-left{
+  flex: 0 0 auto;
+  display:flex;
+  align-items:center;
+}
+
+/* logo un filo più piccolo */
+.site-footer .footer-brand-logo{
+  width: clamp(140px, 14vw, 200px);
+  height: auto;
+  display:block;
+}
+
+/* BLOCCO CENTRALE: divider + contatti (vicini al logo) */
+.site-footer .footer-mid{
+  flex: 1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap: 14px;
+  min-width: 260px;
+}
+
+/* linea verticale leggera */
+.site-footer .footer-divider{
+  width: 1px;
+  height: 56px;
+  background: rgba(31,41,55,0.12);
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+
+/* contatti in verticale */
+.site-footer .footer-center{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap: 10px;
+  text-align:left;
+}
+
+/* DESTRA: social ORIZZONTALE */
+.site-footer .footer-right{
+  flex: 0 0 auto;
+  margin-left: auto;
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  gap: 12px;
+}
+
+/* Mobile: impilato e centrato (pulito) */
+@media (max-width: 900px){
+  .footer-row--v2{
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .site-footer .footer-mid{
+    justify-content:center;
+    min-width: 0;
+  }
+
+  .site-footer .footer-divider{
+    display:none;
+  }
+
+  .site-footer .footer-center{
+    align-items:center;
+    text-align:center;
+  }
+
+  .site-footer .footer-right{
+    justify-content:center;
+    margin-left: 0;
+  }
+
+  .site-footer .footer-brand-logo{
+    width: min(240px, 75vw);
+  }
+}
