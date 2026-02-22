@@ -7,12 +7,38 @@
   <meta name="description" content="Spinning in Liguria con Andrea (Frank): pesca ai predatori, dinamica e tecnica. Spot, fondale, lanci e movimento. Uscite guidate per imparare e migliorare." />
 
   <!-- bump -->
-  <link rel="stylesheet" href="/styles.css?v=10111" />
+  <link rel="stylesheet" href="/styles.css?v=10112" />
 
   <!-- bump -->
-  <script src="/header-loader.js?v=20260300" defer></script>
-  <script src="/footer-loader.js?v=20260300" defer></script>
-  <script src="/floating-loader.js?v=20260300" defer></script>
+  <script src="/header-loader.js?v=20260301" defer></script>
+  <script src="/footer-loader.js?v=20260301" defer></script>
+  <script src="/floating-loader.js?v=20260301" defer></script>
+
+  <style>
+    /* DEZOOM HERO SPINNING (-35% circa) */
+    .technique-hero-image {
+      max-height: 420px;
+      overflow: hidden;
+      border-radius: 20px;
+      margin: 30px 0 50px;
+      background: #f0f2f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .technique-hero-image img {
+      width: 80%; /* riduce visivamente lo zoom */
+      height: auto;
+      object-fit: contain;
+    }
+
+    @media (max-width: 768px) {
+      .technique-hero-image img {
+        width: 95%;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -86,14 +112,14 @@
             <a class="cta" href="/#contatti">Contattami per organizzare la nostra uscita</a>
             <a class="ghost" href="/#tecniche">Torna alle tecniche</a>
           </div>
+
         </div>
       </div>
     </section>
-
-    <!-- FOOTER CONDIVISO -->
-    <div id="site-footer"></div>
-
   </main>
+
+  <!-- FOOTER CONDIVISO -->
+  <div id="site-footer"></div>
 
   <div id="floating-ui"></div>
 </body>
