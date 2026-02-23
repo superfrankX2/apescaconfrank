@@ -1450,3 +1450,62 @@ details > summary::-webkit-details-marker{
   font-weight: 700;
   color: #24303f;
 }
+/* ==========================
+   Pricing Table
+========================== */
+
+.pricing-table-wrapper {
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  font-size: 15px;
+}
+
+.pricing-table thead {
+  background: #f8fafc;
+}
+
+.pricing-table th,
+.pricing-table td {
+  padding: 16px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.pricing-table th:first-child,
+.pricing-table td:first-child {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.pricing-table th {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pricing-table th span {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.technique-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pricing-table tbody tr:hover {
+  background: #f1f5f9;
+}
+
+.pricing-table tbody tr:last-child td {
+  border-bottom: none;
+}
