@@ -4,12 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- FAVICON / ICONS UNIVERSALI -->
-  <link rel="icon" href="/favicon.ico">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
+  <!-- FAVICON / ICONS UNIVERSALI (Safari-proof) -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- PNG senza query (Safari spesso preferisce così, soprattutto sulla home) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- Fallback "generico" (utile su Safari quando fa il difficile) -->
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Mobile -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+
+  <!-- PWA / Android -->
   <link rel="manifest" href="/site.webmanifest?v=2">
   <meta name="theme-color" content="#ffffff">
 
@@ -125,7 +134,7 @@
       </div>
     </section>
 
-    <!-- TECNICHE (snellita: 3 bottoni-card con micro-riga) -->
+    <!-- TECNICHE -->
     <section id="tecniche">
       <div class="container">
         <div class="card">
@@ -171,28 +180,27 @@
       </div>
     </section>
 
-    <!-- CTA (ex CONTATTI) -->
-   <section id="contatti" class="cta-panel">
-  <div class="container">
-    <div class="card cta-card">
-      <h2 class="section-title">Il mare cambia ogni giorno. Troviamo il momento giusto insieme! </h2>
+    <!-- CTA -->
+    <section id="contatti" class="cta-panel">
+      <div class="container">
+        <div class="card cta-card">
+          <h2 class="section-title">Il mare cambia ogni giorno. Troviamo il momento giusto insieme! </h2>
 
-      <p class="cta-body">
-        Ogni uscita va organizzata in base a vento, corrente e stagione.
-        Se vuoi programmare la tua giornata di pesca, scrivimi e troviamo insieme il momento giusto.
-      </p>
+          <p class="cta-body">
+            Ogni uscita va organizzata in base a vento, corrente e stagione.
+            Se vuoi programmare la tua giornata di pesca, scrivimi e troviamo insieme il momento giusto.
+          </p>
 
-      <p class="cta-body">
-        Per scrivermi, usa il pulsante WhatsApp <strong>in basso a destra</strong>.
-        In alternativa, se preferisci chiamarmi o contattarmi via email, trovi i miei recapiti in fondo alla pagina.
-      </p>
-    </div>
-  </div>
-</section>
+          <p class="cta-body">
+            Per scrivermi, usa il pulsante WhatsApp <strong>in basso a destra</strong>.
+            In alternativa, se preferisci chiamarmi o contattarmi via email, trovi i miei recapiti in fondo alla pagina.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <!-- FOOTER CONDIVISO (caricato via JS da footer.html) -->
+    <!-- FOOTER CONDIVISO -->
     <div id="site-footer"></div>
-
   </main>
 
   <script>
@@ -211,9 +219,7 @@
       }, 3000);
     }
 
-    // =========================
     // Carosello SPOT manuale (frecce)
-    // =========================
     (function(){
       const spotCarousel = document.getElementById("spotCarousel");
       if (!spotCarousel) return;
