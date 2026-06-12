@@ -46,7 +46,7 @@ header.nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 
 header.nav.scrolled,header.nav.solid,header.nav.menu-open{background:rgba(12,14,13,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav-inner{max-width:var(--maxw);margin:0 auto;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:flex;align-items:center;gap:13px;font-weight:600;letter-spacing:.01em}
-.brand img{width:46px;height:46px;border-radius:50%;background:#f1ece0;object-fit:contain;flex:none}
+.brand img{width:46px;height:46px;border-radius:50%;background:transparent;object-fit:contain;flex:none}
 .brand b{font-weight:600;font-size:15px;white-space:nowrap}
 .brand .bl{line-height:1.25}
 .brand .bl span{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500}
@@ -360,6 +360,10 @@ footer{border-top:1px solid var(--line);padding:60px 0 40px}
   .kayak-body{padding:46px 22px}
   .bio-stats{grid-template-columns:1fr}
   .bio-stats > div{border-right:none;border-bottom:1px solid var(--line)}
+
+  .foot-grid{grid-template-columns:1fr}
+  .nav-right .btn-wa{padding:10px;gap:0}
+  .nav-right .btn-wa .btn-label{display:none}
 }
 
 /* ---------- MOBILE NAV (burger menu) ---------- */
