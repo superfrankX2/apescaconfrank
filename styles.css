@@ -17,7 +17,7 @@
   --maxw:1280px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   margin:0;background:var(--bg);color:var(--ink);
   font-family:'Hanken Grotesk',system-ui,sans-serif;
@@ -45,17 +45,18 @@ a{color:inherit;text-decoration:none}
 header.nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .4s,border-color .4s,backdrop-filter .4s;border-bottom:1px solid transparent}
 header.nav.scrolled,header.nav.solid,header.nav.menu-open{background:rgba(12,14,13,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav-inner{max-width:var(--maxw);margin:0 auto;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{display:flex;align-items:center;gap:13px;font-weight:600;letter-spacing:.01em}
+.brand{display:flex;align-items:center;gap:13px;font-weight:600;letter-spacing:.01em;min-width:0}
 .brand img{width:46px;height:46px;border-radius:50%;background:transparent;object-fit:contain;flex:none}
 .brand b{font-weight:600;font-size:15px;white-space:nowrap}
-.brand .bl{line-height:1.25}
+.brand .bl{line-height:1.25;min-width:0;overflow:hidden}
+.brand .bl b,.brand .bl span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand .bl span{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .nav-links{display:flex;gap:34px;align-items:center}
 .nav-links a{font-size:14.5px;color:var(--ink-soft);transition:color .2s;position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--green);transition:width .3s}
 .nav-links a:hover,.nav-links a.active{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a.active::after{width:100%}
-.nav-right{display:flex;align-items:center;gap:14px}
+.nav-right{display:flex;align-items:center;gap:14px;flex:none}
 
 /* burger (mobile nav) */
 .nav-burger{display:none;width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:2px;background:none;color:var(--ink);cursor:pointer;flex:none;padding:0}
