@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none}
 .muted{color:var(--muted)}
 
 /* ---------- BUTTONS ---------- */
-.btn{display:inline-flex;align-items:center;gap:9px;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:14.5px;letter-spacing:.01em;cursor:pointer;border:none;transition:transform .2s,background .2s,color .2s,border-color .2s}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:14.5px;letter-spacing:.01em;cursor:pointer;border:none;background:none;-webkit-appearance:none;appearance:none;transition:transform .2s,background .2s,color .2s,border-color .2s}
 .btn-wa{background:var(--green);color:#0c1707;padding:11px 20px;border-radius:2px}
 .btn-wa:hover{background:var(--green-soft);transform:translateY(-1px)}
 .btn-ghost{border:1px solid var(--line);color:var(--ink);padding:14px 26px;border-radius:2px}
