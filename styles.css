@@ -17,7 +17,7 @@
   --maxw:1280px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   margin:0;background:var(--bg);color:var(--ink);
   font-family:'Hanken Grotesk',system-ui,sans-serif;
@@ -184,7 +184,7 @@ section{position:relative}
 .cform .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .field{margin-bottom:16px;display:flex;flex-direction:column;gap:8px}
 .field label{font-size:12.5px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
-.field input,.field select,.field textarea{background:#0e1210;border:1px solid var(--line);border-radius:2px;color:var(--ink);font-family:inherit;font-size:15px;padding:12px 14px;transition:border-color .2s}
+.field input,.field select,.field textarea{width:100%;min-width:0;background:#0e1210;border:1px solid var(--line);border-radius:2px;color:var(--ink);font-family:inherit;font-size:15px;padding:12px 14px;transition:border-color .2s}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--green)}
 .field textarea{resize:vertical;min-height:92px}
 .cform .submit{width:100%;justify-content:center;margin-top:6px}
