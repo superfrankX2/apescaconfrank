@@ -398,8 +398,12 @@ footer{border-top:1px solid var(--line);padding:60px 0 40px}
 .blog-readmore:hover{gap:15px;color:var(--green)}
 
 /* grid */
-.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px}
-.bcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel);transition:border-color .3s,transform .3s}
+.blog-grid{display:flex;gap:22px;margin-top:22px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:8px 0 14px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.blog-grid::-webkit-scrollbar{height:8px}
+.blog-grid::-webkit-scrollbar-track{background:transparent}
+.blog-grid::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.blog-grid::-webkit-scrollbar-thumb:hover{background:rgba(140,191,63,.45)}
+.bcard{flex:0 0 calc((100% - 44px)/3);scroll-snap-align:start;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel);transition:border-color .3s,transform .3s}
 .bcard:hover{border-color:rgba(140,191,63,.45);transform:translateY(-6px)}
 .bcard .bc-media{position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--line)}
 .bcard .bc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
@@ -455,9 +459,15 @@ footer{border-top:1px solid var(--line);padding:60px 0 40px}
   .blog-feat{grid-template-columns:1fr}
   .blog-feat .bf-media{height:230px}
   .blog-feat .bf-body{padding:34px 28px}
-  .blog-grid,.related{grid-template-columns:1fr;max-width:520px}
+  .related{grid-template-columns:1fr;max-width:520px}
+  .blog-grid .bcard{flex-basis:calc((100% - 22px)/2)}
   .pc-grid{grid-template-columns:1fr}
   .article-head{padding:120px 0 0}
   .spec .spec-row{grid-template-columns:1fr;gap:6px;padding:16px 22px}
   .spec .spec-row dd{font-size:16px}
+}
+
+@media(max-width:640px){
+  .blog-grid{margin-left:-4vw;margin-right:-4vw;padding-left:4vw;padding-right:4vw;scroll-padding-left:4vw}
+  .blog-grid .bcard{flex-basis:82%}
 }
