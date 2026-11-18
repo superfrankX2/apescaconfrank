@@ -81,3 +81,43 @@ function sendWa(e){
   window.open('https://wa.me/393882496553?text=' + text, '_blank', 'noopener');
   return false;
 }
+
+/* Scroll progress line (the "lenza") */
+(function(){
+  var line = document.createElement('div');
+  line.className = 'scroll-line';
+  line.setAttribute('aria-hidden','true');
+  document.body.appendChild(line);
+  function upd(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    line.style.width = (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + '%';
+  }
+  upd();
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+})();
+
+/* Mobile sticky contact bar: WhatsApp (same message as the page's floating button) + call */
+(function(){
+  var fab = document.querySelector('.fab');
+  if(!fab) return;
+  var ico = fab.querySelector('svg') ? fab.querySelector('svg').outerHTML : '';
+  var bar = document.createElement('div');
+  bar.className = 'mbar';
+  bar.innerHTML =
+    '<a class="mb-wa" href="' + fab.getAttribute('href') + '" target="_blank" rel="noopener">' + ico + 'Scrivimi su WhatsApp</a>' +
+    '<a class="mb-tel" href="tel:+393882496553" aria-label="Chiamami"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg></a>';
+  document.body.appendChild(bar);
+  document.body.classList.add('has-mbar');
+  var contact = document.getElementById('contatti');
+  function upd(){
+    var show = window.scrollY > 320;
+    if(show && contact){
+      var r = contact.getBoundingClientRect();
+      if(r.top < window.innerHeight * .6 && r.bottom > 0) show = false; /* hide over the contact form */
+    }
+    bar.classList.toggle('show', show);
+  }
+  upd();
+  window.addEventListener('scroll', upd, {passive:true});
+})();
