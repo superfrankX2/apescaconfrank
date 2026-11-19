@@ -1,3 +1,11 @@
+/* Font ospitati sul sito (niente richieste a Google Fonts, GDPR) */
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:200 800;font-display:swap;src:url(/fonts/newsreader-latin-ext-opsz-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:200 800;font-display:swap;src:url(/fonts/newsreader-latin-opsz-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:200 800;font-display:swap;src:url(/fonts/newsreader-latin-ext-opsz-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:200 800;font-display:swap;src:url(/fonts/newsreader-latin-opsz-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Hanken Grotesk';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/hanken-grotesk-latin-ext-wght-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Hanken Grotesk';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/hanken-grotesk-latin-wght-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
 /* ============================================================
    A PESCA CON FRANK — Shared site styles (Direzione A · Linea d'Ombra)
    ============================================================ */
@@ -647,3 +655,16 @@ footer{padding-top:56px}
   .reveal{opacity:1;transform:none;transition:none}
   .tecn::before,.spot img,.hero-photo img{transition:none}
 }
+
+/* ---------- privacy ---------- */
+.form-privacy{margin:14px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted)}
+.form-privacy a,.foot-bottom a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px}
+.form-privacy a:hover,.foot-bottom a:hover{color:var(--green-soft)}
+.legal{max-width:760px}
+.legal h2{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(24px,2.6vw,32px);line-height:1.15;margin:52px 0 14px;color:var(--ink)}
+.legal p,.legal li{color:var(--ink-soft);font-size:16.5px;line-height:1.75}
+.legal ul{padding-left:20px;margin:0 0 16px}
+.legal li{margin-bottom:8px}
+.legal a{color:var(--green-soft);text-underline-offset:3px}
+.legal .box{border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;background:rgba(239,233,216,.025);margin:18px 0}
+.legal .upd{font-size:13px;color:var(--muted);margin-top:56px}
